@@ -7,10 +7,6 @@
     "build": "next build",
     "export": "next export",
     "start": "next start -p 9000",
-    "cypress": "cypress open",
-    "cypress:headless": "cypress run",
-    "e2e": "start-server-and-test 'yarn start' :9000 'yarn cypress'",
-    "e2e:headless": "start-server-and-test 'yarn start' :9000 'yarn cypress:headless'",
     "lint": "next lint"
   },
   "dependencies": {
@@ -35,12 +31,10 @@
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
-    "cypress": "^13.6.1",
     "eslint": "^8.55.0",
     "eslint-config-next": "^14.0.4",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "start-server-and-test": "^2.0.3",
     "typescript": "^5.3.3"
   },
   "packageManager": "yarn@3.2.0"
