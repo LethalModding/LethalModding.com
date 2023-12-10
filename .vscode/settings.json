@@ -14,4 +14,7 @@
     "typescript",
     "typescriptreact",
   ],
+  "cSpell.words": [
+    "Thunderstore"
+  ],
 }
