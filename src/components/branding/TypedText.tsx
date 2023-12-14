@@ -38,8 +38,5 @@ export default function TypedText(props: Props): JSX.Element {
     }
   }, [typedText, finalText])
 
-  return <>
-    {typedText}
-    {isTyping && <span>&#9608;</span>}
-  </>
+  return <>{typedText}{isTyping && <span>&#9608;</span>}</>
 }
