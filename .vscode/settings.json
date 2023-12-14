@@ -15,6 +15,29 @@
     "typescriptreact",
   ],
   "cSpell.words": [
-    "Thunderstore"
+    "AEIOU",
+    "anormaltwig",
+    "Bibendi",
+    "Drakorle",
+    "egeadam",
+    "Evaisa",
+    "Hexnet",
+    "keybind",
+    "Lategame",
+    "lightswitch",
+    "malco",
+    "notnotnotswipez",
+    "Pople",
+    "quackandcheese",
+    "regen",
+    "Sligili",
+    "taffyko",
+    "teleporter",
+    "Thunderstore",
+    "tinyhoot",
+    "walkie"
   ],
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
 }
