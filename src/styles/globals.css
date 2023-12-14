@@ -142,6 +142,17 @@ body, #__next {
   --background: #121010;
 }
 
+a {
+  line-height: 1;
+  transition: background-color 0.05s ease-in-out;
+}
+
+a:hover {
+  background-color: var(--accent);
+  color: #000000;
+  cursor: pointer;
+}
+
 body:not(.accessible)::after {
   content: " ";
   display: block;
@@ -178,6 +189,7 @@ body:not(.accessible) {
   background: var(--background);
   box-shadow: inset 0 0 5em 1em #000;
   color: var(--accent);
-  font-family: monospace;
-  font-size: 1.5rem;
+  font-family: "VT323", monospace;
+  letter-spacing: 0.25rem;
+  word-spacing: 0.1rem;
 }
