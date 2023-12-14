@@ -1,4 +1,3 @@
-import Box from '@mui/material/Box'
 import { useEffect, useState } from 'react'
 
 type Props = {
@@ -39,8 +38,8 @@ export default function TypedText(props: Props): JSX.Element {
     }
   }, [typedText, finalText])
 
-  return <Box>
+  return <>
     {typedText}
     {isTyping && <span>&#9608;</span>}
-  </Box>
+  </>
 }
