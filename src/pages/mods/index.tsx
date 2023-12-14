@@ -1,8 +1,4 @@
-import ComputerIcon from '@mui/icons-material/Computer'
-import DownloadIcon from '@mui/icons-material/Download'
-import LinkOffIcon from '@mui/icons-material/LinkOff'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
-import StorageIcon from '@mui/icons-material/Storage'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import CornerAccents from 'components/branding/CornerAccents'
@@ -12,31 +8,38 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import useGlobalStyles from 'styles/globalStyles'
 // import ShareIcon from '@mui/icons-material/Share'
+import ComputerIcon from '@mui/icons-material/Computer'
+import DownloadIcon from '@mui/icons-material/Download'
+import StorageIcon from '@mui/icons-material/Storage'
+import WarningIcon from '@mui/icons-material/Warning'
+import Fade from '@mui/material/Fade'
 
 const externalLinks = [
   {
     href:  'https://thunderstore.io/c/lethal-company/',
-    label: '> Find More Mods on Thunderstore',
+    label: 'Find More Mods on Thunderstore',
   },
   {
     href:  'https://github.com/LethalCompany/LethalCompanyTemplate',
-    label: '> Clone the Template Repository',
+    label: 'Clone the Template Repository',
   },
   {
     href:  'https://discord.gg/nYcQFEpXfU',
-    label: '> Join the Unofficial Discord',
+    label: 'Join the Unofficial Discord',
   },
 ]
 
-const recommendedMods = [
+const allMods = [
   {
     id:             'notnotnotswipez-MoreCompany-1.7.1',
     description:    'Allows you to play with up to 32 players in a single game.',
+    recommended:    true,
     vanillaBreaker: false,
   },
   {
     id:             'x753-More_Suits-1.3.3',
     description:    'Adds 6+ new suits to the suit rack in the ship.',
+    recommended:    true,
     vanillaBreaker: false,
   },
   {
@@ -57,11 +60,13 @@ const recommendedMods = [
   {
     id:             'Verity-TooManySuits-1.0.3',
     description:    'Adds a pager to the suit rack, allowing you to have more than 10 suits. (Default: N / B)',
+    recommended:    true,
     vanillaBreaker: false,
   },
   {
     id:             'taffyko-NameplateTweaks-1.0.2',
     description:    'Shows a speaking icon above the name of the people who are speaking.',
+    recommended:    true,
     onlyClient:     true,
     vanillaBreaker: false,
   },
@@ -86,18 +91,21 @@ const recommendedMods = [
   {
     id:             'tinyhoot-ShipLoot-1.0.0',
     description:    'Gives a cumulative total of all the loot you\'ve brought to the ship.',
+    recommended:    true,
     onlyClient:     true,
     vanillaBreaker: false,
   },
   {
     id:             'Renegades-FlashlightToggle-1.3.1',
     description:    'Adds a keybind to toggle your flashlight on and off. (Default: F)',
+    recommended:    true,
     onlyClient:     true,
     vanillaBreaker: false,
   },
   {
     id:             'Renegades-WalkieUse-1.2.3',
     description:    'Adds a keybind to use your equipped walkie-talkie. (Default: R)',
+    recommended:    true,
     onlyClient:     true,
     vanillaBreaker: false,
   },
@@ -110,12 +118,14 @@ const recommendedMods = [
   {
     id:             'Drakorle-MoreItems-1.0.1',
     description:    'Allows you to have unlimited items in your ship without de-spawning them.',
+    recommended:    true,
     onlyServer:     true,
     vanillaBreaker: false,
   },
   {
     id:             'tinyhoot-ShipLobby-1.0.2',
     description:    'Allows people to join your ship any time that you\'re in orbit, not just when starting.',
+    recommended:    true,
     onlyServer:     true,
     vanillaBreaker: false,
   },
@@ -199,15 +209,7 @@ const ModsHome: NextPage = (): JSX.Element => {
             />
           </Typography>
 
-          <Typography variant="h3">
-            <TypedText
-              finalText="Recommended Mods"
-              startDelay={1800}
-              typingSpeed={17}
-            />
-          </Typography>
-
-          {recommendedMods.map((item, index) => {
+          {allMods.map((item, index) => {
             const parts = item.id.split('-')
             const creator = parts[0]
             const version = parts[parts.length - 1]
@@ -217,110 +219,94 @@ const ModsHome: NextPage = (): JSX.Element => {
 
             const downloadURL = `https://thunderstore.io/package/download/${creator}/${name}/${version}/`
 
-            return <Box
+            return <Fade
+              in={true}
               key={index}
+              style={{ transitionDelay: `${index * 200 + 2200}ms` }}
             >
-              {/* <Image
-                alt={'icon'}
-                src={imageURL}
-                height={128}
-                width={128}
-              /> */}
+              <Box>
+                {/* <Image
+                  alt={'icon'}
+                  src={imageURL}
+                  height={128}
+                  width={128}
+                /> */}
 
-              <Box
-                sx={{
-                  display:       'flex',
-                  flexDirection: 'row',
-                  gap:           '0.5em',
-                }}
-              >
-                <Box>
+                <Box
+                  sx={{
+                    display:       'flex',
+                    flexDirection: 'row',
+                    gap:           '0.5em',
+                  }}
+                >
                   <TypedText
                     finalText={`${creator}/${name} v${version}`}
                     startDelay={index * 200 + 2200}
                     typingSpeed={2}
                   />
-                </Box>
-                {item.vanillaBreaker && <Box>
-                  <LinkOffIcon />
-                  <TypedText
-                    finalText='(Vanilla Breaker)'
-                    startDelay={index * 200 + 2200 + 100}
-                    typingSpeed={1}
-                  /></Box>}
-                {item.onlyClient && <Box>
-                  <ComputerIcon />
-                  <TypedText
-                    finalText='(Client-Only)'
-                    startDelay={index * 200 + 2200 + 100}
-                    typingSpeed={1}
-                  /></Box>}
-                {item.onlyServer && <Box>
-                  <StorageIcon />
-                  <TypedText
-                    finalText='(Server-Only)'
-                    startDelay={index * 200 + 2200 + 100}
-                    typingSpeed={1}
-                  /></Box>}
-              </Box>
-
-              <Box
-                sx={{
-                  display:       'flex',
-                  flexDirection: 'column',
-                  gap:           '0.1em',
-                  mx:            '2em',
-                  mt:            '0.25em',
-                  mb:            '0.5em',
-                }}
-              >
-                <Box>
-                  <TypedText
-                    finalText={`${item.description}`}
-                    startDelay={index * 200 + 2200 + 100}
-                    typingSpeed={1}
-                  />
+                  {item.vanillaBreaker && <WarningIcon sx={{ mr: 2, verticalAlign: 'top' }} />}
+                  {item.onlyClient && <ComputerIcon sx={{ mr: 2, verticalAlign: 'top' }} />}
+                  {item.onlyServer && <StorageIcon sx={{ mr: 2, verticalAlign: 'top' }} />}
                 </Box>
 
-                <Box>
-                  <Link
-                    color="inherit"
-                    href={`https://thunderstore.io/c/lethal-company/p/${creator}/${name}/`}
-                    target="_blank"
-                    underline="none"
-                  >
-                    &gt; <OpenInNewIcon />
+                <Box
+                  sx={{
+                    display:       'flex',
+                    flexDirection: 'column',
+                    gap:           '0.1em',
+                    mx:            '2em',
+                    mt:            '0.25em',
+                    mb:            '0.5em',
+                  }}
+                >
+                  <Box>
                     <TypedText
-                      finalText={'View on Thunderstore'}
+                      finalText={`${item.description}`}
                       startDelay={index * 200 + 2200 + 100}
                       typingSpeed={1}
                     />
-                  </Link>
-                </Box>
+                  </Box>
 
-                <Box>
-                  <Link
-                    color="inherit"
-                    href={downloadURL}
-                    target="_blank"
-                    underline="none"
-                  >
-                    &gt; <DownloadIcon color="inherit" />
-                    <TypedText
-                      finalText={'Download'}
-                      startDelay={index * 200 + 2200 + 100}
-                      typingSpeed={1}
-                    />
-                  </Link>
+                  <Box>
+                    <Link
+                      color="inherit"
+                      href={`https://thunderstore.io/c/lethal-company/p/${creator}/${name}/`}
+                      target="_blank"
+                      underline="none"
+                    >
+                      <OpenInNewIcon sx={{ mr: 2, verticalAlign: 'top' }} />
+                      <TypedText
+                        finalText={'View on Thunderstore'}
+                        startDelay={index * 200 + 2200 + 100}
+                        typingSpeed={1}
+                      />
+                    </Link>
+                  </Box>
+
+                  <Box>
+                    <Link
+                      color="inherit"
+                      href={downloadURL}
+                      target="_blank"
+                      underline="none"
+                    >
+                      <DownloadIcon sx={{ mr: 2, verticalAlign: 'top' }} />
+                      <TypedText
+                        finalText={'Download'}
+                        startDelay={index * 200 + 2200 + 100}
+                        typingSpeed={1}
+                      />
+                    </Link>
+                  </Box>
                 </Box>
               </Box>
-            </Box>
+            </Fade>
           })}
 
           <Typography variant="h3">
             <TypedText
               finalText="External"
-              startDelay={2000 + recommendedMods.length * 200}
+              startDelay={2000 + allMods.length * 200}
               typingSpeed={17}
             />
           </Typography>
@@ -331,10 +317,10 @@ const ModsHome: NextPage = (): JSX.Element => {
             target="_blank"
             underline="none"
           >
-            <OpenInNewIcon />
+            <OpenInNewIcon sx={{ mr: 2, verticalAlign: 'top' }} />
             <TypedText
               finalText={item.label}
-              startDelay={index * 500 + recommendedMods.length * 200 + 2200}
+              startDelay={index * 500 + allMods.length * 200 + 2200}
               typingSpeed={17}
             />
           </Link>)}
