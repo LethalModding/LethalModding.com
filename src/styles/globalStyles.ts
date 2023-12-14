@@ -24,10 +24,6 @@ const globalStyles: Styles = {
     maxWidth:      'clamp(400px, 80vw, 1200px)',
     minWidth:      'clamp(400px, 80vw, 1200px)',
 
-    '*:empty': {
-      display: 'none',
-    },
-
     '.column': {
       display:       'flex',
       flex:          '1 1 50%',
