@@ -4,9 +4,9 @@
   "editor.formatOnSave": true,
   "eslint.format.enable": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.fixAll.eslint": true,
-    "source.organizeImports": true,
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
   },
   "eslint.validate": [
     "javascript",
@@ -24,8 +24,11 @@
     "Hexnet",
     "keybind",
     "Lategame",
+    "lethalcompany",
+    "lethalmodding",
     "lightswitch",
     "malco",
+    "modders",
     "notnotnotswipez",
     "Pople",
     "quackandcheese",
@@ -35,7 +38,8 @@
     "teleporter",
     "Thunderstore",
     "tinyhoot",
-    "walkie"
+    "walkie",
+    "Zeekerss"
   ],
   "[typescript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
