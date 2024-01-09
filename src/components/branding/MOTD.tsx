@@ -37,8 +37,8 @@ const externalLinks = [
     label: '> Clone the Template Repository',
   },
   {
-    href:  'https://discord.gg/nYcQFEpXfU',
-    label: '> Join the Unofficial Discord',
+    href:  'https://discord.gg/XeyYqRdRGC',
+    label: '> Join the Modding Discord',
   },
 ]
 
