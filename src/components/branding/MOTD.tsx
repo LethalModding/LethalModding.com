@@ -11,7 +11,7 @@ const styles = {
     fontSize:   'clamp(1rem, 7vw, 4rem)',
     lineHeight: '0.8',
     mx:         'auto',
-    textShadow: '4px 0 4px white',
+    textShadow: '4px 0 4px',
   },
 
   titleText: {
