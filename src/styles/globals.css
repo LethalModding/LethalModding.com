@@ -199,6 +199,6 @@ body.accessible {
 }
 
 body {
-  background: var(--background);
-  color: var(--accent);
+  background: var(--background) !important;
+  color: var(--accent) !important;
 }
