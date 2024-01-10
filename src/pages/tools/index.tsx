@@ -167,7 +167,9 @@ const ToolsHome: NextPage = (): JSX.Element => {
   // Pagination
   //
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [pageNumber, setPageNumber] = useState<number>(1)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [pageSize, setPageSize] = useState<number>(100)
 
   const thisPage = useMemo(() => {
