@@ -185,6 +185,7 @@ body:not(.accessible)::before {
 
 body:not(.accessible) {
   animation: textShadow 1.6s infinite;
+  color: var(--accent);
 
   /* terminal colors, charcoal and orange/yellow */
   box-shadow: inset 0 0 5em 1em #000;
@@ -193,11 +194,11 @@ body:not(.accessible) {
   word-spacing: 0.1rem;
 }
 
+body.accessible {
+  font-family: 'Open Sans', sans-serif;
+}
+
 body {
   background: var(--background);
   color: var(--accent);
-}
-
-body.accessible {
-  font-family: 'Open Sans', sans-serif;
 }
