@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
 body, #__next {
   margin: 0 !important;
@@ -186,10 +187,17 @@ body:not(.accessible) {
   animation: textShadow 1.6s infinite;
 
   /* terminal colors, charcoal and orange/yellow */
-  background: var(--background);
   box-shadow: inset 0 0 5em 1em #000;
-  color: var(--accent);
   font-family: "VT323", monospace;
   letter-spacing: 0.25rem;
   word-spacing: 0.1rem;
+}
+
+body {
+  background: var(--background);
+  color: var(--accent);
+}
+
+body.accessible {
+  font-family: 'Open Sans', sans-serif;
 }
