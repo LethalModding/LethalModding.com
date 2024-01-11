@@ -247,12 +247,13 @@ const ToolsHome: NextPage = (): JSX.Element => {
       <Box
         onClick={toggleAccessibility}
         sx={{
+          bottom:     '0.75em',
+          cursor:     'pointer',
           fontSize:   '2em',
+          left:       '1em',
           lineHeight: 1,
           position:   'absolute',
-          right:      '1em',
           textAlign:  'right',
-          top:        '1em',
           zIndex:     100,
         }}
       >
@@ -263,8 +264,19 @@ const ToolsHome: NextPage = (): JSX.Element => {
       <Box sx={globalStyles.linksBox}>
         <Box className="column" sx={{ my: 4 }}>
           <Typography variant='h2'>
+            <span
+              onClick={() => {
+                window.history.back()
+              }}
+              style={{
+                cursor:      'pointer',
+                marginRight: 32
+              }}
+            >
+              #
+            </span>
             <TypedText
-              finalText="# Tools"
+              finalText="Tools"
               startDelay={0}
               typingSpeed={17}
             />
