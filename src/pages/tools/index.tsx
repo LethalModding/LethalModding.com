@@ -172,9 +172,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
   // Pagination
   //
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [pageNumber, setPageNumber] = useState<number>(1)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [pageSize, setPageSize] = useState<number>(100)
 
   const thisPage = useMemo(() => {
@@ -226,7 +224,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               flexDirection: 'row',
               flexWrap:      'wrap',
               gap:           3,
-
+              
               '.MuiFormLabel-root.MuiInputLabel-shrink': {
                 mt:      -.5,
                 padding: 0,
@@ -238,18 +236,23 @@ const ToolsHome: NextPage = (): JSX.Element => {
 
               '& > *': {
                 flexGrow: 1,
-              }
+              },
+
+              '.MuiOutlinedInput-input': {
+                py: 1,
+              },
             }}
           >
             <FormControl
               sx={{
                 '.MuiFormLabel-root': {
-                  fontSize: '0.8em',
+                  fontSize: '0.75em',
                   mt:       -1.75,
                   mb:       -2,
                   ml:       2,
                 },
               }}
+              size="small"
               variant="outlined"
             >
               <FormLabel>Category</FormLabel>
@@ -288,6 +291,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               label="Name"
               name="name"
               onChange={handleFilterChange}
+              size="small"
               type="text"
               value={filters.name}
               variant="outlined"
@@ -296,6 +300,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               label="Author"
               name="owner"
               onChange={handleFilterChange}
+              size="small"
               type="text"
               value={filters.owner}
               variant="outlined"
@@ -329,6 +334,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               label="Min. Downloads"
               name="minDownloads"
               onChange={handleFilterChange}
+              size="small"
               type="number"
               value={filters.minDownloads}
               variant="outlined"
@@ -339,6 +345,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               label="Max. Downloads"
               name="maxDownloads"
               onChange={handleFilterChange}
+              size="small"
               type="number"
               value={filters.maxDownloads}
               variant="outlined"
@@ -349,6 +356,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               label="Min. Ratings"
               name="minRatings"
               onChange={handleFilterChange}
+              size="small"
               type="number"
               value={filters.minRatings}
               variant="outlined"
@@ -359,6 +367,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               label="Max. Ratings"
               name="maxRatings"
               onChange={handleFilterChange}
+              size="small"
               type="number"
               value={filters.maxRatings}
               variant="outlined"
@@ -369,6 +378,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               label="Min. Size (MB)"
               name="minSize"
               onChange={handleFilterChange}
+              size="small"
               type="number"
               value={filters.minSize}
               variant="outlined"
@@ -379,6 +389,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               label="Max. Size (MB)"
               name="maxSize"
               onChange={handleFilterChange}
+              size="small"
               type="number"
               value={filters.maxSize}
               variant="outlined"
@@ -412,7 +423,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
                 indeterminate={filters.hasDonation === null}
                 name="hasDonation"
                 onChange={handleFilterCheckboxChange}
-              /> Has Donation Link
+              /> Donation Link
             </FormLabel>
             <FormLabel sx={{ m: -1 }}>
               <Checkbox
@@ -420,7 +431,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
                 indeterminate={filters.hasNSFW === null}
                 name="hasNSFW"
                 onChange={handleFilterCheckboxChange}
-              /> Has NSFW Content
+              /> NSFW Content
             </FormLabel>
             <FormLabel sx={{ m: -1 }}>
               <Checkbox
@@ -428,7 +439,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
                 indeterminate={filters.hasWebsite === null}
                 name="hasWebsite"
                 onChange={handleFilterCheckboxChange}
-              /> Has Website
+              /> Website
             </FormLabel>
             <FormLabel sx={{ m: -1 }}>
               <Checkbox
@@ -436,7 +447,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
                 indeterminate={filters.isDeprecated === null}
                 name="isDeprecated"
                 onChange={handleFilterCheckboxChange}
-              /> Is Deprecated
+              /> Deprecated
             </FormLabel>
             <FormLabel sx={{ m: -1 }}>
               <Checkbox
@@ -444,8 +455,97 @@ const ToolsHome: NextPage = (): JSX.Element => {
                 indeterminate={filters.isPinned === null}
                 name="isPinned"
                 onChange={handleFilterCheckboxChange}
-              /> Is Pinned
+              /> Pinned
             </FormLabel>
+          </Box>
+
+          <Box
+            sx={{
+              border: '1px solid var(--accent)',
+
+              display:        'flex',
+              alignItems:     'center',
+              justifyContent: 'space-between',
+              mb:             -2,
+              p:              1,
+              px:             2,
+            }}
+          >
+            <Typography variant="body1">
+              Page {pageNumber} of {Math.ceil(filteredMods.length / pageSize)}
+            </Typography>
+            <Box
+              sx={{
+                display:    'flex',
+                alignItems: 'center',
+                gap:        2,
+              }}
+            >
+              <FormControl size="small" variant="outlined">
+                <Select
+                  defaultValue={100}
+                  name="pageSize"
+                  onChange={(e) => setPageSize(e.target.value as number)}
+                  inputProps={{
+                    sx: {
+                      mr: 1,
+                      py: 0,
+                    }
+                  }}
+                  size="small"
+                >
+                  <MenuItem value={20}>20</MenuItem>
+                  <MenuItem value={40}>40</MenuItem>
+                  <MenuItem value={100}>100</MenuItem>
+                  <MenuItem value={200}>200</MenuItem>
+                  <MenuItem value={400}>400</MenuItem>
+                </Select>
+              </FormControl>
+              Per Page
+            </Box>
+            <Typography variant="body1">
+              {filteredMods.length} results
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              border: '1px solid var(--accent)',
+
+              display:        'flex',
+              alignItems:     'center',
+              justifyContent: 'space-between',
+              flexWrap:       'wrap',
+              gap:            1,
+              p:              1,
+              px:             2,
+            }}
+          >
+            {/* show pages 1 ... n-1, n, n+1, ... (last) */}
+            {Array.from({ length: Math.ceil(filteredMods.length / pageSize) }, (_, i) => i + 1).map(x => {
+              if (x === 1 || x === Math.ceil(filteredMods.length / pageSize) || Math.abs(x - pageNumber) <= 3) {
+                return <Link
+                  key={x}
+                  onClick={() => setPageNumber(x)}
+                  sx={{
+                    backgroundColor: pageNumber === x ? 'var(--accent)' : 'inherit',
+                    borderRadius:    2,
+                    color:           pageNumber === x ? 'white' : 'inherit',
+                    cursor:          'pointer',
+                    px:              1,
+                    textDecoration:  'none',
+                  }}
+                  variant="body1"
+                >
+                  {x}
+                </Link>
+              } else if (x === 2 && pageNumber > 3) {
+                return '...'
+              } else if (x === Math.ceil(filteredMods.length / pageSize) - 1 && pageNumber < Math.ceil(filteredMods.length / pageSize) - 1) {
+                return '...'
+              } else {
+                return null
+              }
+            })}
           </Box>
 
           <Box
