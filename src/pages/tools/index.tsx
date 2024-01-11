@@ -13,11 +13,11 @@ import TypedText from 'components/branding/TypedText'
 import Link from 'components/mui/Link'
 import { type NextPage } from 'next'
 import Head from 'next/head'
+import Image from 'next/image'
 import { ofetch } from 'ofetch'
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'react'
 import useGlobalStyles from 'styles/globalStyles'
 import { type Mod } from 'types/Mod'
-
 
 type Filters = {
   hasDonation:  boolean | null
@@ -43,8 +43,12 @@ const ToolsHome: NextPage = (): JSX.Element => {
 
   const [allMods, setAllMods] = useState<Mod[]>([])
   useEffect(() => {
-    ofetch('https://thunderstore.io/c/lethal-company/api/v1/package/')
-      .then((data) => setAllMods(data))
+    const timeout = setTimeout(() => {
+      ofetch('https://thunderstore.io/c/lethal-company/api/v1/package/')
+        .then((data) => setAllMods(data))
+    }, 250)
+
+    return () => clearTimeout(timeout)
   }, [])
 
   const [allCategories, setAllCategories] = useState<string[]>([])
@@ -209,14 +213,6 @@ const ToolsHome: NextPage = (): JSX.Element => {
               finalText="# Tools"
               startDelay={0}
               typingSpeed={17}
-            />
-          </Typography>
-
-          <Typography variant="body2">
-            <TypedText
-              finalText="Understanding the importance of an intuitive user experience, we have taken the proactive step of crafting additional functionalities to augment Thunderstore's offerings. We are delighted to present a suite of features designed to streamline your search for mods. These enhancements allow for filtering by:"
-              startDelay={300}
-              typingSpeed={4}
             />
           </Typography>
 
@@ -457,15 +453,14 @@ const ToolsHome: NextPage = (): JSX.Element => {
               display:       'flex',
               flexDirection: 'row',
               flexWrap:      'wrap',
-              fontSize:      '0.7em',
               gap:           1,
 
               '& > *': {
                 backgroundColor: 'var(--background)',
                 borderRadius:    2,
                 flex:            '1 0 auto',
-                maxWidth:        'calc(33.39% - 1 * 8px)',
-                minWidth:        'calc(33.39% - 1 * 8px)',
+                maxWidth:        'calc(25% - 1 * 8px)',
+                minWidth:        'calc(25% - 1 * 8px)',
                 px:              2,
                 py:              1,
 
@@ -483,7 +478,8 @@ const ToolsHome: NextPage = (): JSX.Element => {
                 },
 
                 '.MuiTypography-body2': {
-                  fontSize: '0.9em',
+                  color:    'white',
+                  fontSize: '0.7em',
                 },
               },
             }}
@@ -500,9 +496,10 @@ const ToolsHome: NextPage = (): JSX.Element => {
             >
               <Image
                 alt={x.name}
-                height={x.versions[0].icon ? 128 : 0}
+                height={256}
+                loading='lazy'
                 src={x.versions[0].icon}
-                width={x.versions[0].icon ? 128 : 0}
+                width={256}
               />
               <Typography variant="body2">
                 {x.owner}
