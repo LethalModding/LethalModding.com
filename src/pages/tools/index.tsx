@@ -174,14 +174,14 @@ const ToolsHome: NextPage = (): JSX.Element => {
   // Sorting
   //
 
-  type Sort = {
-    direction: 'asc' | 'desc'
-    property:  'updated' | 'name' | 'owner' | 'downloads' | 'ratings' | 'size'
-  }
-  const [sort, setSort] = useState<Sort>({
-    direction: 'asc',
-    property:  'updated',
-  })
+  // type Sort = {
+  //   direction: 'asc' | 'desc'
+  //   property:  'updated' | 'name' | 'owner' | 'downloads' | 'ratings' | 'size'
+  // }
+  // const [sort, setSort] = useState<Sort>({
+  //   direction: 'asc',
+  //   property:  'updated',
+  // })
 
   //
   // Pagination
