@@ -171,6 +171,19 @@ const ToolsHome: NextPage = (): JSX.Element => {
   }, [allMods, categoryFilter, filters.hasDonation, filters.hasNSFW, filters.hasWebsite, filters.isDeprecated, filters.isPinned, filters.maxDownloads, filters.maxRatings, filters.maxSize, filters.minDownloads, filters.minRatings, filters.minSize, filters.name, filters.owner])
 
   //
+  // Sorting
+  //
+
+  type Sort = {
+    direction: 'asc' | 'desc'
+    property:  'updated' | 'name' | 'owner' | 'downloads' | 'ratings' | 'size'
+  }
+  const [sort, setSort] = useState<Sort>({
+    direction: 'asc',
+    property:  'updated',
+  })
+
+  //
   // Pagination
   //
 
