@@ -5,8 +5,8 @@ import Checkbox from '@mui/material/Checkbox'
 import Chip from '@mui/material/Chip'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
+import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
-import OutlinedInput from '@mui/material/OutlinedInput'
 import Select, { type SelectChangeEvent } from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
@@ -99,18 +99,30 @@ const ToolsHome: NextPage = (): JSX.Element => {
     setFilters(prev => ({ ...prev, [name]: value }))
   }, [filters])
 
-  const [categoryFilter, setCategoryFilter] = useState<string[]>([])
-  const handleCategoryFilterChange = useCallback((e: SelectChangeEvent<string[]>) => {
+  const [includesCategoryFilter, setIncludesCategoryFilter] = useState<string[]>([])
+  const handleIncludesCategoryFilterChange = useCallback((e: SelectChangeEvent<string[]>) => {
     if (typeof e.target.value === 'string') {
-      setCategoryFilter(e.target.value.split(','))
+      setIncludesCategoryFilter(e.target.value.split(','))
     } else {
-      setCategoryFilter(e.target.value)
+      setIncludesCategoryFilter(e.target.value)
+    }
+  }, [])
+  const [excludesCategoryFilter, setExcludesCategoryFilter] = useState<string[]>([])
+  const handleExcludesCategoryFilterChange = useCallback((e: SelectChangeEvent<string[]>) => {
+    if (typeof e.target.value === 'string') {
+      setExcludesCategoryFilter(e.target.value.split(','))
+    } else {
+      setExcludesCategoryFilter(e.target.value)
     }
   }, [])
 
   const filteredMods = useMemo(() => {
     return allMods.filter(mod => {
-      if (categoryFilter.length > 0 && !mod.categories.some(category => categoryFilter.includes(category))) {
+      if (includesCategoryFilter.length > 0 && !mod.categories.some(category => includesCategoryFilter.includes(category))) {
+        return false
+      }
+
+      if (excludesCategoryFilter.length > 0 && mod.categories.some(category => excludesCategoryFilter.includes(category))) {
         return false
       }
 
@@ -168,7 +180,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
 
       return true
     })
-  }, [allMods, categoryFilter, filters.hasDonation, filters.hasNSFW, filters.hasWebsite, filters.isDeprecated, filters.isPinned, filters.maxDownloads, filters.maxRatings, filters.maxSize, filters.minDownloads, filters.minRatings, filters.minSize, filters.name, filters.owner])
+  }, [allMods, includesCategoryFilter, excludesCategoryFilter, filters.hasNSFW, filters.isDeprecated, filters.isPinned, filters.maxRatings, filters.minRatings, filters.hasDonation, filters.name, filters.owner, filters.maxDownloads, filters.minDownloads, filters.maxSize, filters.minSize, filters.hasWebsite])
 
   //
   // Sorting
@@ -269,11 +281,6 @@ const ToolsHome: NextPage = (): JSX.Element => {
               flexWrap:      'wrap',
               gap:           3,
               
-              '.MuiFormLabel-root.MuiInputLabel-shrink': {
-                mt:      -.5,
-                padding: 0,
-              },
-
               'fieldset legend span': {
                 fontSize: '0.8em',
               },
@@ -281,56 +288,8 @@ const ToolsHome: NextPage = (): JSX.Element => {
               '& > *': {
                 flexGrow: 1,
               },
-
-              '.MuiOutlinedInput-input': {
-                py: 1,
-              },
             }}
           >
-            <FormControl
-              sx={{
-                '.MuiFormLabel-root': {
-                  fontSize: '0.75em',
-                  mt:       -1.75,
-                  mb:       -2,
-                  ml:       2,
-                },
-              }}
-              size="small"
-              variant="outlined"
-            >
-              <FormLabel>Category</FormLabel>
-              <Select
-                input={<OutlinedInput label="Category" />}
-                label="Category"
-                multiple
-                onChange={handleCategoryFilterChange}
-                renderValue={(selected: string[]) => <Box
-                  sx={{
-                    display:  'flex',
-                    flexWrap: 'wrap',
-                    gap:      0.5,
-                    
-                    '.MuiChip-root': {
-                      fontSize: '0.7em',
-                      padding:  0,
-                    },
-                  }}
-                >
-                  {selected.map(value => <Chip
-                    color="primary"
-                    key={value}
-                    label={value}
-                    size="small"
-                  />)}
-                </Box>}
-                value={categoryFilter}
-              >
-                {allCategories.map(x => <MenuItem key={x} value={x}>
-                  {x}
-                </MenuItem>)}
-              </Select>
-            </FormControl>
             <TextField
               label="Name"
               name="name"
@@ -349,6 +308,92 @@ const ToolsHome: NextPage = (): JSX.Element => {
               value={filters.owner}
               variant="outlined"
             />
+          </Box>
+
+          <Box
+            sx={{
+              display:       'flex',
+              flexDirection: 'row',
+              flexWrap:      'wrap',
+              gap:           3,
+              
+              'fieldset legend span': {
+                fontSize: '0.8em',
+              },
+
+              '& > *': {
+                width: '49%',
+              },
+            }}
+          >
+            <FormControl size="small" variant="outlined">
+              <InputLabel>Includes Category</InputLabel>
+              <Select
+                label="Includes Category"
+                multiple
+                onChange={handleIncludesCategoryFilterChange}
+                renderValue={(selected: string[]) => <Box
+                  sx={{
+                    display:  'flex',
+                    flexWrap: 'wrap',
+                    gap:      0.5,
+                    pt:       0.75,
+                    
+                    '.MuiChip-root': {
+                      fontSize: '0.7em',
+                      padding:  0,
+                    },
+                  }}
+                >
+                  {selected.map(value => <Chip
+                    color="primary"
+                    key={value}
+                    label={value}
+                    size="small"
+                  />)}
+                </Box>}
+                value={includesCategoryFilter}
+                variant="outlined"
+              >
+                {allCategories.map(x => <MenuItem key={x} value={x}>
+                  {x}
+                </MenuItem>)}
+              </Select>
+            </FormControl>
+            <FormControl size="small" variant="outlined">
+              <InputLabel>Excludes Category</InputLabel>
+              <Select
+                label="Excludes Category"
+                multiple
+                onChange={handleExcludesCategoryFilterChange}
+                renderValue={(selected: string[]) => <Box
+                  sx={{
+                    display:  'flex',
+                    flexWrap: 'wrap',
+                    gap:      0.5,
+                    pt:       0.75,
+                    
+                    '.MuiChip-root': {
+                      fontSize: '0.7em',
+                      padding:  0,
+                    },
+                  }}
+                >
+                  {selected.map(value => <Chip
+                    color="primary"
+                    key={value}
+                    label={value}
+                    size="small"
+                  />)}
+                </Box>}
+                value={excludesCategoryFilter}
+                variant="outlined"
+              >
+                {allCategories.map(x => <MenuItem key={x} value={x}>
+                  {x}
+                </MenuItem>)}
+              </Select>
+            </FormControl>
           </Box>
 
           <Box
