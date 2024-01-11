@@ -13,7 +13,7 @@ const darkThemeOptions: Theme = createTheme({
   },
   typography: {
     fontFamily: ['VT323', 'monospace'].join(','),
-    fontSize:   24,
+    fontSize:   18,
   },
 })
 
