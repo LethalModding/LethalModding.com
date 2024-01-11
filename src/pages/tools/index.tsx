@@ -334,7 +334,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               },
 
               '& > *': {
-                width: '49%',
+                flex: 1,
               },
             }}
           >
