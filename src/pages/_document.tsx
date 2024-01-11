@@ -10,7 +10,7 @@ import type { DocumentContext } from 'next/document'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 import type { NextRouter } from 'next/router'
 import { Children } from 'react'
-import theme from 'styles/lightThemeOptions'
+import darkThemeOptions from 'styles/darkThemeOptions'
 import createEmotionCache from 'utility/createEmotionCache'
 
 export default class MyDocument extends Document {
@@ -20,11 +20,11 @@ export default class MyDocument extends Document {
         <Head>
           <meta
             name="theme-color"
-            content={theme.palette.primary.main}
+            content={darkThemeOptions.palette.primary.main}
           />
           <meta
             name="msapplication-TileColor"
-            content={theme.palette.primary.main}
+            content={darkThemeOptions.palette.primary.main}
           />
         </Head>
         <body>

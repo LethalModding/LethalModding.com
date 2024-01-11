@@ -18,6 +18,7 @@ import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'rea
 import useGlobalStyles from 'styles/globalStyles'
 import { type Mod } from 'types/Mod'
 
+
 type Filters = {
   hasDonation:  boolean | null
   hasNSFW:      boolean | null
@@ -468,6 +469,10 @@ const ToolsHome: NextPage = (): JSX.Element => {
                 px:              2,
                 py:              1,
 
+                '&:hover': {
+                  backgroundColor: 'var(--accent)',
+                },
+
                 '.MuiTypography-root': {
                   lineHeight:   1.5,
                   overflowWrap: 'anywhere',
@@ -483,23 +488,29 @@ const ToolsHome: NextPage = (): JSX.Element => {
               },
             }}
           >
-            {thisPage.map(x => <Box key={x.uuid4}>
-              <Link
-                href={x.package_url}
-                sx={{
-                  color:          'inherit',
-                  textDecoration: 'none',
-                }}
-                target="_blank"
-              >
-                <Typography variant="body2">
-                  {x.owner}
-                </Typography>
-                <Typography variant="body1">
-                  {x.name}
-                </Typography>
-              </Link>
-            </Box>)}
+            {thisPage.map(x => <Link
+              href={x.package_url}
+              key={x.uuid4}
+              sx={{
+                color:          'inherit',
+                display:        'block',
+                textDecoration: 'none',
+              }}
+              target="_blank"
+            >
+              <Image
+                alt={x.name}
+                height={x.versions[0].icon ? 128 : 0}
+                src={x.versions[0].icon}
+                width={x.versions[0].icon ? 128 : 0}
+              />
+              <Typography variant="body2">
+                {x.owner}
+              </Typography>
+              <Typography variant="body1">
+                {x.name}
+              </Typography>
+            </Link>)}
           </Box>
         </Box>
       </Box>

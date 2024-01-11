@@ -1,9 +1,9 @@
 import type { Theme } from '@mui/material/styles'
 import { createTheme, responsiveFontSizes } from '@mui/material/styles'
 
-const lightThemeOptions: Theme = createTheme({
+const darkThemeOptions: Theme = createTheme({
   palette: {
-    mode: 'light',
+    mode: 'dark',
   },
   typography: {
     fontFamily: ['VT323', 'monospace'].join(','),
@@ -11,4 +11,4 @@ const lightThemeOptions: Theme = createTheme({
   },
 })
 
-export default responsiveFontSizes(lightThemeOptions)
+export default responsiveFontSizes(darkThemeOptions)

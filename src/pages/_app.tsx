@@ -7,8 +7,8 @@ import ThemeProvider from '@mui/system/ThemeProvider'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import type { FunctionComponent, PropsWithChildren } from 'react'
+import darkThemeOptions from 'styles/darkThemeOptions'
 import 'styles/globals.css'
-import lightThemeOptions from 'styles/lightThemeOptions'
 import createEmotionCache from 'utility/createEmotionCache'
 
 interface MyAppProps extends AppProps {
@@ -17,7 +17,7 @@ interface MyAppProps extends AppProps {
 
 const clientSideEmotionCache: EmotionCache = createEmotionCache()
 
-const lightTheme: Theme = createTheme(lightThemeOptions)
+const darkTheme: Theme = createTheme(darkThemeOptions)
 
 const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProps>) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
@@ -26,7 +26,7 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
     <Head>
       <meta name="viewport" content="initial-scale=1, width=device-width" />
     </Head>
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Component {...pageProps} />
     </ThemeProvider>

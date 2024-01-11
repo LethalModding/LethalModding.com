@@ -139,7 +139,7 @@ body, #__next {
 }
 
 :root {
-  --accent: #ffa530;
+  --accent: #e8982f;
   --background: #121010;
 }
 
@@ -150,7 +150,7 @@ a {
 
 a:hover {
   background-color: var(--accent);
-  color: #000000;
+  color: var(--background);
   cursor: pointer;
 }
 
@@ -166,7 +166,7 @@ body:not(.accessible)::after {
   opacity: 0;
   z-index: 20;
   pointer-events: none;
-  animation: flicker 0.15s infinite;
+  animation: flicker 0.30s infinite;
 }
 
 body:not(.accessible)::before {
@@ -184,7 +184,7 @@ body:not(.accessible)::before {
 }
 
 body:not(.accessible) {
-  animation: textShadow 1.6s infinite;
+  animation: textShadow 3.2s infinite;
   color: var(--accent);
 
   /* terminal colors, charcoal and orange/yellow */
