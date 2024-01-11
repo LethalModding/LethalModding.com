@@ -6,7 +6,7 @@ import TypedText from './TypedText'
 
 const styles = {
   titleBox: {
-    color:      '#E00',
+    color:      '#fc0000',
     display:    'inline-block',
     fontSize:   'clamp(1rem, 7vw, 4rem)',
     lineHeight: '0.8',
@@ -15,7 +15,7 @@ const styles = {
   },
 
   titleText: {
-    border:     '10px solid #E00',
+    border:     '10px solid #fc0000',
     fontFamily: 'sans-serif',
     padding:    '0.5rem 1rem',
     paddingTop: '1rem',

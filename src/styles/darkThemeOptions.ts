@@ -3,7 +3,13 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles'
 
 const darkThemeOptions: Theme = createTheme({
   palette: {
-    mode: 'dark',
+    mode:    'dark',
+    primary: {
+      main: '#e8982f',
+    },
+    secondary: {
+      main: '#fc0000',
+    },
   },
   typography: {
     fontFamily: ['VT323', 'monospace'].join(','),
