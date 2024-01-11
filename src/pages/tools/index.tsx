@@ -1,3 +1,5 @@
+import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew'
+import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward'
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import Chip from '@mui/material/Chip'
@@ -179,6 +181,19 @@ const ToolsHome: NextPage = (): JSX.Element => {
     return filteredMods.slice((pageNumber-1)*pageSize, pageNumber*pageSize)
   }, [filteredMods, pageNumber, pageSize])
 
+  const [isAccessible, setIsAccessible] = useState<boolean>(false)
+  const toggleAccessibility = useCallback(() => {
+    const newState = !isAccessible
+
+    if (newState) {
+      document.body.classList.add('accessible')
+    } else {
+      document.body.classList.remove('accessible')
+    }
+
+    setIsAccessible(newState)
+  }, [isAccessible])
+
   return <>
     <Head>
       <title>Your Source for Lethal Company Tools</title>
@@ -204,6 +219,22 @@ const ToolsHome: NextPage = (): JSX.Element => {
         },
       }}
     >
+      <Box
+        onClick={toggleAccessibility}
+        sx={{
+          fontSize:   '2em',
+          lineHeight: 1,
+          position:   'absolute',
+          right:      '1em',
+          textAlign:  'right',
+          top:        '1em',
+          zIndex:     100,
+        }}
+      >
+        {!isAccessible ? <AccessibilityNewIcon fontSize='inherit' /> :
+          <AccessibleForwardIcon fontSize='inherit' />}
+      </Box>
+
       <Box sx={globalStyles.linksBox}>
         <Box className="column" sx={{ my: 4 }}>
           <Typography variant='h2'>

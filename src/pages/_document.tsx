@@ -26,6 +26,7 @@ export default class MyDocument extends Document {
             name="msapplication-TileColor"
             content={darkThemeOptions.palette.primary.main}
           />
+          <meta name="darkreader-lock" />
         </Head>
         <body>
           <Main />
