@@ -1,5 +1,3 @@
-import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew'
-import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward'
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import Chip from '@mui/material/Chip'
@@ -16,7 +14,6 @@ import Image from 'next/image'
 import { ofetch } from 'ofetch'
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'react'
 
-import IconButton from '@mui/material/IconButton'
 import CornerAccents from 'components/branding/CornerAccents'
 import Link from 'components/mui/Link'
 import Breadcrumb from 'components/tools/Breadcrumb'
@@ -209,19 +206,6 @@ const ToolsHome: NextPage = (): JSX.Element => {
     return filteredMods.slice((pageNumber-1)*pageSize, pageNumber*pageSize)
   }, [filteredMods, pageNumber, pageSize])
 
-  const [isAccessible, setIsAccessible] = useState<boolean>(false)
-  const toggleAccessibility = useCallback(() => {
-    const newState = !isAccessible
-
-    if (newState) {
-      document.body.classList.add('accessible')
-    } else {
-      document.body.classList.remove('accessible')
-    }
-
-    setIsAccessible(newState)
-  }, [isAccessible])
-
   return <>
     <Head>
       <title>Your Source for Lethal Company Tools</title>
@@ -247,25 +231,6 @@ const ToolsHome: NextPage = (): JSX.Element => {
         },
       }}
     >
-      <IconButton
-        color="inherit"
-        onClick={toggleAccessibility}
-        sx={{
-          bottom:     '0.75em',
-          cursor:     'pointer',
-          fontSize:   '2em',
-          left:       '0.75em',
-          lineHeight: 1,
-          position:   'absolute',
-          textAlign:  'right',
-          zIndex:     100,
-        }}
-        tabIndex={0}
-      >
-        {!isAccessible ? <AccessibilityNewIcon fontSize='inherit' /> :
-          <AccessibleForwardIcon fontSize='inherit' />}
-      </IconButton>
-
       <Box sx={globalStyles.linksBox}>
         <Box className="column" sx={{ my: 4 }}>
           <Breadcrumb parts={['Tools', 'Thunderstore Search']} />
