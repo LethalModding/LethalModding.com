@@ -11,6 +11,15 @@ const darkThemeOptions: Theme = createTheme({
       main: '#fc0000',
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 800,
+      md: 1000,
+      lg: 1400,
+      xl: 2000,
+    },
+  },
   typography: {
     fontFamily: ['VT323', 'monospace'].join(','),
     fontSize:   18,

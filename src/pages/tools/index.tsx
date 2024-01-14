@@ -14,6 +14,8 @@ import Image from 'next/image'
 import { ofetch } from 'ofetch'
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'react'
 
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { Theme } from '@mui/system/createTheme'
 import CornerAccents from 'components/branding/CornerAccents'
 import Link from 'components/mui/Link'
 import Breadcrumb from 'components/tools/Breadcrumb'
@@ -205,6 +207,10 @@ const ToolsHome: NextPage = (): JSX.Element => {
   const thisPage = useMemo(() => {
     return filteredMods.slice((pageNumber-1)*pageSize, pageNumber*pageSize)
   }, [filteredMods, pageNumber, pageSize])
+
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
+  const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
+  const isSmallPC = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'))
 
   return <>
     <Head>
@@ -528,8 +534,8 @@ const ToolsHome: NextPage = (): JSX.Element => {
                 backgroundColor: 'var(--background)',
                 borderRadius:    2,
                 flex:            '1 0 auto',
-                maxWidth:        'calc(25% - 1 * 8px)',
-                minWidth:        'calc(25% - 1 * 8px)',
+                maxWidth:        isMobile ? 'calc(100% - 1 * 8px)' : isSmallPC ? 'calc(50% - 1 * 8px)' : isTablet ? 'calc(33% - 1 * 8px)' : 'calc(25% - 1 * 8px)',
+                minWidth:        isMobile ? 'calc(100% - 1 * 8px)' : isSmallPC ? 'calc(50% - 1 * 8px)' : isTablet ? 'calc(33% - 1 * 8px)' : 'calc(25% - 1 * 8px)',
                 px:              2,
                 py:              1,
 
