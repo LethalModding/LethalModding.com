@@ -10,14 +10,16 @@ import MenuItem from '@mui/material/MenuItem'
 import Select, { type SelectChangeEvent } from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import CornerAccents from 'components/branding/CornerAccents'
-import TypedText from 'components/branding/TypedText'
-import Link from 'components/mui/Link'
 import { type NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { ofetch } from 'ofetch'
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'react'
+
+import CornerAccents from 'components/branding/CornerAccents'
+import TypedText from 'components/branding/TypedText'
+import Link from 'components/mui/Link'
+import Pagination from 'components/tools/Pagination'
 import useGlobalStyles from 'styles/globalStyles'
 import { type Mod } from 'types/Mod'
 
@@ -264,17 +266,19 @@ const ToolsHome: NextPage = (): JSX.Element => {
       <Box sx={globalStyles.linksBox}>
         <Box className="column" sx={{ my: 4 }}>
           <Typography variant='h2'>
-            <span
-              onClick={() => {
-                window.history.back()
-              }}
+            <Link
+              href="/"
               style={{
-                cursor:      'pointer',
-                marginRight: 32
+                cursor:         'pointer',
+                marginRight:    32,
+                textDecoration: 'none',
+                '&:hover':      {
+                  background: 'inherit',
+                },
               }}
             >
               #
-            </span>
+            </Link>
             <TypedText
               finalText="Tools"
               startDelay={0}
@@ -639,117 +643,6 @@ const ToolsHome: NextPage = (): JSX.Element => {
           />
         </Box>
       </Box>
-    </Box>
-  </>
-}
-
-type PaginationProps = {
-  pageNumber?: number
-  pageSize?: number
-  totalResults?: number
-  setPageNumber: (pageNumber: number) => void
-  setPageSize: (pageSize: number) => void
-}
-
-const Pagination = (props: PaginationProps): JSX.Element => {
-  const {
-    pageNumber = 1,
-    pageSize = 100,
-    totalResults = 0,
-    setPageNumber,
-    setPageSize,
-  } = props
-
-  return <>
-    <Box
-      sx={{
-        border: '1px solid var(--accent)',
-
-        display:        'flex',
-        alignItems:     'center',
-        justifyContent: 'space-between',
-        mb:             -2,
-        p:              1,
-        px:             2,
-      }}
-    >
-      <Typography variant="body1">
-        Page {pageNumber} of {Math.ceil(totalResults / pageSize)}
-      </Typography>
-      <Box
-        sx={{
-          display:    'flex',
-          alignItems: 'center',
-          gap:        2,
-        }}
-      >
-        <FormControl size="small" variant="outlined">
-          <Select
-            defaultValue={100}
-            inputProps={{
-              sx: {
-                mr: 1,
-                py: 0,
-              }
-            }}
-            name="pageSize"
-            onChange={(e) => setPageSize(e.target.value as number)}
-            size="small"
-            value={pageSize}
-          >
-            <MenuItem value={20}>20</MenuItem>
-            <MenuItem value={40}>40</MenuItem>
-            <MenuItem value={100}>100</MenuItem>
-            <MenuItem value={200}>200</MenuItem>
-            <MenuItem value={400}>400</MenuItem>
-          </Select>
-        </FormControl>
-        Per Page
-      </Box>
-      <Typography variant="body1">
-        {totalResults} results
-      </Typography>
-    </Box>
-
-    <Box
-      sx={{
-        border: '1px solid var(--accent)',
-
-        display:        'flex',
-        alignItems:     'center',
-        justifyContent: 'space-between',
-        flexWrap:       'wrap',
-        gap:            1,
-        p:              1,
-        px:             2,
-      }}
-    >
-      {/* show pages 1 ... n-1, n, n+1, ... (last) */}
-      {Array.from({ length: Math.ceil(totalResults / pageSize) }, (_, i) => i + 1).map(x => {
-        if (x === 1 || x === Math.ceil(totalResults / pageSize) || Math.abs(x - pageNumber) <= 3) {
-          return <Link
-            key={x}
-            onClick={() => setPageNumber(x)}
-            sx={{
-              backgroundColor: pageNumber === x ? 'var(--accent)' : 'inherit',
-              borderRadius:    2,
-              color:           pageNumber === x ? 'white' : 'inherit',
-              cursor:          'pointer',
-              px:              1,
-              textDecoration:  'none',
-            }}
-            variant="body1"
-          >
-            {x}
-          </Link>
-        } else if (x === 2 && pageNumber > 3) {
-          return '...'
-        } else if (x === Math.ceil(totalResults / pageSize) - 1 && pageNumber < Math.ceil(totalResults / pageSize) - 1) {
-          return '...'
-        } else {
-          return null
-        }
-      })}
     </Box>
   </>
 }
