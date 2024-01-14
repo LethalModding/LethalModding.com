@@ -13,6 +13,7 @@ import DownloadIcon from '@mui/icons-material/Download'
 import StorageIcon from '@mui/icons-material/Storage'
 import WarningIcon from '@mui/icons-material/Warning'
 import Fade from '@mui/material/Fade'
+import Breadcrumb from 'components/tools/Breadcrumb'
 
 const externalLinks = [
   {
@@ -193,13 +194,7 @@ const ModsHome: NextPage = (): JSX.Element => {
     >
       <Box sx={globalStyles.linksBox}>
         <Box className="column" sx={{ my: 4 }}>
-          <Typography variant='h2'>
-            <TypedText
-              finalText="# Mods"
-              startDelay={0}
-              typingSpeed={17}
-            />
-          </Typography>
+          <Breadcrumb parts={['Mods']} />
 
           <Typography sx={{ mb: 2 }} variant="body2">
             <TypedText

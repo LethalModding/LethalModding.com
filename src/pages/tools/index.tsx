@@ -18,8 +18,8 @@ import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'rea
 
 import IconButton from '@mui/material/IconButton'
 import CornerAccents from 'components/branding/CornerAccents'
-import TypedText from 'components/branding/TypedText'
 import Link from 'components/mui/Link'
+import Breadcrumb from 'components/tools/Breadcrumb'
 import Pagination from 'components/tools/Pagination'
 import useGlobalStyles from 'styles/globalStyles'
 import { type Mod } from 'types/Mod'
@@ -268,30 +268,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
 
       <Box sx={globalStyles.linksBox}>
         <Box className="column" sx={{ my: 4 }}>
-          <Typography variant='h2'>
-            <Link
-              href="/"
-              style={{
-                cursor:         'pointer',
-                marginRight:    32,
-                textDecoration: 'none',
-                '&:hover':      {
-                  background: 'inherit',
-                },
-              }}
-            >
-              #
-            </Link>
-            <TypedText
-              finalText="Tools"
-              startDelay={0}
-              typingSpeed={17}
-            />
-          </Typography>
-
-          <Typography variant="h3">
-            Advanced Search
-          </Typography>
+          <Breadcrumb parts={['Tools', 'Thunderstore Search']} />
 
           <Box
             sx={{
