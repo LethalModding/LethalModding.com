@@ -16,6 +16,7 @@ import Image from 'next/image'
 import { ofetch } from 'ofetch'
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'react'
 
+import IconButton from '@mui/material/IconButton'
 import CornerAccents from 'components/branding/CornerAccents'
 import TypedText from 'components/branding/TypedText'
 import Link from 'components/mui/Link'
@@ -246,22 +247,24 @@ const ToolsHome: NextPage = (): JSX.Element => {
         },
       }}
     >
-      <Box
+      <IconButton
+        color="inherit"
         onClick={toggleAccessibility}
         sx={{
           bottom:     '0.75em',
           cursor:     'pointer',
           fontSize:   '2em',
-          left:       '1em',
+          left:       '0.75em',
           lineHeight: 1,
           position:   'absolute',
           textAlign:  'right',
           zIndex:     100,
         }}
+        tabIndex={0}
       >
         {!isAccessible ? <AccessibilityNewIcon fontSize='inherit' /> :
           <AccessibleForwardIcon fontSize='inherit' />}
-      </Box>
+      </IconButton>
 
       <Box sx={globalStyles.linksBox}>
         <Box className="column" sx={{ my: 4 }}>
