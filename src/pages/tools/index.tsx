@@ -22,6 +22,7 @@ import Breadcrumb from 'components/tools/Breadcrumb'
 import Pagination from 'components/tools/Pagination'
 import useGlobalStyles from 'styles/globalStyles'
 import { type Mod } from 'types/Mod'
+import { ModSort } from 'types/ModSort'
 
 type Filters = {
   hasDonation:  boolean | null
@@ -180,11 +181,13 @@ const ToolsHome: NextPage = (): JSX.Element => {
         return false
       }
 
-      if (filters.maxDownloads > -1 && mod.versions[0].downloads > filters.maxDownloads) {
+      // downloads across all versions
+      const totalDownloads = mod.versions.reduce((acc, cur) => acc + cur.downloads, 0)
+      if (filters.maxDownloads > -1 && totalDownloads > filters.maxDownloads) {
         return false
       }
 
-      if (filters.minDownloads > 0 && mod.versions[0].downloads < filters.minDownloads) {
+      if (filters.minDownloads > 0 && totalDownloads < filters.minDownloads) {
         return false
       }
 
@@ -208,14 +211,36 @@ const ToolsHome: NextPage = (): JSX.Element => {
   // Sorting
   //
 
-  // type Sort = {
-  //   direction: 'asc' | 'desc'
-  //   property:  'updated' | 'name' | 'owner' | 'downloads' | 'ratings' | 'size'
-  // }
-  // const [sort, setSort] = useState<Sort>({
-  //   direction: 'asc',
-  //   property:  'updated',
-  // })
+  const [sort, setSort] = useState<ModSort>({
+    direction: 'asc',
+    property:  '',
+  })
+
+  const sortedMods = useMemo(() => {
+    const newMods = [...filteredMods]
+
+    newMods.sort((a, b) => {
+      if (sort.property === 'name') {
+        return sort.direction === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
+      } else if (sort.property === 'owner') {
+        return sort.direction === 'asc' ? a.owner.localeCompare(b.owner) : b.owner.localeCompare(a.owner)
+      } else if (sort.property === 'downloads') {
+        const totalA = a.versions.reduce((acc, cur) => acc + cur.downloads, 0)
+        const totalB = b.versions.reduce((acc, cur) => acc + cur.downloads, 0)
+        return sort.direction === 'asc' ? totalA - totalB : totalB - totalA
+      } else if (sort.property === 'ratings') {
+        return sort.direction === 'asc' ? a.rating_score - b.rating_score : b.rating_score - a.rating_score
+      } else if (sort.property === 'size') {
+        return sort.direction === 'asc' ? a.versions[0].file_size - b.versions[0].file_size : b.versions[0].file_size - a.versions[0].file_size
+      } else if (sort.property === 'dependencies') {
+        return sort.direction === 'asc' ? a.versions[0].dependencies.length - b.versions[0].dependencies.length : b.versions[0].dependencies.length - a.versions[0].dependencies.length
+      } else {
+        return 0
+      }
+    })
+
+    return newMods
+  }, [filteredMods, sort])
 
   //
   // Pagination
@@ -225,8 +250,8 @@ const ToolsHome: NextPage = (): JSX.Element => {
   const [pageSize, setPageSize] = useState<number>(100)
 
   const thisPage = useMemo(() => {
-    return filteredMods.slice((pageNumber-1)*pageSize, pageNumber*pageSize)
-  }, [filteredMods, pageNumber, pageSize])
+    return sortedMods.slice((pageNumber-1)*pageSize, pageNumber*pageSize)
+  }, [sortedMods, pageNumber, pageSize])
 
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
   const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
@@ -552,9 +577,11 @@ const ToolsHome: NextPage = (): JSX.Element => {
           <Pagination
             pageNumber={pageNumber}
             pageSize={pageSize}
-            totalResults={filteredMods.length}
+            totalResults={sortedMods.length}
             setPageNumber={setPageNumber}
             setPageSize={setPageSize}
+            setSort={setSort}
+            sort={sort}
           />
 
           <Box
@@ -622,9 +649,11 @@ const ToolsHome: NextPage = (): JSX.Element => {
           <Pagination
             pageNumber={pageNumber}
             pageSize={pageSize}
-            totalResults={filteredMods.length}
+            totalResults={sortedMods.length}
             setPageNumber={setPageNumber}
             setPageSize={setPageSize}
+            setSort={setSort}
+            sort={sort}
           />
         </Box>
       </Box>

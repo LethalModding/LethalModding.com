@@ -2,8 +2,10 @@ import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import Link from '@mui/material/Link'
 import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
+import Select, { type SelectChangeEvent } from '@mui/material/Select'
 import Typography from '@mui/material/Typography'
+import { useCallback, type Dispatch, type SetStateAction } from 'react'
+import { ModSort } from 'types/ModSort'
 
 type Props = {
   pageNumber: number
@@ -11,6 +13,8 @@ type Props = {
   totalResults: number
   setPageNumber: (pageNumber: number) => void
   setPageSize: (pageSize: number) => void
+  setSort: Dispatch<SetStateAction<ModSort>>
+  sort: ModSort
 }
 
 const Pagination = (props: Props): JSX.Element => {
@@ -20,7 +24,16 @@ const Pagination = (props: Props): JSX.Element => {
     totalResults,
     setPageNumber,
     setPageSize,
+    setSort,
+    sort,
   } = props
+
+  const handleSortDirectionChange = useCallback((e: SelectChangeEvent<string>) => {
+    setSort(prev => ({ ...prev, direction: e.target.value as ModSort['direction'] }))
+  }, [setSort])
+  const handleSortPropertyChange = useCallback((e: SelectChangeEvent<string>) => {
+    setSort(prev => ({ ...prev, property: e.target.value as ModSort['property'] }))
+  }, [setSort])
 
   return <>
     <Box
@@ -35,9 +48,6 @@ const Pagination = (props: Props): JSX.Element => {
         px:             2,
       }}
     >
-      <Typography variant="body1">
-        Page {pageNumber} of {Math.ceil(totalResults / pageSize)}
-      </Typography>
       <Box
         sx={{
           display:    'flex',
@@ -45,9 +55,49 @@ const Pagination = (props: Props): JSX.Element => {
           gap:        2,
         }}
       >
+        Sort
         <FormControl size="small" variant="outlined">
           <Select
-            defaultValue={100}
+            inputProps={{
+              sx: {
+                mr: 1,
+                py: 0,
+              }
+            }}
+            name="sortProperty"
+            onChange={handleSortPropertyChange}
+            size="small"
+            value={sort.property as string}
+          >
+            <MenuItem value="">Default</MenuItem>
+            <MenuItem value="name">Name</MenuItem>
+            <MenuItem value="owner">Author</MenuItem>
+            <MenuItem value="dependencies">Dependencies</MenuItem>
+            <MenuItem value="downloads">Downloads</MenuItem>
+            <MenuItem value="ratings">Rating</MenuItem>
+            <MenuItem value="size">Size</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl size="small" variant="outlined">
+          <Select
+            inputProps={{
+              sx: {
+                mr: 1,
+                py: 0,
+              }
+            }}
+            name="sortDirection"
+            onChange={handleSortDirectionChange}
+            size="small"
+            value={sort.direction as string}
+          >
+            <MenuItem value="asc">Low to High</MenuItem>
+            <MenuItem value="desc">High to Low</MenuItem>
+          </Select>
+        </FormControl>
+        Showing
+        <FormControl size="small" variant="outlined">
+          <Select
             inputProps={{
               sx: {
                 mr: 1,
@@ -69,7 +119,7 @@ const Pagination = (props: Props): JSX.Element => {
         Per Page
       </Box>
       <Typography variant="body1">
-        {totalResults} results
+        {totalResults} total
       </Typography>
     </Box>
 
