@@ -28,7 +28,9 @@ type Filters = {
   hasNSFW:      boolean | null
   hasWebsite:   boolean | null
   isDeprecated: boolean | null
-  isPinned:     boolean | null
+  isPinned: boolean | null
+  maxDependencies: number
+  minDependencies: number
   maxDownloads: number
   minDownloads: number
   maxRatings:   number
@@ -49,8 +51,16 @@ const ToolsHome: NextPage = (): JSX.Element => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       ofetch('https://thunderstore.io/c/lethal-company/api/v1/package/')
-        .then((data) => setAllMods(data))
-    }, 250)
+        .then((data) => {
+          if (data.error) {
+            console.error(data.error)
+            return
+          }
+
+          console.log('Got data from Thunderstore API', 'entries', data?.length ?? 0)
+          setAllMods(data)
+        })
+    }, 100)
 
     return () => clearTimeout(timeout)
   }, [])
@@ -67,19 +77,21 @@ const ToolsHome: NextPage = (): JSX.Element => {
   //
 
   const [filters, setFilters] = useState<Filters>({
-    hasDonation:  null,
-    hasNSFW:      null,
-    hasWebsite:   null,
-    isDeprecated: false,
-    isPinned:     null,
-    maxDownloads: -1,
-    minDownloads: 0,
-    maxRatings:   -1,
-    minRatings:   0,
-    maxSize:      -1,
-    minSize:      0,
-    name:         '',
-    owner:        '',
+    hasDonation:     null,
+    hasNSFW:         null,
+    hasWebsite:      null,
+    isDeprecated:    false,
+    isPinned:        null,
+    maxDependencies: -1,
+    minDependencies: 0,
+    maxDownloads:    -1,
+    minDownloads:    0,
+    maxRatings:      -1,
+    minRatings:      0,
+    maxSize:         -1,
+    minSize:         0,
+    name:            '',
+    owner:           '',
   })
   const handleFilterChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -160,6 +172,14 @@ const ToolsHome: NextPage = (): JSX.Element => {
         return false
       }
 
+      if (filters.maxDependencies > -1 && mod.versions[0].dependencies.length > filters.maxDependencies) {
+        return false
+      }
+
+      if (filters.minDependencies > 0 && mod.versions[0].dependencies.length < filters.minDependencies) {
+        return false
+      }
+
       if (filters.maxDownloads > -1 && mod.versions[0].downloads > filters.maxDownloads) {
         return false
       }
@@ -182,7 +202,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
 
       return true
     })
-  }, [allMods, includesCategoryFilter, excludesCategoryFilter, filters.hasNSFW, filters.isDeprecated, filters.isPinned, filters.maxRatings, filters.minRatings, filters.hasDonation, filters.name, filters.owner, filters.maxDownloads, filters.minDownloads, filters.maxSize, filters.minSize, filters.hasWebsite])
+  }, [allMods, includesCategoryFilter, excludesCategoryFilter, filters.hasNSFW, filters.isDeprecated, filters.isPinned, filters.maxRatings, filters.minRatings, filters.hasDonation, filters.name, filters.owner, filters.maxDependencies, filters.minDependencies, filters.maxDownloads, filters.minDownloads, filters.maxSize, filters.minSize, filters.hasWebsite])
 
   //
   // Sorting
@@ -385,7 +405,26 @@ const ToolsHome: NextPage = (): JSX.Element => {
             }}
           >
             <TextField
-              defaultValue={0}
+              inputProps={{ min: 0 }}
+              label="Min. Dependencies"
+              name="minDependencies"
+              onChange={handleFilterChange}
+              size="small"
+              type="number"
+              value={filters.minDependencies}
+              variant="outlined"
+            />
+            <TextField
+              inputProps={{ min: -1 }}
+              label="Max. Dependencies"
+              name="maxDependencies"
+              onChange={handleFilterChange}
+              size="small"
+              type="number"
+              value={filters.maxDependencies}
+              variant="outlined"
+            />
+            <TextField
               inputProps={{ min: 0 }}
               label="Min. Downloads"
               name="minDownloads"
@@ -396,7 +435,6 @@ const ToolsHome: NextPage = (): JSX.Element => {
               variant="outlined"
             />
             <TextField
-              defaultValue={-1}
               inputProps={{ min: -1 }}
               label="Max. Downloads"
               name="maxDownloads"
@@ -407,7 +445,6 @@ const ToolsHome: NextPage = (): JSX.Element => {
               variant="outlined"
             />
             <TextField
-              defaultValue={0}
               inputProps={{ min: 0 }}
               label="Min. Ratings"
               name="minRatings"
@@ -418,7 +455,6 @@ const ToolsHome: NextPage = (): JSX.Element => {
               variant="outlined"
             />
             <TextField
-              defaultValue={-1}
               inputProps={{ min: -1 }}
               label="Max. Ratings"
               name="maxRatings"
@@ -429,7 +465,6 @@ const ToolsHome: NextPage = (): JSX.Element => {
               variant="outlined"
             />
             <TextField
-              defaultValue={0}
               inputProps={{ min: 0 }}
               label="Min. Size (MB)"
               name="minSize"
@@ -440,7 +475,6 @@ const ToolsHome: NextPage = (): JSX.Element => {
               variant="outlined"
             />
             <TextField
-              defaultValue={-1}
               inputProps={{ min: -1 }}
               label="Max. Size (MB)"
               name="maxSize"
