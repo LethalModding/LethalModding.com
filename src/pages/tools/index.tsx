@@ -79,7 +79,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
 
   const [filters, setFilters] = useState<Filters>({
     hasDonation:     null,
-    hasNSFW:         null,
+    hasNSFW:         false,
     hasWebsite:      null,
     isDeprecated:    false,
     isPinned:        null,
@@ -416,7 +416,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               gap:           3,
 
               '.MuiFormLabel-root.MuiInputLabel-shrink': {
-                mt:      -.5,
+                mt:      -.4,
                 padding: 0,
               },
 
