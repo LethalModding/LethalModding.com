@@ -51,7 +51,7 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
           bottom:     '0.75em',
           cursor:     'pointer',
           fontSize:   '2em',
-          left:       '0.75em',
+          right:      '0.75em',
           lineHeight: 1,
           position:   'absolute',
           textAlign:  'right',
