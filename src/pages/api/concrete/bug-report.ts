@@ -1,5 +1,11 @@
 import { Octokit } from '@octokit/rest'
 import { type NextApiRequest, type NextApiResponse } from 'next/types'
+import rateLimit from 'server/rate-limit'
+
+const limiter = rateLimit({
+  interval:               60 * 1000, // 60 seconds
+  uniqueTokenPerInterval: 500, // Max 500 users per second
+})
 
 type EnvironmentData = {
   version: string
@@ -60,6 +66,13 @@ export default void async function ConcreteBugReport(
   req: BugReportRequest,
   res: NextApiResponse
 ) {
+  try {
+    await limiter.check(res, 10, 'CACHE_TOKEN') // 10 requests per minute
+  } catch {
+    res.status(429).json({ error: 'Rate limit exceeded' })
+    return
+  }
+
   const {
     context,
     environment,
