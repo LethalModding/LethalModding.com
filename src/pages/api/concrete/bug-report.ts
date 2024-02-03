@@ -59,7 +59,7 @@ const bugReportTemplate = `
 export default void async function ConcreteBugReport(
   req: BugReportRequest,
   res: NextApiResponse
-) { 
+) {
   const {
     context,
     environment,
