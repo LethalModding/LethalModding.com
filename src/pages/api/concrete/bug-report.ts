@@ -62,10 +62,10 @@ const bugReportTemplate = `
 `
 
 // NextJS API Route for submitting bug reports
-export default void async function ConcreteBugReport(
+export default async function ConcreteBugReport(
   req: BugReportRequest,
   res: NextApiResponse
-) {
+): Promise<void> {
   try {
     await limiter.check(res, 10, 'CACHE_TOKEN') // 10 requests per minute
   } catch {

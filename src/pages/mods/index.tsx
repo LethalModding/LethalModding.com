@@ -1,324 +1,291 @@
-import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import AccountCircle from '@mui/icons-material/AccountCircle'
+import AddIcon from '@mui/icons-material/Add'
+import HelpIcon from '@mui/icons-material/Help'
+import ImportIcon from '@mui/icons-material/ImportExport'
+import PlayIcon from '@mui/icons-material/PlayArrow'
+import SearchIcon from '@mui/icons-material/Search'
+import SettingsIcon from '@mui/icons-material/Settings'
+import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import InputBase from '@mui/material/InputBase'
+import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
-import CornerAccents from 'components/branding/CornerAccents'
-import TypedText from 'components/branding/TypedText'
-import Link from 'components/mui/Link'
+import ModListItem from 'components/mods/ModListItem'
+import ProfileListItem from 'components/mods/ProfileListItem'
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import useGlobalStyles from 'styles/globalStyles'
-// import ShareIcon from '@mui/icons-material/Share'
-import ComputerIcon from '@mui/icons-material/Computer'
-import DownloadIcon from '@mui/icons-material/Download'
-import StorageIcon from '@mui/icons-material/Storage'
-import WarningIcon from '@mui/icons-material/Warning'
-import Fade from '@mui/material/Fade'
-import Breadcrumb from 'components/tools/Breadcrumb'
+import Image from 'next/image'
+import { useState } from 'react'
+import { type Profile } from 'types/Profile'
 
-const externalLinks = [
+const allProfiles = [
   {
-    href:  'https://thunderstore.io/c/lethal-company/',
-    label: 'Find More Mods on Thunderstore',
+    id:    '10',
+    mods:  ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+    name:  'Bug Fix Pack',
+    owner: '',
   },
   {
-    href:  'https://github.com/LethalCompany/LethalCompanyTemplate',
-    label: 'Clone the Template Repository',
+    id:    '20',
+    mods:  ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+    name:  'LethalModding.com Official Pack',
+    owner: 'LethalModding.com',
   },
   {
-    href:  'https://discord.gg/nYcQFEpXfU',
-    label: 'Join the Unofficial Discord',
+    id:    '30',
+    mods:  ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+    name:  'Default',
+    owner: '',
   },
-]
-
-const allMods = [
-  {
-    id:             'notnotnotswipez-MoreCompany-1.7.1',
-    description:    'Allows you to play with up to 32 players in a single game.',
-    recommended:    true,
-    vanillaBreaker: false,
-  },
-  {
-    id:             'x753-More_Suits-1.3.3',
-    description:    'Adds 6+ new suits to the suit rack in the ship.',
-    recommended:    true,
-    vanillaBreaker: false,
-  },
-  {
-    id:             'TeamClark-SCP_Foundation_Suit-1.0.1',
-    description:    'Adds the SCP Foundation Guard suit to the suit rack in the ship.',
-    vanillaBreaker: false,
-  },
-  {
-    id:             'Sligili-More_Emotes-1.1.2',
-    description:    'Adds 5+ emotes, use keys 3-6 to middle finger, golf clap, or gritty.',
-    vanillaBreaker: false,
-  },
-  {
-    id:             'malco-Lategame_Upgrades-2.5.1',
-    description:    'Adds 10+ late-game upgrades to give you something to work towards.',
-    vanillaBreaker: true,
-  },
-  {
-    id:             'Verity-TooManySuits-1.0.3',
-    description:    'Adds a pager to the suit rack, allowing you to have more than 10 suits. (Default: N / B)',
-    recommended:    true,
-    vanillaBreaker: false,
-  },
-  {
-    id:             'taffyko-NameplateTweaks-1.0.2',
-    description:    'Shows a speaking icon above the name of the people who are speaking.',
-    recommended:    true,
-    onlyClient:     true,
-    vanillaBreaker: false,
-  },
-  {
-    id:             'Hexnet111-SuitSaver-1.0.3',
-    description:    'Saves and automatically re-selects your previously used suit.',
-    onlyClient:     true,
-    vanillaBreaker: false,
-  },
-  {
-    id:             'RickArg-Helmet_Cameras-2.1.3',
-    description:    'Adds a remote first-person view of your teammate beside the radar screen.',
-    onlyClient:     true,
-    vanillaBreaker: false,
-  },
-  {
-    id:             'PopleZoo-BetterItemScan-2.0.3',
-    description:    'Improves the item scanner to have a better UI and faster calculation.',
-    onlyClient:     true,
-    vanillaBreaker: false,
-  },
-  {
-    id:             'tinyhoot-ShipLoot-1.0.0',
-    description:    'Gives a cumulative total of all the loot you\'ve brought to the ship.',
-    recommended:    true,
-    onlyClient:     true,
-    vanillaBreaker: false,
-  },
-  {
-    id:             'Renegades-FlashlightToggle-1.3.1',
-    description:    'Adds a keybind to toggle your flashlight on and off. (Default: F)',
-    recommended:    true,
-    onlyClient:     true,
-    vanillaBreaker: false,
-  },
-  {
-    id:             'Renegades-WalkieUse-1.2.3',
-    description:    'Adds a keybind to use your equipped walkie-talkie. (Default: R)',
-    recommended:    true,
-    onlyClient:     true,
-    vanillaBreaker: false,
-  },
-  {
-    id:             'FlipMods-LetMeLookDown-1.0.1',
-    description:    'Allows you to look down, because by default, you can\'t. Weird.',
-    onlyClient:     true,
-    vanillaBreaker: false,
-  },
-  {
-    id:             'Drakorle-MoreItems-1.0.1',
-    description:    'Allows you to have unlimited items in your ship without de-spawning them.',
-    recommended:    true,
-    onlyServer:     true,
-    vanillaBreaker: false,
-  },
-  {
-    id:             'tinyhoot-ShipLobby-1.0.2',
-    description:    'Allows people to join your ship any time that you\'re in orbit, not just when starting.',
-    recommended:    true,
-    onlyServer:     true,
-    vanillaBreaker: false,
-  },
-  {
-    id:             'Nips-Brutal_Company_Plus-3.2.0',
-    description:    'Adds a lot of variety in the form of random landing events, moon heat, and more.',
-    onlyServer:     true,
-    vanillaBreaker: false,
-  },
-  {
-    id:             'anormaltwig-TerminalExtras-1.0.1',
-    description:    'Adds extra commands to the terminal, such as toggling the door, teleporter, or lightswitch.',
-    vanillaBreaker: true,
-  },
-  {
-    id:             'Evaisa-LethalThings-0.7.1',
-    description:    'Adds a LOT, including a rocket launcher and personal teleporter.',
-    vanillaBreaker: true,
-  },
-  {
-    id:             'FlipMods-BetterStamina-1.2.1',
-    description:    'Reworks the stamina system entirely. Configurable sprint duration, regeneration, and weight penalties.',
-    vanillaBreaker: false,
-  },
-  {
-    id:             'egeadam-MoreScreams-1.0.2',
-    description:    'Allows you to hear your teammates scream while they die. (Default: 2 seconds)',
-    vanillaBreaker: false,
-  },
-  {
-    id:             'Bibendi-AEIOUCompany-1.2.0',
-    description:    'Adds moon base alpha text-to-speech to the game. Also increases chat length to 1023.',
-    onlyClient:     true,
-    vanillaBreaker: false,
-  }
 ]
 
 const ModsHome: NextPage = (): JSX.Element => {
-  const globalStyles = useGlobalStyles()
+  const [selectedProfile, setSelectedProfile] = useState<Profile>(allProfiles[0])
 
   return <>
     <Head>
       <title>Your Source for Lethal Company Mods</title>
     </Head>
 
-    <CornerAccents />
+    <AppBar
+      elevation={4}
+      position="static"
+      sx={{
+        alignItems:    'center',
+        display:       'flex',
+        flexDirection: 'row',
+        gap:           2,
+        height:        56,
+        px:            1.5,
+      }}
+    >
+      <Image
+        alt="LethalModding.com logo"
+        height={48}
+        src="/icons/favicon.ico"
+        width={48}
+      />
+
+      <Box
+        sx={{
+          display:       'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Typography
+          color="text.secondary"
+          component="h1"
+          variant="subtitle1"
+        >
+          LethalModding.com
+        </Typography>
+      </Box>
+
+      <InputBase
+        color="primary"
+        endAdornment={<IconButton>
+          <SearchIcon />
+        </IconButton>}
+        sx={{ flex: 1, mx: 1 }}
+        placeholder="Search online for mods or profiles..."
+      />
+
+      <Button
+        color="primary"
+        size="small"
+        variant="outlined"
+      >
+        <AccountCircle sx={{ mr: 1 }} />
+        Login
+      </Button>
+    </AppBar>
 
     <Box
       sx={{
-        ...globalStyles.container,
-        height:         '100vh',
-        justifyContent: 'stretch',
-        overflowX:      'hidden',
-        overflowY:      'auto',
+        display:             'grid',
+        gridTemplateColumns: '300px 1fr',
 
-        '&::-webkit-scrollbar': {
-          width:  '0.25em',
-          height: '0.25em',
-        },
-
-        '&::-webkit-scrollbar-thumb': {
-          backgroundColor: 'var(--accent)',
-        },
+        '& > *': {
+          borderRadius:  0,
+          display:       'flex',
+          flexDirection: 'column',
+          height:        'calc(100vh - 56px)',
+          overflow:      'hidden',
+        }
       }}
     >
-      <Box sx={globalStyles.linksBox}>
-        <Box className="column" sx={{ my: 4 }}>
-          <Breadcrumb parts={['Mods']} />
-
-          <Typography sx={{ mb: 2 }} variant="body2">
-            <TypedText
-              finalText="Soon LethalModding will be your source for Lethal Company mods. In the meantime, check out the external links below for more mods. If you're interested in making your own mods, check out the template repository."
-              startDelay={300}
-              typingSpeed={5}
-            />
-          </Typography>
-
-          {allMods.map((item, index) => {
-            const parts = item.id.split('-')
-            const creator = parts[0]
-            const version = parts[parts.length - 1]
-            const name = parts.slice(1, parts.length - 1).join('-')
-
-            // const imageURL = `https://gcdn.thunderstore.io/live/repository/icons/${item.id}.png.128x128_q95.png`
-
-            const downloadURL = `https://thunderstore.io/package/download/${creator}/${name}/${version}/`
-
-            return <Fade
-              in={true}
-              key={index}
-              style={{ transitionDelay: `${index * 200 + 2200}ms` }}
-            >
-              <Box>
-                {/* <Image
-                  alt={'icon'}
-                  src={imageURL}
-                  height={128}
-                  width={128}
-                /> */}
-
-                <Box
-                  sx={{
-                    display:       'flex',
-                    flexDirection: 'row',
-                    gap:           '0.5em',
-                  }}
-                >
-                  <TypedText
-                    finalText={`${creator}/${name} v${version}`}
-                    startDelay={index * 200 + 2200}
-                    typingSpeed={2}
-                  />
-                  {item.vanillaBreaker && <WarningIcon sx={{ mr: 2, verticalAlign: 'top' }} />}
-                  {item.onlyClient && <ComputerIcon sx={{ mr: 2, verticalAlign: 'top' }} />}
-                  {item.onlyServer && <StorageIcon sx={{ mr: 2, verticalAlign: 'top' }} />}
-                </Box>
-
-                <Box
-                  sx={{
-                    display:       'flex',
-                    flexDirection: 'column',
-                    gap:           '0.1em',
-                    mx:            '2em',
-                    mt:            '0.25em',
-                    mb:            '0.5em',
-                  }}
-                >
-                  <Box>
-                    <TypedText
-                      finalText={`${item.description}`}
-                      startDelay={index * 200 + 2200 + 100}
-                      typingSpeed={1}
-                    />
-                  </Box>
-
-                  <Box>
-                    <Link
-                      color="inherit"
-                      href={`https://thunderstore.io/c/lethal-company/p/${creator}/${name}/`}
-                      target="_blank"
-                      underline="none"
-                    >
-                      <OpenInNewIcon sx={{ mr: 2, verticalAlign: 'top' }} />
-                      <TypedText
-                        finalText={'View on Thunderstore'}
-                        startDelay={index * 200 + 2200 + 100}
-                        typingSpeed={1}
-                      />
-                    </Link>
-                  </Box>
-
-                  <Box>
-                    <Link
-                      color="inherit"
-                      href={downloadURL}
-                      target="_blank"
-                      underline="none"
-                    >
-                      <DownloadIcon sx={{ mr: 2, verticalAlign: 'top' }} />
-                      <TypedText
-                        finalText={'Download'}
-                        startDelay={index * 200 + 2200 + 100}
-                        typingSpeed={1}
-                      />
-                    </Link>
-                  </Box>
-                </Box>
-              </Box>
-            </Fade>
-          })}
-
-          <Typography variant="h3">
-            <TypedText
-              finalText="External"
-              startDelay={2000 + allMods.length * 200}
-              typingSpeed={17}
-            />
-          </Typography>
-          {externalLinks.map((item, index) => <Link
-            color="inherit"
-            href={item.href}
-            key={index}
-            target="_blank"
-            underline="none"
+      <Paper elevation={1}>
+        <Box
+          sx={{
+            display:             'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap:                 1.5,
+            height:              48,
+            m:                   1,
+            ml:                  1.5,
+          }}
+        >
+          <Button
+            color="primary"
+            fullWidth
+            variant="outlined"
           >
-            <OpenInNewIcon sx={{ mr: 2, verticalAlign: 'top' }} />
-            <TypedText
-              finalText={item.label}
-              startDelay={index * 500 + allMods.length * 200 + 2200}
-              typingSpeed={17}
-            />
-          </Link>)}
+            <AddIcon /> New
+          </Button>
+          <Button
+            color="primary"
+            fullWidth
+            variant="outlined"
+          >
+            <ImportIcon /> Import
+          </Button>
+        </Box>
+
+        <Box
+          sx={{
+            display:       'flex',
+            flexDirection: 'column',
+            mb:            'auto',
+          }}
+        >
+          {allProfiles.map((profile) => <ProfileListItem
+            key={profile.id}
+            onSelect={setSelectedProfile}
+            profile={profile}
+          />)}
+        </Box>
+
+        <Box
+          sx={{
+            display:       'flex',
+            flexDirection: 'row',
+            gap:           1.5,
+            height:        48,
+            m:             1,
+            ml:            1.5,
+            mr:            1,
+          }}
+        >
+          <Button
+            color="primary"
+            fullWidth
+            variant="outlined"
+          >
+            <HelpIcon fontSize="inherit" sx={{ mr: 1 }} />
+            Get Help
+          </Button>
+          <Button
+            color="primary"
+            fullWidth
+            variant="outlined"
+          >
+            <SettingsIcon fontSize="inherit" sx={{ mr: 1 }} />
+            Settings
+          </Button>
+        </Box>
+
+        <Button
+          fullWidth
+          sx={{ height: 56 }}
+          variant="contained"
+        >
+          <PlayIcon />
+          Launch {selectedProfile.name}
+        </Button>
+      </Paper>
+
+      <Box
+        sx={{
+          display:       'flex',
+          flex:          4,
+          flexDirection: 'column',
+        }}
+      >
+        <Box
+          sx={{
+            flexDirection: 'column',
+            overflowX:     'hidden',
+            overflowY:     'auto',
+
+            '&::-webkit-scrollbar': {
+              width:  '0.25em',
+              height: '0.25em',
+            },
+
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: 'var(--accent)',
+            },
+        
+            '& > *': {
+              backgroundColor: 'background.paper',
+              gap:             2.25,
+            },
+          }}
+        >
+          <ModListItem
+            id="1"
+            name="Radar Ident QuickSwitch"
+            owner="LethalModding.com"
+            summary="Some long description about the mod. This could go on for quite a while, so we should be sure to cap it somewhere, so nobody pulls a Thunderstore and puts all Hs in their summary, screwing up the site for everyone involved."
+            verified={true}
+          />
+          <ModListItem
+            id="2"
+            name="LethalThings"
+            owner="EvaisaDev"
+            summary="Short summary is short."
+            verified={true}
+          />
+          <ModListItem
+            id="3"
+            name="Lategame_Upgrades"
+            owner="I FORGOR"
+            summary="No summary."
+          />
+          <ModListItem
+            id="4"
+            name="LethalThings"
+            owner="EvaisaDev"
+            summary="Short summary is short."
+          />
+          <ModListItem
+            id="5"
+            name="Lategame_Upgrades"
+            owner="I FORGOR"
+            summary="No summary."
+          />
+          <ModListItem
+            id="6"
+            name="LethalThings"
+            owner="EvaisaDev"
+            summary="Short summary is short."
+          />
+          <ModListItem
+            id="7"
+            name="Lategame_Upgrades"
+            owner="I FORGOR"
+            summary="No summary."
+          />
+          <ModListItem
+            id="8"
+            name="LethalThings"
+            owner="EvaisaDev"
+            summary="Short summary is short."
+          />
+          <ModListItem
+            id="9"
+            name="Lategame_Upgrades"
+            owner="I FORGOR"
+            summary="No summary."
+          />
+          <ModListItem
+            id="10"
+            name="LethalThings"
+            owner="EvaisaDev"
+            summary="Short summary is short."
+          />
         </Box>
       </Box>
     </Box>
