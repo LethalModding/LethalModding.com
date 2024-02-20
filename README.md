@@ -35,7 +35,7 @@ yarn install
 You can run the server locally with the following command:
 
 ```bash
-yarn run dev -p 3000
+yarn run dev -p 9000
 ```
 
 ## Learn More
