@@ -1,7 +1,7 @@
 # LethalModding.com Website
 
-[![CodeQL Analysis Workflow Status](https://github.com/Rethunk-Tech/LethalModding.com/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Rethunk-Tech/LethalModding.com/actions)
-[![License](https://badgen.net/badge/License/CC-BY-NC-SA-2.0/blue)](https://github.com/Rethunk-Tech/LethalModding.com/blob/main/LICENSE.txt)
+[![CodeQL Analysis Workflow Status](https://github.com/LethalModding/LethalModding.com/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/LethalModding/LethalModding.com/actions)
+[![License](https://badgen.net/badge/License/CC-BY-NC-SA-2.0/blue)](https://github.com/LethalModding/LethalModding.com/blob/main/LICENSE.txt)
 
 This is the source code for the [LethalModding.com](https://lethalmodding.com/) website. This is based on the [Next.JS](https://nextjs.org/) framework, and uses [Material UI](https://mui.com/) for styling.
 
@@ -20,7 +20,7 @@ npm install -g yarn
 Then, we can clone the repository into a path of your choosing:
 
 ```bash
-git clone https://github.com/Rethunk-Tech/LethalModding.com.git LethalModding.com
+git clone https://github.com/LethalModding/LethalModding.com.git LethalModding.com
 cd LethalModding.com
 ```
 
