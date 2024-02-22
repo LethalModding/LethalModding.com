@@ -67,8 +67,8 @@ export default function InviteListItem(props: Props): JSX.Element {
       </Typography>
     </Box>
 
-    <IconButton color="primary" onClick={handleRevoke} size="small">
+    {invite.deleted_at ? null : <IconButton color="primary" onClick={handleRevoke} size="small">
       <DeleteIcon fontSize="inherit" />
-    </IconButton>
+    </IconButton>}
   </Box>
 }
