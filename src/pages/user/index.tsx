@@ -3,14 +3,11 @@ import DashboardIcon from '@mui/icons-material/Dashboard'
 import PluginIcon from '@mui/icons-material/Extension'
 import UsersIcon from '@mui/icons-material/Group'
 import InviteIcon from '@mui/icons-material/PersonAdd'
-import SearchIcon from '@mui/icons-material/Search'
 import AppBar from '@mui/material/AppBar'
 import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import FormControl from '@mui/material/FormControl'
-import IconButton from '@mui/material/IconButton'
-import InputBase from '@mui/material/InputBase'
 import InputLabel from '@mui/material/InputLabel'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
@@ -120,25 +117,6 @@ export default function UserPage(): JSX.Element {
     }
   }, [loading, selectedPage, handleTeamCreate, teams, selectedTeam])
 
-  const pageName = useMemo(() => {
-    switch (selectedPage) {
-    case 'team/create':
-      return 'Create Team'
-    case 'team/dashboard':
-      return 'Team Dashboard'
-    case 'team/members':
-      return 'Manage Members'
-    case 'team/members/invite':
-      return 'Invite Members'
-    case 'team/projects':
-      return 'Manage Projects'
-    case 'team/projects/create':
-      return 'Create Project'
-    default:
-      return 'Coming Soon'
-    }
-  }, [selectedPage])
-
   const handleSelectedTeamChange = useCallback((event: SelectChangeEvent<string>) => {
     if (event.target.value === 'create') {
       setSelectedPage('team/create')
@@ -165,7 +143,7 @@ export default function UserPage(): JSX.Element {
         flexDirection: 'row',
         gap:           2,
         height:        56,
-        px:            1.5,
+        pl:            1.5,
       }}
     >
       <Image
@@ -178,24 +156,11 @@ export default function UserPage(): JSX.Element {
       <Typography
         color="text.secondary"
         component="h1"
-        sx={{ mr: 1 }}
+        sx={{ flex: 1 }}
         variant="subtitle1"
       >
         LethalModding.com
       </Typography>
-
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
-        {pageName}
-      </Typography>
-
-      <InputBase
-        color="primary"
-        endAdornment={<IconButton>
-          <SearchIcon />
-        </IconButton>}
-        placeholder="Search"
-        sx={{ mr: 2 }}
-      />
 
       <AccountButton />
     </AppBar>
@@ -215,6 +180,7 @@ export default function UserPage(): JSX.Element {
         elevation={4}
         sx={{
           borderRadius: 0,
+          zINdex:       1000,
 
           '.MuiListSubheader-root': {
             userSelect: 'none',
