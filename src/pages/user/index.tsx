@@ -21,8 +21,8 @@ import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import AccountButton from 'components/_shared/auth/AccountButton'
 import DashboardPage from 'components/user/dashboard'
-import TeamCreatePage from 'components/user/teamCreate'
-import TeamInvitePage from 'components/user/teamInvite'
+import TeamCreatePage from 'components/user/Team/Create'
+import TeamMemberInvitePage from 'components/user/Team/MemberInvite'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -104,7 +104,7 @@ export default function UserPage(): JSX.Element {
     case 'team/members':
       return <ComingSoonPage />
     case 'team/members/invite':
-      return <TeamInvitePage
+      return <TeamMemberInvitePage
         onTeamChange={handleTeamCreate}
         team={teams.find((team) => team.id === selectedTeam) as Team}
       />

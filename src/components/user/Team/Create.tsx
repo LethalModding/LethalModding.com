@@ -9,6 +9,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSnackbar } from 'notistack'
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react'
 
 type Props = {
@@ -37,6 +38,7 @@ export default function TeamCreatePage(props: Props): JSX.Element {
     }
   }, [])
 
+  const { enqueueSnackbar } = useSnackbar()
   const supabase = useSupabaseClient()
   const handleSubmit = useCallback((event: FormEvent) => {
     event.preventDefault()
@@ -48,12 +50,14 @@ export default function TeamCreatePage(props: Props): JSX.Element {
       .select()
       .then(({ data, error }) => {
         if (error) {
+          enqueueSnackbar('Unable to create Team', { variant: 'error' })
           console.error(error)
         } else {
+          enqueueSnackbar('Team created', { variant: 'success' })
           onTeamCreate(data[0].id)
         }
       })
-  }, [name, onTeamCreate, supabase, type])
+  }, [enqueueSnackbar, name, onTeamCreate, supabase, type])
 
   return <Box
     component="form"

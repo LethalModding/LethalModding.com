@@ -17,17 +17,18 @@ import Select, { type SelectChangeEvent } from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSnackbar } from 'notistack'
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'react'
 import { type Team } from 'types/Team'
 import { TeamInvite } from 'types/TeamInvite'
-import InviteListItem from './inviteListItem'
+import InviteListItem from '../inviteListItem'
 
 type Props = {
   onTeamChange: (teamID: string) => void
   team: Team
 }
 
-export default function TeamInvitePage(props: Props): JSX.Element {
+export default function TeamMemberInvitePage(props: Props): JSX.Element {
   const { team } = props
   
   const [email, setEmail] = useState('')
@@ -76,6 +77,8 @@ export default function TeamInvitePage(props: Props): JSX.Element {
   }, [supabase, team.id])
   useEffect(() => refreshInvites(), [refreshInvites])
 
+  const { enqueueSnackbar } = useSnackbar()
+
   const handleSubmit = useCallback(() => {
     setLoading(true)
     
@@ -84,14 +87,18 @@ export default function TeamInvitePage(props: Props): JSX.Element {
       .insert({ team_id: team.id, email, type })
       .then(({ error }) => {
         setLoading(false)
-        refreshInvites()
-        setEmail('')
 
         if (error) {
+          enqueueSnackbar(`Error inviting ${email}`, { variant: 'error' })
           console.error(error)
+        } else {
+          enqueueSnackbar(`Invited ${email}`, { variant: 'success' })
+          refreshInvites()
         }
+
+        setEmail('')
       })
-  }, [email, refreshInvites, supabase, team.id, type])
+  }, [email, enqueueSnackbar, refreshInvites, supabase, team.id, type])
 
   return <Box
     component="form"

@@ -15,6 +15,7 @@ import LinearProgress from '@mui/material/LinearProgress'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSnackbar } from 'notistack'
 import { useCallback, useState, type ChangeEvent } from 'react'
 import { type Team } from 'types/Team'
 
@@ -43,6 +44,7 @@ export default function DashboardPage(props: Props): JSX.Element {
   const [expanded, setExpanded] = useState<string>('profile')
   
   const supabase = useSupabaseClient()
+  const { enqueueSnackbar } = useSnackbar()
   const handleSubmit = useCallback(() => {
     setLoading(true)
     
@@ -52,14 +54,16 @@ export default function DashboardPage(props: Props): JSX.Element {
       .eq('id', localTeam.id)
       .then(({ error }) => {
         if (error) {
+          enqueueSnackbar('Unable to save changes', { variant: 'error' })
           console.error(error)
         } else {
+          enqueueSnackbar('Changes saved', { variant: 'success' })
           onTeamChange(localTeam.id)
         }
-        
+
         setLoading(false)
       })
-  }, [localTeam, onTeamChange, supabase])
+  }, [enqueueSnackbar, localTeam, onTeamChange, supabase])
 
   return <>
     <Backdrop open={loading} sx={{ zIndex: 100 }}>

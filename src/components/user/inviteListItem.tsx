@@ -3,6 +3,7 @@ import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSnackbar } from 'notistack'
 import { useCallback } from 'react'
 import { type TeamInvite } from 'types/TeamInvite'
 
@@ -18,6 +19,7 @@ export default function InviteListItem(props: Props): JSX.Element {
   const session = useSession()
   const supabase = useSupabaseClient()
 
+  const { enqueueSnackbar } = useSnackbar()
   const handleRevoke = useCallback(() => {
     supabase
       .from('team_invites')
@@ -27,10 +29,13 @@ export default function InviteListItem(props: Props): JSX.Element {
         refresh()
 
         if (error) {
+          enqueueSnackbar('Unable to revoke invite', { variant: 'error' })
           console.error(error)
+        } else {
+          enqueueSnackbar('Invite revoked', { variant: 'success' })
         }
       })
-  }, [invite.id, refresh, supabase])
+  }, [enqueueSnackbar, invite.id, refresh, supabase])
 
   return <Box
     sx={{

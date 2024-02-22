@@ -13,6 +13,7 @@ import AuthWrapper from 'components/_shared/auth/Wrapper'
 import Loader from 'components/mui/Loader'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import { SnackbarProvider } from 'notistack'
 import { useCallback, useState, type FunctionComponent, type PropsWithChildren } from 'react'
 import darkThemeOptions from 'styles/darkThemeOptions'
 import 'styles/globals.css'
@@ -36,7 +37,6 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
       ...pageProps
     },
   } = props
-  
 
   const [isAccessible, setIsAccessible] = useState<boolean>(false)
   const toggleAccessibility = useCallback(() => {
@@ -79,17 +79,18 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
         {!isAccessible ? <AccessibilityNewIcon fontSize='inherit' /> :
           <AccessibleForwardIcon fontSize='inherit' />}
       </IconButton>
-
-      {supabaseClient === null ? <Loader /> : <SessionContextProvider
-        supabaseClient={supabaseClient}
-        initialSession={initialSession}
-      >
-        {Component.auth ? <AuthWrapper>
-          <Component {...pageProps} />
-        </AuthWrapper> : (
-          <Component {...pageProps} />
-        )}
-      </SessionContextProvider>}
+      <SnackbarProvider>
+        {supabaseClient === null ? <Loader /> : <SessionContextProvider
+          supabaseClient={supabaseClient}
+          initialSession={initialSession}
+        >
+          {Component.auth ? <AuthWrapper>
+            <Component {...pageProps} />
+          </AuthWrapper> : (
+            <Component {...pageProps} />
+          )}
+        </SessionContextProvider>}
+      </SnackbarProvider>
     </ThemeProvider>
   </CacheProvider>
 }
