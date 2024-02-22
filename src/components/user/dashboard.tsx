@@ -90,6 +90,7 @@ export default function DashboardPage(props: Props): JSX.Element {
           display:             'grid',
           gridTemplateColumns: '1fr 1fr',
           gap:                 1,
+          pt:                  0,
         }}
       >
         <TextField
@@ -114,7 +115,7 @@ export default function DashboardPage(props: Props): JSX.Element {
           multiline
           name="bio"
           onChange={handleChange}
-          rows={2}
+          rows={6}
           sx={{
             gridColumn: '1 / span 2',
           }}
