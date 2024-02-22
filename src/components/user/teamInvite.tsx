@@ -1,4 +1,3 @@
-import DeleteIcon from '@mui/icons-material/Delete'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
@@ -11,33 +10,21 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Collapse from '@mui/material/Collapse'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
-import IconButton from '@mui/material/IconButton'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Paper from '@mui/material/Paper'
 import Select, { type SelectChangeEvent } from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'react'
 import { type Team } from 'types/Team'
+import { TeamInvite } from 'types/TeamInvite'
+import InviteListItem from './inviteListItem'
 
 type Props = {
   onTeamChange: (teamID: string) => void
   team: Team
-}
-
-type TeamInvite = {
-  id: string
-
-  created_at: string
-  updated_at: string
-  deleted_at?: string
-
-  inviter: string
-  team_id: string
-  email: string
-  type: string
 }
 
 export default function TeamInvitePage(props: Props): JSX.Element {
@@ -213,70 +200,5 @@ export default function TeamInvitePage(props: Props): JSX.Element {
         </AccordionDetails>
       </Accordion>
     </Collapse>
-  </Box>
-}
-
-export function InviteListItem(props: {
-  expanded?: boolean,
-  invite: TeamInvite,
-  refresh: () => void,
-}): JSX.Element {
-  const { expanded, invite, refresh } = props
-
-  const session = useSession()
-  const supabase = useSupabaseClient()
-
-  const handleRevoke = useCallback(() => {
-    supabase
-      .from('team_invites')
-      .update({ deleted_at: new Date().toISOString() })
-      .eq('id', invite.id)
-      .then(({ error }) => {
-        refresh()
-
-        if (error) {
-          console.error(error)
-        }
-      })
-  }, [invite.id, refresh, supabase])
-
-  return <Box
-    sx={{
-      display:             'grid',
-      gridTemplateColumns: '1fr auto auto',
-      alignItems:          'center',
-      gap:                 2,
-      
-      '&:not(:last-child)': {
-        borderBottom: '1px solid',
-        borderColor:  'divider',
-      },
-
-      color:          invite.deleted_at ? 'text.disabled' : 'text.primary',
-      textDecoration: invite.deleted_at ? 'line-through' : 'none',
-    }}
-  >
-    <Box>
-      <Typography>
-        {invite.email}
-      </Typography>
-
-      {expanded ? <Typography color="text.secondary">
-        {invite.type}
-      </Typography> : null}
-    </Box>
-
-    <Box>
-      {expanded ? <Typography color="text.secondary">
-        {invite.inviter === session?.user.id ? 'You' : invite.inviter}
-      </Typography> : null}
-      <Typography color="text.secondary" variant="body2">
-        {invite.created_at}
-      </Typography>
-    </Box>
-
-    <IconButton color="primary" onClick={handleRevoke} size="small">
-      <DeleteIcon fontSize="inherit" />
-    </IconButton>
   </Box>
 }
