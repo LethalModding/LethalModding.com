@@ -8,7 +8,8 @@ import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemText from '@mui/material/ListItemText'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
@@ -21,7 +22,7 @@ export default function AccountButton(): JSX.Element {
   const showLoginDialog = useCallback(() => setLoginDialogOpen(true), [])
 
   const [menuEl, setMenuEl] = useState<null | HTMLElement>(null)
-  const openMenu = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+  const openMenu = useCallback((event: MouseEvent<HTMLElement>) => {
     setMenuEl(event.currentTarget)
   }, [])
   const closeMenu = useCallback(() => setMenuEl(null), [])
@@ -35,14 +36,35 @@ export default function AccountButton(): JSX.Element {
 
   if (session?.user.id) {
     return <>
-      <IconButton onClick={openMenu} size="small">
+      <ListItemButton
+        onClick={openMenu}
+        sx={{
+          flexGrow: 0,
+          py:       0,
+
+          '.MuiTypography-root': {
+            lineHeight: 1,
+            textAlign:  'right',
+          }
+        }}
+      >
+        <ListItemText
+          primary={session.user.user_metadata.full_name}
+          secondary={session.user.email}
+        />
         <Avatar
           alt={session.user.email}
           src={session.user.user_metadata.avatar_url}
+          sx={{ ml: 1 }}
         />
-      </IconButton>
+      </ListItemButton>
     
-      <Menu open={Boolean(menuEl)} onClose={closeMenu} anchorEl={menuEl}>
+      <Menu
+        anchorEl={menuEl}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        onClose={closeMenu}
+        open={Boolean(menuEl)}
+      >
         <MenuItem>
           <AccountCircleIcon sx={{ mr: 2 }} />
           Account
