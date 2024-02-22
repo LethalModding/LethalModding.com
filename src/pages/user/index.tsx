@@ -25,6 +25,7 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import AccountButton from 'components/_shared/auth/AccountButton'
 import DashboardPage from 'components/user/dashboard'
 import TeamCreatePage from 'components/user/teamCreate'
+import TeamInvitePage from 'components/user/teamInvite'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -105,11 +106,11 @@ export default function UserPage(): JSX.Element {
       />
     case 'team/members':
       return <ComingSoonPage />
-    // case 'team/members/invite':
-    //   return <TeamInvitePage
-    //     onTeamChange={handleTeamCreate}
-    //     team={teams.find((team) => team.id === selectedTeam) as Team}
-    //   />
+    case 'team/members/invite':
+      return <TeamInvitePage
+        onTeamChange={handleTeamCreate}
+        team={teams.find((team) => team.id === selectedTeam) as Team}
+      />
     case 'team/projects':
       return <ComingSoonPage />
     case 'team/projects/create':
