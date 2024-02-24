@@ -44,16 +44,12 @@ const externalLinks = [
 
 const internalLinks = [
   {
-    href:  '/mods',
-    label: '> Find Mods',
-  },
-  {
-    href:  '/guides',
-    label: '> Read Guides',
+    href:  '/user',
+    label: '> LethalModding (WIP)',
   },
   {
     href:  '/tools',
-    label: '> Use Tools',
+    label: '> Thunderstore Search',
   },
 ]
 
