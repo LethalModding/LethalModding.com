@@ -103,6 +103,7 @@ export default function AccountButton(): JSX.Element {
       color="primary"
       onClick={showLoginDialog}
       size="small"
+      sx={{ mr: 1 }}
       variant="outlined"
     >
       <AccountCircleIcon sx={{ mr: 1 }} />
