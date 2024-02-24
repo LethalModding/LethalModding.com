@@ -62,6 +62,21 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
     <ThemeProvider theme={darkTheme}>
       <CssBaseline enableColorScheme />
 
+      <SnackbarProvider>
+        {supabaseClient === null ? <Loader /> : <SessionContextProvider
+          supabaseClient={supabaseClient}
+          initialSession={initialSession}
+        >
+          <AppBar />
+
+          {Component.auth ? <AuthWrapper>
+            <Component {...pageProps} />
+          </AuthWrapper> : (
+            <Component {...pageProps} />
+          )}
+        </SessionContextProvider>}
+      </SnackbarProvider>
+
       <IconButton
         color="inherit"
         onClick={toggleAccessibility}
@@ -80,20 +95,6 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
         {!isAccessible ? <AccessibilityNewIcon fontSize='inherit' /> :
           <AccessibleForwardIcon fontSize='inherit' />}
       </IconButton>
-      <SnackbarProvider>
-        {supabaseClient === null ? <Loader /> : <SessionContextProvider
-          supabaseClient={supabaseClient}
-          initialSession={initialSession}
-        >
-          <AppBar />
-
-          {Component.auth ? <AuthWrapper>
-            <Component {...pageProps} />
-          </AuthWrapper> : (
-            <Component {...pageProps} />
-          )}
-        </SessionContextProvider>}
-      </SnackbarProvider>
     </ThemeProvider>
   </CacheProvider>
 }
