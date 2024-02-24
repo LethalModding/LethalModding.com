@@ -23,6 +23,7 @@ import AccountButton from 'components/_shared/auth/AccountButton'
 import DashboardPage from 'components/user/dashboard'
 import TeamCreatePage from 'components/user/Team/Create'
 import TeamMemberInvitePage from 'components/user/Team/MemberInvite'
+import TeamMemberManagePage from 'components/user/Team/MemberManage'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -100,9 +101,12 @@ export default function UserPage(): JSX.Element {
       return <DashboardPage
         onTeamChange={handleTeamCreate}
         team={teams.find((team) => team.id === selectedTeam) as Team}
-      />
+      />  
     case 'team/members':
-      return <ComingSoonPage />
+      return <TeamMemberManagePage
+        onTeamChange={handleTeamCreate}
+        team={teams.find((team) => team.id === selectedTeam) as Team}
+      />
     case 'team/members/invite':
       return <TeamMemberInvitePage
         onTeamChange={handleTeamCreate}
