@@ -12,7 +12,7 @@ const globalStyles: Styles = {
     flexDirection:  'column',
     gap:            '32px',
     justifyContent: 'center',
-    minHeight:      '100vh',
+    minHeight:      'calc(100vh - 56px)',
     py:             '16px',
     userSelect:     'none',
   },
@@ -28,7 +28,7 @@ const globalStyles: Styles = {
       display:       'flex',
       flex:          '1 1 50%',
       flexDirection: 'column',
-      gap:           '24px',
+      gap:           '16px',
     },
   },
 }

@@ -1,6 +1,7 @@
 import LockIcon from '@mui/icons-material/Lock'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import CornerAccents from 'components/branding/CornerAccents'
 import type { PropsWithChildren } from 'react'
 
 export default function AuthRequired(props: PropsWithChildren): JSX.Element {
@@ -9,10 +10,12 @@ export default function AuthRequired(props: PropsWithChildren): JSX.Element {
   return <Box
     sx={{
       display:   'grid',
-      minHeight: 'calc(100vh - 64px)',
+      minHeight: 'calc(100vh - 56px)',
       textAlign: 'center'
     }}
   >
+    <CornerAccents />
+
     <LockIcon
       sx={{
         fontSize: '10em',

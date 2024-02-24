@@ -373,7 +373,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
       <Box
         sx={{
           ...globalStyles.container,
-          height:         '100vh',
+          height:         'calc(100vh - 56px)',
           justifyContent: 'stretch',
           overflowX:      'hidden',
           overflowY:      'auto',

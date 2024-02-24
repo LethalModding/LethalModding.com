@@ -9,6 +9,7 @@ import { createTheme } from '@mui/material/styles'
 import ThemeProvider from '@mui/system/ThemeProvider'
 import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
+import AppBar from 'components/_shared/AppBar'
 import AuthWrapper from 'components/_shared/auth/Wrapper'
 import Loader from 'components/mui/Loader'
 import type { AppProps } from 'next/app'
@@ -84,6 +85,8 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
           supabaseClient={supabaseClient}
           initialSession={initialSession}
         >
+          <AppBar />
+
           {Component.auth ? <AuthWrapper>
             <Component {...pageProps} />
           </AuthWrapper> : (

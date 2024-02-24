@@ -3,7 +3,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard'
 import PluginIcon from '@mui/icons-material/Extension'
 import UsersIcon from '@mui/icons-material/Group'
 import InviteIcon from '@mui/icons-material/PersonAdd'
-import AppBar from '@mui/material/AppBar'
 import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
@@ -19,7 +18,6 @@ import Paper from '@mui/material/Paper'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
-import AccountButton from 'components/_shared/auth/AccountButton'
 import DashboardPage from 'components/user/dashboard'
 import TeamCreatePage from 'components/user/Team/Create'
 import TeamMemberInvitePage from 'components/user/Team/MemberInvite'
@@ -30,7 +28,7 @@ import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { type Team } from 'types/Team'
 
-export default function UserPage(): JSX.Element {
+const UserPage = (): JSX.Element => {
   const [selectedTeam, setSelectedTeam] = useState('')
 
   const supabase = useSupabaseClient()
@@ -138,36 +136,6 @@ export default function UserPage(): JSX.Element {
     <Head>
       <title>Your Source for Lethal Company Mods</title>
     </Head>
-
-    <AppBar
-      position="static"
-      sx={{
-        alignItems:    'center',
-        display:       'flex',
-        flexDirection: 'row',
-        gap:           2,
-        height:        56,
-        pl:            1.5,
-      }}
-    >
-      <Image
-        alt="logo"
-        height={48}
-        src="/icons/favicon.ico"
-        width={48}
-      />
-
-      <Typography
-        color="text.secondary"
-        component="h1"
-        sx={{ flex: 1 }}
-        variant="subtitle1"
-      >
-        LethalModding.com
-      </Typography>
-
-      <AccountButton />
-    </AppBar>
 
     <Box
       sx={{
@@ -348,3 +316,7 @@ export function LoadingPage(): JSX.Element {
     </Typography>
   </Backdrop>
 }
+
+UserPage.auth = true
+
+export default UserPage
