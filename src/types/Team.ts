@@ -6,7 +6,8 @@ export type Team = {
   updated_at: string
   deleted_at?: string
 
-  avatar: string
+  // avatar: string
+  slug?: string
   name: string
   bio: string
   location: string
@@ -14,6 +15,6 @@ export type Team = {
   website: string
 
   members: string[]
-  projects: string[]
-  reputation: number
+  // projects: string[]
+  // reputation: number
 }
