@@ -253,30 +253,22 @@ const UserPage = (): JSX.Element => {
 
       <Box
         sx={{
-          display:       'flex',
-          flex:          4,
-          flexDirection: 'column',
+          overflowX: 'hidden',
+          overflowY: 'auto',
+
+          p: 1,
+
+          '&::-webkit-scrollbar': {
+            width:  '0.25em',
+            height: '0.25em',
+          },
+
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'var(--accent)',
+          },
         }}
       >
-        <Box
-          sx={{
-            overflowX: 'hidden',
-            overflowY: 'auto',
-
-            p: 1,
-
-            '&::-webkit-scrollbar': {
-              width:  '0.25em',
-              height: '0.25em',
-            },
-
-            '&::-webkit-scrollbar-thumb': {
-              backgroundColor: 'var(--accent)',
-            },
-          }}
-        >
-          {pageComponent}
-        </Box>
+        {pageComponent}
       </Box>
     </Box>
   </>
