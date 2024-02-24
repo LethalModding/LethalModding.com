@@ -2,11 +2,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
-import Backdrop from '@mui/material/Backdrop'
 import Badge from '@mui/material/Badge'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress'
 import Collapse from '@mui/material/Collapse'
 import FormControl from '@mui/material/FormControl'
 import FormHelperText from '@mui/material/FormHelperText'
@@ -17,6 +15,7 @@ import Select, { type SelectChangeEvent } from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import Loader from 'components/_shared/Loader'
 import { useSnackbar } from 'notistack'
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'react'
 import { type Team } from 'types/Team'
@@ -109,9 +108,7 @@ export default function TeamMemberInvitePage(props: Props): JSX.Element {
       minHeight:  'calc(100svh - 80px)',
     }}
   >
-    <Backdrop open={loading}>
-      <CircularProgress />
-    </Backdrop>
+    <Loader open={loading} />
 
     <Paper
       sx={{

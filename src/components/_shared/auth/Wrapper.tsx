@@ -1,6 +1,6 @@
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
+import Loader from 'components/_shared/Loader'
 import AuthRequired from 'components/_shared/auth/Required'
-import Loader from 'components/mui/Loader'
 import type { PropsWithChildren } from 'react'
 import { useEffect, useState } from 'react'
 

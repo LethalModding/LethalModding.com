@@ -1,11 +1,10 @@
 import DeleteIcon from '@mui/icons-material/Delete'
-import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
-import CircularProgress from '@mui/material/CircularProgress'
 import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import Loader from 'components/_shared/Loader'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { type Team } from 'types/Team'
 
@@ -66,9 +65,7 @@ export default function TeamMemberManagePage(props: Props): JSX.Element {
       minHeight:  'calc(100svh - 80px)',
     }}
   >
-    <Backdrop open={loading}>
-      <CircularProgress />
-    </Backdrop>
+    <Loader open={loading} />
 
     <Paper
       sx={{

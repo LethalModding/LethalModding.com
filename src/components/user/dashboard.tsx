@@ -4,17 +4,16 @@ import MinusIcon from '@mui/icons-material/Remove'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
-import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
-import CircularProgress from '@mui/material/CircularProgress'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import IconButton from '@mui/material/IconButton'
 import LinearProgress from '@mui/material/LinearProgress'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import Loader from 'components/_shared/Loader'
 import { useSnackbar } from 'notistack'
 import { useCallback, useState, type ChangeEvent } from 'react'
 import { type Team } from 'types/Team'
@@ -66,9 +65,7 @@ export default function DashboardPage(props: Props): JSX.Element {
   }, [enqueueSnackbar, localTeam, onTeamChange, supabase])
 
   return <>
-    <Backdrop open={loading} sx={{ zIndex: 100 }}>
-      <CircularProgress />
-    </Backdrop>
+    <Loader open={loading} />
 
     <Accordion
       defaultExpanded

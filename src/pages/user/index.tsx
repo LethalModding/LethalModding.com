@@ -3,7 +3,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard'
 import PluginIcon from '@mui/icons-material/Extension'
 import UsersIcon from '@mui/icons-material/Group'
 import InviteIcon from '@mui/icons-material/PersonAdd'
-import Backdrop from '@mui/material/Backdrop'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import FormControl from '@mui/material/FormControl'
@@ -18,12 +17,12 @@ import Paper from '@mui/material/Paper'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import Loader from 'components/_shared/Loader'
 import DashboardPage from 'components/user/dashboard'
 import TeamCreatePage from 'components/user/Team/Create'
 import TeamMemberInvitePage from 'components/user/Team/MemberInvite'
 import TeamMemberManagePage from 'components/user/Team/MemberManage'
 import Head from 'next/head'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { type Team } from 'types/Team'
@@ -88,7 +87,7 @@ const UserPage = (): JSX.Element => {
   }, [refreshTeams])
 
   const pageComponent = useMemo(() => {
-    if (loading) return <LoadingPage />
+    if (loading) return <Loader />
 
     switch (selectedPage) {
     case 'team/create':
@@ -292,29 +291,6 @@ export function ComingSoonPage(): JSX.Element {
       Coming Soon
     </Typography>
   </>
-}
-
-export function LoadingPage(): JSX.Element {
-  return <Backdrop
-    open
-    sx={{
-      display:       'flex',
-      flexDirection: 'column',
-    }}
-  >
-    <Image
-      alt="loading"
-      height={128}
-      src="/icons/favicon.ico"
-      width={128}
-    />
-    <Typography
-      color="text.secondary"
-      variant="h4"
-    >
-      Loading...
-    </Typography>
-  </Backdrop>
 }
 
 UserPage.auth = true
