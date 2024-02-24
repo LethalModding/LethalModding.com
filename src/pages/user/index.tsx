@@ -139,11 +139,22 @@ const UserPage = (): JSX.Element => {
     <Box
       sx={{
         display:             'grid',
-        gridTemplateColumns: teams.length > 0 ? '300px 1fr' : '0px 1fr',
+        gridTemplateColumns: teams.length > 0 ? '280px 1fr' : '0px 1fr',
 
         '& > *': {
-          height:   'calc(100vh - 56px)',
-          overflow: 'hidden',
+          height: 'calc(100vh - 56px)',
+
+          overflowX: 'hidden',
+          overflowY: 'auto',
+
+          '&::-webkit-scrollbar': {
+            width:  '0.25em',
+            height: '0.25em',
+          },
+
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'var(--accent)',
+          },
         }
       }}
     >
@@ -151,7 +162,7 @@ const UserPage = (): JSX.Element => {
         elevation={4}
         sx={{
           borderRadius: 0,
-          zINdex:       1000,
+          zIndex:       1,
 
           '.MuiListSubheader-root': {
             userSelect: 'none',
@@ -251,23 +262,7 @@ const UserPage = (): JSX.Element => {
         </List>
       </Paper>
 
-      <Box
-        sx={{
-          overflowX: 'hidden',
-          overflowY: 'auto',
-
-          p: 1,
-
-          '&::-webkit-scrollbar': {
-            width:  '0.25em',
-            height: '0.25em',
-          },
-
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: 'var(--accent)',
-          },
-        }}
-      >
+      <Box>
         {pageComponent}
       </Box>
     </Box>

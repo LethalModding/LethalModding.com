@@ -61,8 +61,8 @@ export default function TeamMemberManagePage(props: Props): JSX.Element {
   return <Box
     sx={{
       display:    'grid',
-      placeItems: 'center',
-      minHeight:  'calc(100svh - 80px)',
+      height:     '100%',
+      placeItems: 'center'
     }}
   >
     <Loader open={loading} />

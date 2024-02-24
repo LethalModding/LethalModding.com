@@ -104,8 +104,8 @@ export default function TeamMemberInvitePage(props: Props): JSX.Element {
     onSubmit={handleSubmit}
     sx={{
       display:    'grid',
-      placeItems: 'center',
-      minHeight:  'calc(100svh - 80px)',
+      height:     '100%',
+      placeItems: 'center'
     }}
   >
     <Loader open={loading} />
