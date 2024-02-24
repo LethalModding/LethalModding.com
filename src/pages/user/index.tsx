@@ -18,8 +18,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Loader from 'components/_shared/Loader'
-import DashboardPage from 'components/user/dashboard'
 import TeamCreatePage from 'components/user/Team/Create'
+import TeamDashboardPage from 'components/user/Team/Dashboard'
 import TeamMemberInvitePage from 'components/user/Team/MemberInvite'
 import TeamMemberManagePage from 'components/user/Team/MemberManage'
 import Head from 'next/head'
@@ -95,7 +95,7 @@ const UserPage = (): JSX.Element => {
         onTeamCreate={handleTeamCreate}
       />
     case 'team/dashboard':
-      return <DashboardPage
+      return <TeamDashboardPage
         onTeamChange={handleTeamCreate}
         team={teams.find((team) => team.id === selectedTeam) as Team}
       />  

@@ -100,8 +100,6 @@ export default function TeamMemberInvitePage(props: Props): JSX.Element {
   }, [email, enqueueSnackbar, refreshInvites, supabase, team.id, type])
 
   return <Box
-    component="form"
-    onSubmit={handleSubmit}
     sx={{
       display:    'grid',
       height:     '100%',

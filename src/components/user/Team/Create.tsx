@@ -60,12 +60,10 @@ export default function TeamCreatePage(props: Props): JSX.Element {
   }, [enqueueSnackbar, name, onTeamCreate, supabase, type])
 
   return <Box
-    component="form"
-    onSubmit={handleSubmit}
     sx={{
       display:    'grid',
-      placeItems: 'center',
-      minHeight:  'calc(100svh - 80px)',
+      height:     '100%',
+      placeItems: 'center'
     }}
   >
     <Paper
