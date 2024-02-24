@@ -8,7 +8,7 @@ const styles = {
   titleBox: {
     color:      '#fc0000',
     display:    'inline-block',
-    fontSize:   'clamp(1rem, 7vw, 4rem)',
+    fontSize:   'clamp(1rem, 6vw, 3rem)',
     lineHeight: '0.8',
     mx:         'auto',
     textShadow: '4px 0 4px',
