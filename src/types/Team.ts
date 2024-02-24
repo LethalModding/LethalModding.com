@@ -1,8 +1,10 @@
 export type Team = {
   id: string
-  created: string
-  updated: string
-  deleted: string
+  owner_id: string
+
+  created_at: string
+  updated_at: string
+  deleted_at?: string
 
   avatar: string
   name: string

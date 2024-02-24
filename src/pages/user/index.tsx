@@ -48,7 +48,7 @@ export default function UserPage(): JSX.Element {
 
           if (selectedTeam === '' || (selectedTeam !== 'create' &&
             !data.find((team) => team.id === selectedTeam))) {
-            setSelectedTeam(data[0].id)
+            setSelectedTeam(data?.[0]?.id)
           }
         }
 
