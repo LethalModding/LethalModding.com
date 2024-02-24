@@ -8,8 +8,6 @@ import MenuItem from '@mui/material/MenuItem'
 import Select, { type SelectChangeEvent } from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import useMediaQuery from '@mui/material/useMediaQuery'
-import { Theme } from '@mui/system/createTheme'
 import CornerAccents from 'components/branding/CornerAccents'
 import Link from 'components/mui/Link'
 import Breadcrumb from 'components/tools/Breadcrumb'
@@ -25,7 +23,6 @@ import {
   useState,
   type ChangeEvent,
 } from 'react'
-import useGlobalStyles from 'styles/globalStyles'
 import { type Mod } from 'types/Mod'
 import { ModSort } from 'types/ModSort'
 
@@ -51,8 +48,6 @@ type Filters = {
 const MEBI = 1024 * 1024
 
 const ToolsHome: NextPage = (): JSX.Element => {
-  const globalStyles = useGlobalStyles()
-
   const [allMods, setAllMods] = useState<Mod[]>([])
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -356,12 +351,6 @@ const ToolsHome: NextPage = (): JSX.Element => {
     return sortedMods.slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
   }, [sortedMods, pageNumber, pageSize])
 
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
-  const isTablet = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
-  const isSmallPC = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('lg')
-  )
-
   return (
     <>
       <Head>
@@ -372,11 +361,11 @@ const ToolsHome: NextPage = (): JSX.Element => {
 
       <Box
         sx={{
-          ...globalStyles.container,
-          height:         'calc(100vh - 56px)',
-          justifyContent: 'stretch',
-          overflowX:      'hidden',
-          overflowY:      'auto',
+          height:    'calc(100vh - 56px)',
+          overflowX: 'hidden',
+          overflowY: 'auto',
+          p:         6,
+          py:        4,
 
           '&::-webkit-scrollbar': {
             width:  '0.25em',
@@ -388,423 +377,343 @@ const ToolsHome: NextPage = (): JSX.Element => {
           },
         }}
       >
-        <Box sx={globalStyles.linksBox}>
-          <Box
-            className="column"
-            sx={{ my: 4 }}
-          >
-            <Breadcrumb parts={['Tools', 'Thunderstore Search']} />
+        <Breadcrumb parts={['Tools', 'Thunderstore Search']} />
 
-            <Box
-              sx={{
-                display:       'flex',
-                flexDirection: 'row',
-                flexWrap:      'wrap',
-                gap:           3,
+        <Box
+          sx={{
+            display:       'flex',
+            flexDirection: 'row',
+            flexWrap:      'wrap',
+            gap:           3,
+            mt:            3,
 
-                'fieldset legend span': {
-                  fontSize: '0.8em',
-                },
+            '.MuiFormLabel-root.MuiInputLabel-shrink': {
+              mt: -0.5,
+            },
 
-                '& > *': {
-                  flexGrow: 1,
-                },
-              }}
-            >
-              <TextField
-                label="Name"
-                name="name"
-                onChange={handleFilterChange}
-                size="small"
-                type="text"
-                value={filters.name}
-                variant="outlined"
-              />
-              <TextField
-                label="Author"
-                name="owner"
-                onChange={handleFilterChange}
-                size="small"
-                type="text"
-                value={filters.owner}
-                variant="outlined"
-              />
-            </Box>
+            'fieldset legend span': {
+              fontSize: '0.83em',
+            },
 
-            <Box
-              sx={{
-                display:       'flex',
-                flexDirection: 'row',
-                flexWrap:      'wrap',
-                gap:           3,
+            '& > *': {
+              flexGrow: 1,
+            },
+          }}
+        >
+          <TextField
+            label="Name"
+            name="name"
+            onChange={handleFilterChange}
+            type="text"
+            value={filters.name}
+            variant="outlined"
+          />
+          <TextField
+            label="Author"
+            name="owner"
+            onChange={handleFilterChange}
+            type="text"
+            value={filters.owner}
+            variant="outlined"
+          />
 
-                'fieldset legend span': {
-                  fontSize: '0.8em',
-                },
-
-                '& > *': {
-                  flex: 1,
-                },
-              }}
-            >
-              <FormControl
-                size="small"
-                variant="outlined"
-              >
-                <InputLabel>Includes Category</InputLabel>
-                <Select
-                  label="Includes Category"
-                  multiple
-                  onChange={handleIncludesCategoryFilterChange}
-                  renderValue={(selected: string[]) => (
-                    <Box
-                      sx={{
-                        display:  'flex',
-                        flexWrap: 'wrap',
-                        gap:      0.5,
-                        pt:       0.75,
-
-                        '.MuiChip-root': {
-                          fontSize: '0.7em',
-                          padding:  0,
-                        },
-                      }}
-                    >
-                      {selected.map(value => (
-                        <Chip
-                          color="primary"
-                          key={value}
-                          label={value}
-                          size="small"
-                        />
-                      ))}
-                    </Box>
-                  )}
-                  value={includesCategoryFilter}
-                  variant="outlined"
-                >
-                  {allCategories.map(x => (
-                    <MenuItem
-                      key={x}
-                      value={x}
-                    >
-                      {x}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl
-                size="small"
-                variant="outlined"
-              >
-                <InputLabel>Excludes Category</InputLabel>
-                <Select
-                  label="Excludes Category"
-                  multiple
-                  onChange={handleExcludesCategoryFilterChange}
-                  renderValue={(selected: string[]) => (
-                    <Box
-                      sx={{
-                        display:  'flex',
-                        flexWrap: 'wrap',
-                        gap:      0.5,
-                        pt:       0.75,
-
-                        '.MuiChip-root': {
-                          fontSize: '0.7em',
-                          padding:  0,
-                        },
-                      }}
-                    >
-                      {selected.map(value => (
-                        <Chip
-                          color="primary"
-                          key={value}
-                          label={value}
-                          size="small"
-                        />
-                      ))}
-                    </Box>
-                  )}
-                  value={excludesCategoryFilter}
-                  variant="outlined"
-                >
-                  {allCategories.map(x => (
-                    <MenuItem
-                      key={x}
-                      value={x}
-                    >
-                      {x}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
-
-            <Box
-              sx={{
-                display:       'flex',
-                flexDirection: 'row',
-                flexWrap:      'wrap',
-                gap:           3,
-
-                '.MuiFormLabel-root.MuiInputLabel-shrink': {
-                  mt:      -0.4,
-                  padding: 0,
-                },
-
-                'fieldset legend span': {
-                  fontSize: '0.8em',
-                },
-
-                '& > *': {
-                  flexGrow: 1,
-                },
-              }}
-            >
-              <TextField
-                inputProps={{ min: 0 }}
-                label="Min. Dependencies"
-                name="minDependencies"
-                onChange={handleFilterChange}
-                size="small"
-                type="number"
-                value={filters.minDependencies}
-                variant="outlined"
-              />
-              <TextField
-                inputProps={{ min: -1 }}
-                label="Max. Dependencies"
-                name="maxDependencies"
-                onChange={handleFilterChange}
-                size="small"
-                type="number"
-                value={filters.maxDependencies}
-                variant="outlined"
-              />
-              <TextField
-                inputProps={{ min: 0 }}
-                label="Min. Downloads"
-                name="minDownloads"
-                onChange={handleFilterChange}
-                size="small"
-                type="number"
-                value={filters.minDownloads}
-                variant="outlined"
-              />
-              <TextField
-                inputProps={{ min: -1 }}
-                label="Max. Downloads"
-                name="maxDownloads"
-                onChange={handleFilterChange}
-                size="small"
-                type="number"
-                value={filters.maxDownloads}
-                variant="outlined"
-              />
-              <TextField
-                inputProps={{ min: 0 }}
-                label="Min. Ratings"
-                name="minRatings"
-                onChange={handleFilterChange}
-                size="small"
-                type="number"
-                value={filters.minRatings}
-                variant="outlined"
-              />
-              <TextField
-                inputProps={{ min: -1 }}
-                label="Max. Ratings"
-                name="maxRatings"
-                onChange={handleFilterChange}
-                size="small"
-                type="number"
-                value={filters.maxRatings}
-                variant="outlined"
-              />
-              <TextField
-                inputProps={{ min: 0 }}
-                label="Min. Size (MB)"
-                name="minSize"
-                onChange={handleFilterChange}
-                size="small"
-                type="number"
-                value={filters.minSize}
-                variant="outlined"
-              />
-              <TextField
-                inputProps={{ min: -1 }}
-                label="Max. Size (MB)"
-                name="maxSize"
-                onChange={handleFilterChange}
-                size="small"
-                type="number"
-                value={filters.maxSize}
-                variant="outlined"
-              />
-            </Box>
-
-            <Box
-              sx={{
-                display:       'flex',
-                flexDirection: 'row',
-                flexWrap:      'wrap',
-                gap:           3,
-
-                '.MuiFormLabel-root.MuiInputLabel-shrink': {
-                  mt:      -0.5,
-                  padding: 0,
-                },
-
-                'fieldset legend span': {
-                  fontSize: '0.8em',
-                },
-
-                '& > *': {
-                  flexGrow: 1,
-                },
-              }}
-            >
-              <FormLabel sx={{ m: -1 }}>
-                <Checkbox
-                  checked={filters.hasDonation ?? false}
-                  indeterminate={filters.hasDonation === null}
-                  name="hasDonation"
-                  onChange={handleFilterCheckboxChange}
-                />{' '}
-                Donation Link
-              </FormLabel>
-              <FormLabel sx={{ m: -1 }}>
-                <Checkbox
-                  checked={filters.hasNSFW ?? false}
-                  indeterminate={filters.hasNSFW === null}
-                  name="hasNSFW"
-                  onChange={handleFilterCheckboxChange}
-                />{' '}
-                NSFW Content
-              </FormLabel>
-              <FormLabel sx={{ m: -1 }}>
-                <Checkbox
-                  checked={filters.hasWebsite ?? false}
-                  indeterminate={filters.hasWebsite === null}
-                  name="hasWebsite"
-                  onChange={handleFilterCheckboxChange}
-                />{' '}
-                Website
-              </FormLabel>
-              <FormLabel sx={{ m: -1 }}>
-                <Checkbox
-                  checked={filters.isDeprecated ?? false}
-                  indeterminate={filters.isDeprecated === null}
-                  name="isDeprecated"
-                  onChange={handleFilterCheckboxChange}
-                />{' '}
-                Deprecated
-              </FormLabel>
-              <FormLabel sx={{ m: -1 }}>
-                <Checkbox
-                  checked={filters.isPinned ?? false}
-                  indeterminate={filters.isPinned === null}
-                  name="isPinned"
-                  onChange={handleFilterCheckboxChange}
-                />{' '}
-                Pinned
-              </FormLabel>
-            </Box>
-
-            <Pagination
-              pageNumber={pageNumber}
-              pageSize={pageSize}
-              totalResults={sortedMods.length}
-              setPageNumber={setPageNumber}
-              setPageSize={setPageSize}
-              setSort={setSort}
-              sort={sort}
-            />
-
-            <Box
-              sx={{
-                display:       'flex',
-                flexDirection: 'row',
-                flexWrap:      'wrap',
-                gap:           1,
-
-                '& > *': {
-                  backgroundColor: 'var(--background)',
-                  borderRadius:    2,
-                  flex:            '1 0 auto',
-                  maxWidth:        isMobile
-                    ? 'calc(100% - 1 * 8px)'
-                    : isSmallPC
-                      ? 'calc(50% - 1 * 8px)'
-                      : isTablet
-                        ? 'calc(33% - 1 * 8px)'
-                        : 'calc(25% - 1 * 8px)',
-                  minWidth: isMobile
-                    ? 'calc(100% - 1 * 8px)'
-                    : isSmallPC
-                      ? 'calc(50% - 1 * 8px)'
-                      : isTablet
-                        ? 'calc(33% - 1 * 8px)'
-                        : 'calc(25% - 1 * 8px)',
-                  px: 2,
-                  py: 1,
-
-                  '&:hover': {
-                    backgroundColor: 'var(--accent)',
-                  },
-
-                  '.MuiTypography-root': {
-                    lineHeight:   1.5,
-                    overflowWrap: 'anywhere',
-                  },
-
-                  '.MuiTypography-body1': {
-                    lineHeight: 1,
-                  },
-
-                  '.MuiTypography-body2': {
-                    color:    'white',
-                    fontSize: '0.7em',
-                  },
-                },
-              }}
-            >
-              {thisPage.map(x => (
-                <Link
-                  href={x.package_url}
-                  key={x.uuid4}
+          <FormControl sx={{ minWidth: 150 }} variant="outlined">
+            <InputLabel>Include</InputLabel>
+            <Select
+              label="Include"
+              multiple
+              onChange={handleIncludesCategoryFilterChange}
+              renderValue={(selected: string[]) => (
+                <Box
                   sx={{
-                    color:          'inherit',
-                    display:        'block',
-                    textDecoration: 'none',
-                  }}
-                  target="_blank"
-                >
-                  <Image
-                    alt={x.name}
-                    height={256}
-                    loading="lazy"
-                    src={x.versions[0].icon}
-                    width={256}
-                  />
-                  <Typography variant="body2">{x.owner}</Typography>
-                  <Typography variant="body1">{x.name}</Typography>
-                </Link>
-              ))}
-            </Box>
+                    display:  'flex',
+                    flexWrap: 'wrap',
+                    gap:      0.5,
+                    pt:       0.75,
 
-            <Pagination
-              pageNumber={pageNumber}
-              pageSize={pageSize}
-              totalResults={sortedMods.length}
-              setPageNumber={setPageNumber}
-              setPageSize={setPageSize}
-              setSort={setSort}
-              sort={sort}
-            />
-          </Box>
+                    '.MuiChip-root': {
+                      fontSize: '0.7em',
+                      padding:  0,
+                    },
+                  }}
+                >
+                  {selected.map(value => (
+                    <Chip
+                      color="primary"
+                      key={value}
+                      label={value}
+                      size="small"
+                    />
+                  ))}
+                </Box>
+              )}
+              value={includesCategoryFilter}
+              variant="outlined"
+            >
+              {allCategories.map(x => (
+                <MenuItem
+                  key={x}
+                  value={x}
+                >
+                  {x}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ minWidth: 150 }} variant="outlined">
+            <InputLabel>Exclude</InputLabel>
+            <Select
+              label="Exclude"
+              multiple
+              onChange={handleExcludesCategoryFilterChange}
+              renderValue={(selected: string[]) => (
+                <Box
+                  sx={{
+                    display:  'flex',
+                    flexWrap: 'wrap',
+                    gap:      0.5,
+                    pt:       0.75,
+
+                    '.MuiChip-root': {
+                      fontSize: '0.7em',
+                      padding:  0,
+                    },
+                  }}
+                >
+                  {selected.map(value => (
+                    <Chip
+                      color="primary"
+                      key={value}
+                      label={value}
+                      size="small"
+                    />
+                  ))}
+                </Box>
+              )}
+              value={excludesCategoryFilter}
+              variant="outlined"
+            >
+              {allCategories.map(x => (
+                <MenuItem
+                  key={x}
+                  value={x}
+                >
+                  {x}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <TextField
+            inputProps={{ min: 0 }}
+            label="Min. Dependencies"
+            name="minDependencies"
+            onChange={handleFilterChange}
+            type="number"
+            value={filters.minDependencies}
+            variant="outlined"
+          />
+          <TextField
+            inputProps={{ min: -1 }}
+            label="Max. Dependencies"
+            name="maxDependencies"
+            onChange={handleFilterChange}
+            type="number"
+            value={filters.maxDependencies}
+            variant="outlined"
+          />
+          <TextField
+            inputProps={{ min: 0 }}
+            label="Min. Downloads"
+            name="minDownloads"
+            onChange={handleFilterChange}
+            type="number"
+            value={filters.minDownloads}
+            variant="outlined"
+          />
+          <TextField
+            inputProps={{ min: -1 }}
+            label="Max. Downloads"
+            name="maxDownloads"
+            onChange={handleFilterChange}
+            type="number"
+            value={filters.maxDownloads}
+            variant="outlined"
+          />
+          <TextField
+            inputProps={{ min: 0 }}
+            label="Min. Ratings"
+            name="minRatings"
+            onChange={handleFilterChange}
+            type="number"
+            value={filters.minRatings}
+            variant="outlined"
+          />
+          <TextField
+            inputProps={{ min: -1 }}
+            label="Max. Ratings"
+            name="maxRatings"
+            onChange={handleFilterChange}
+            type="number"
+            value={filters.maxRatings}
+            variant="outlined"
+          />
+          <TextField
+            inputProps={{ min: 0 }}
+            label="Min. Size (MB)"
+            name="minSize"
+            onChange={handleFilterChange}
+            type="number"
+            value={filters.minSize}
+            variant="outlined"
+          />
+          <TextField
+            inputProps={{ min: -1 }}
+            label="Max. Size (MB)"
+            name="maxSize"
+            onChange={handleFilterChange}
+            type="number"
+            value={filters.maxSize}
+            variant="outlined"
+          />
         </Box>
+
+        <Box
+          sx={{
+            display:        'flex',
+            alignItems:     'center',
+            justifyContent: 'space-around',
+            flexDirection:  'row',
+            flexWrap:       'wrap',
+            py:             2,
+          }}
+        >
+          <FormLabel>
+            <Checkbox
+              checked={filters.hasDonation ?? false}
+              indeterminate={filters.hasDonation === null}
+              name="hasDonation"
+              onChange={handleFilterCheckboxChange}
+            />{' '}
+            Donation Link
+          </FormLabel>
+          <FormLabel>
+            <Checkbox
+              checked={filters.hasNSFW ?? false}
+              indeterminate={filters.hasNSFW === null}
+              name="hasNSFW"
+              onChange={handleFilterCheckboxChange}
+            />{' '}
+            NSFW Content
+          </FormLabel>
+          <FormLabel>
+            <Checkbox
+              checked={filters.hasWebsite ?? false}
+              indeterminate={filters.hasWebsite === null}
+              name="hasWebsite"
+              onChange={handleFilterCheckboxChange}
+            />{' '}
+            Website
+          </FormLabel>
+          <FormLabel>
+            <Checkbox
+              checked={filters.isDeprecated ?? false}
+              indeterminate={filters.isDeprecated === null}
+              name="isDeprecated"
+              onChange={handleFilterCheckboxChange}
+            />{' '}
+            Deprecated
+          </FormLabel>
+          <FormLabel>
+            <Checkbox
+              checked={filters.isPinned ?? false}
+              indeterminate={filters.isPinned === null}
+              name="isPinned"
+              onChange={handleFilterCheckboxChange}
+            />{' '}
+            Pinned
+          </FormLabel>
+        </Box>
+
+        <Pagination
+          pageNumber={pageNumber}
+          pageSize={pageSize}
+          totalResults={sortedMods.length}
+          setPageNumber={setPageNumber}
+          setPageSize={setPageSize}
+          setSort={setSort}
+          sort={sort}
+        />
+
+        <Box
+          sx={{
+            display:             'grid',
+            alignItems:          'flex-start',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(calc(192px + 2rem), 1fr))',
+            gap:                 1,
+            my:                  2,
+
+            '& > *': {
+              backgroundColor: 'var(--background)',
+              borderRadius:    2,
+              p:               2,
+              width:           'calc(192px + 2rem)',
+
+              '&:hover': {
+                backgroundColor: 'var(--accent)',
+              },
+
+              '.MuiTypography-root': {
+                // overflow with elipsis
+                overflow:     'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace:   'nowrap',
+              },
+
+              '.MuiTypography-body1': {
+                lineHeight: 0.9,
+              },
+
+              '.MuiTypography-body2': {
+                color:    'white',
+                fontSize: '0.7em',
+              },
+            },
+          }}
+        >
+          {thisPage.map(x => (
+            <Link
+              href={x.package_url}
+              key={x.uuid4}
+              sx={{
+                color:          'inherit',
+                display:        'block',
+                textDecoration: 'none',
+              }}
+              target="_blank"
+            >
+              <Image
+                alt={x.name}
+                height={192}
+                loading="lazy"
+                src={x.versions[0].icon}
+                width={192}
+              />
+              <Typography variant="body2">{x.owner}</Typography>
+              <Typography variant="body1">{x.name}</Typography>
+            </Link>
+          ))}
+        </Box>
+
+        <Pagination
+          pageNumber={pageNumber}
+          pageSize={pageSize}
+          totalResults={sortedMods.length}
+          setPageNumber={setPageNumber}
+          setPageSize={setPageSize}
+          setSort={setSort}
+          sort={sort}
+        />
       </Box>
     </>
   )
