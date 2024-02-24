@@ -15,13 +15,7 @@ const Home: NextPage = (): JSX.Element => {
 
     <CornerAccents />
 
-    <Box
-      sx={{
-        ...globalStyles.container,
-        display:    'grid',
-        placeItems: 'center',
-      }}
-    >
+    <Box sx={globalStyles.container}>
       <Box sx={{ display: 'grid' }}>
         <MOTD />
       </Box>
