@@ -43,83 +43,78 @@ const Pagination = (props: Props): JSX.Element => {
         display:        'flex',
         alignItems:     'center',
         justifyContent: 'space-between',
-        mb:             -2,
         p:              1,
         px:             2,
       }}
     >
-      <Box
-        sx={{
-          display:    'flex',
-          alignItems: 'center',
-          gap:        2,
-        }}
-      >
-        Sort
-        <FormControl size="small" variant="outlined">
-          <Select
-            inputProps={{
-              sx: {
-                mr: 1,
-                py: 0,
-              }
-            }}
-            name="sortProperty"
-            onChange={handleSortPropertyChange}
-            size="small"
-            value={sort.property as string}
-          >
-            <MenuItem value="">Default</MenuItem>
-            <MenuItem value="name">Name</MenuItem>
-            <MenuItem value="owner">Author</MenuItem>
-            <MenuItem value="dependencies">Dependencies</MenuItem>
-            <MenuItem value="downloads">Downloads</MenuItem>
-            <MenuItem value="ratings">Rating</MenuItem>
-            <MenuItem value="size">Size</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl size="small" variant="outlined">
-          <Select
-            inputProps={{
-              sx: {
-                mr: 1,
-                py: 0,
-              }
-            }}
-            name="sortDirection"
-            onChange={handleSortDirectionChange}
-            size="small"
-            value={sort.direction as string}
-          >
-            <MenuItem value="asc">Low to High</MenuItem>
-            <MenuItem value="desc">High to Low</MenuItem>
-          </Select>
-        </FormControl>
-        Showing
-        <FormControl size="small" variant="outlined">
-          <Select
-            inputProps={{
-              sx: {
-                mr: 1,
-                py: 0,
-              }
-            }}
-            name="pageSize"
-            onChange={(e) => setPageSize(e.target.value as number)}
-            size="small"
-            value={pageSize}
-          >
-            <MenuItem value={20}>20</MenuItem>
-            <MenuItem value={40}>40</MenuItem>
-            <MenuItem value={100}>100</MenuItem>
-            <MenuItem value={200}>200</MenuItem>
-            <MenuItem value={400}>400</MenuItem>
-          </Select>
-        </FormControl>
-        Per Page
-      </Box>
       <Typography variant="body1">
-        {totalResults} total
+        Sort by
+      </Typography>
+
+      <FormControl size="small" variant="outlined">
+        <Select
+          inputProps={{
+            sx: {
+              mr: 1,
+              py: 0,
+            }
+          }}
+          name="sortProperty"
+          onChange={handleSortPropertyChange}
+          size="small"
+          value={sort.property as string}
+        >
+          <MenuItem value="">Default</MenuItem>
+          <MenuItem value="name">Name</MenuItem>
+          <MenuItem value="owner">Author</MenuItem>
+          <MenuItem value="dependencies">Dependencies</MenuItem>
+          <MenuItem value="downloads">Downloads</MenuItem>
+          <MenuItem value="ratings">Rating</MenuItem>
+          <MenuItem value="size">Size</MenuItem>
+        </Select>
+      </FormControl>
+
+      <FormControl size="small" variant="outlined">
+        <Select
+          inputProps={{
+            sx: {
+              mr: 1,
+              py: 0,
+            }
+          }}
+          name="sortDirection"
+          onChange={handleSortDirectionChange}
+          size="small"
+          value={sort.direction as string}
+        >
+          <MenuItem value="asc">Low to High</MenuItem>
+          <MenuItem value="desc">High to Low</MenuItem>
+        </Select>
+      </FormControl>
+
+      Showing
+      <FormControl size="small" variant="outlined">
+        <Select
+          inputProps={{
+            sx: {
+              mr: 1,
+              py: 0,
+            }
+          }}
+          name="pageSize"
+          onChange={(e) => setPageSize(e.target.value as number)}
+          size="small"
+          value={pageSize}
+        >
+          <MenuItem value={20}>20</MenuItem>
+          <MenuItem value={40}>40</MenuItem>
+          <MenuItem value={100}>100</MenuItem>
+          <MenuItem value={200}>200</MenuItem>
+          <MenuItem value={400}>400</MenuItem>
+        </Select>
+      </FormControl>
+      <Typography variant="body1">
+        on page {pageNumber} of {Math.ceil(totalResults / pageSize)} ({totalResults} total)
       </Typography>
     </Box>
 
@@ -130,8 +125,7 @@ const Pagination = (props: Props): JSX.Element => {
         display:        'flex',
         alignItems:     'center',
         justifyContent: 'space-between',
-        flexWrap:       'wrap',
-        gap:            1,
+        my:             1,
         p:              1,
         px:             2,
       }}
