@@ -7,15 +7,21 @@ import AccordionSummary from '@mui/material/AccordionSummary'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import IconButton from '@mui/material/IconButton'
 import LinearProgress from '@mui/material/LinearProgress'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import { Theme, alpha } from '@mui/material/styles'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Loader from 'components/_shared/Loader'
 import { useSnackbar } from 'notistack'
-import { useCallback, useState, type ChangeEvent } from 'react'
+import { useCallback, useEffect, useState, type ChangeEvent } from 'react'
 import { type Team } from 'types/Team'
 
 type Props = {
@@ -23,10 +29,12 @@ type Props = {
     team: Team
 }
 
-export default function DashboardPage(props: Props): JSX.Element {
+export default function TeamDashboardPage(props: Props): JSX.Element {
   const { onTeamChange, team } = props
   
   const [localTeam, setLocalTeam] = useState<Team>(team)
+  useEffect(() => setLocalTeam(team), [team])
+
   const [loading, setLoading] = useState(false)
   
   const socials = localTeam.socials?.split(',') || ['']
@@ -64,8 +72,79 @@ export default function DashboardPage(props: Props): JSX.Element {
       })
   }, [enqueueSnackbar, localTeam, onTeamChange, supabase])
 
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
+  const showDeleteModal = useCallback(() => setDeleteModalOpen(true), [])
+  const hideDeleteModal = useCallback(() => setDeleteModalOpen(false), [])
+
+  const [confirmationName, setConfirmationName] = useState('')
+  const confirmDeleteTeam = useCallback(() => {
+    setLoading(true)
+    
+    supabase
+      .from('teams')
+      .delete()
+      .eq('id', localTeam.id)
+      .then(({ error }) => {
+        if (error) {
+          enqueueSnackbar('Unable to delete Team', { variant: 'error' })
+          console.error(error)
+        } else {
+          enqueueSnackbar('Team deleted', { variant: 'success' })
+          onTeamChange('')
+        }
+
+        setLoading(false)
+      })
+  }, [enqueueSnackbar, localTeam.id, onTeamChange, supabase])
+
   return <>
     <Loader open={loading} />
+
+    <Dialog
+      fullWidth
+      maxWidth="md"
+      onClose={hideDeleteModal}
+      open={deleteModalOpen}
+    >
+      <DialogTitle>
+        Delete Team
+      </DialogTitle>
+      <DialogContent sx={{ pb: 0 }}>
+        <DialogContentText>
+          <Typography gutterBottom>
+            This action is immediate and permanent, and cannot be undone.
+          </Typography>
+          <Typography gutterBottom>
+            This will also delete all your Projects.
+          </Typography>
+          <Typography gutterBottom>
+            To confirm, type the Team Name below.
+          </Typography>
+          <TextField
+            fullWidth
+            label="Team Name"
+            onChange={(event) => setConfirmationName(event.target.value)}
+            value={confirmationName}
+            variant="filled"
+          />
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          color="primary"
+          onClick={hideDeleteModal}
+        >
+          Cancel
+        </Button>
+        <Button
+          color="error"
+          disabled={confirmationName !== localTeam.name}
+          onClick={confirmDeleteTeam}
+        >
+          Delete
+        </Button>
+      </DialogActions>
+    </Dialog>
 
     <Accordion
       defaultExpanded
@@ -75,13 +154,13 @@ export default function DashboardPage(props: Props): JSX.Element {
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography
-          sx={{ flexBasis: '20%', flexShrink: 0 }}
+          sx={{ flexBasis: '240px', flexShrink: 0 }}
           variant="h5"
         >
           Profile
         </Typography>
         <Typography
-          sx={{ color: 'text.secondary', pt: 0.5 }}
+          sx={{ color: 'text.secondary', pt: 0.8 }}
         >
           Manage your Team&apos;s Public Profile.
         </Typography>
@@ -167,36 +246,6 @@ export default function DashboardPage(props: Props): JSX.Element {
     </Accordion>
 
     <Accordion
-      disableGutters
-      expanded={expanded === 'reputation'}
-      onChange={() => setExpanded('reputation')}
-    >
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography
-          sx={{ flexBasis: '20%', flexShrink: 0 }}
-          variant="h5"
-        >
-          Reputation
-        </Typography>
-        <Typography
-          sx={{ color: 'text.secondary', pt: 0.5 }}
-        >
-          View your Team&apos;s Reputation.
-        </Typography>
-      </AccordionSummary>
-      <LinearProgress
-        color="primary"
-        value={0}
-        variant="determinate"
-      />
-      <AccordionDetails sx={{ px: 3, pt: 2 }}>
-        <Typography>
-          Your Team has not yet been rated. Get started by creating a Project!
-        </Typography>
-      </AccordionDetails>
-    </Accordion>
-
-    <Accordion
       disabled
       disableGutters
       expanded={expanded === 'donation'}
@@ -204,13 +253,13 @@ export default function DashboardPage(props: Props): JSX.Element {
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography
-          sx={{ flexBasis: '20%', flexShrink: 0 }}
+          sx={{ flexBasis: '240px', flexShrink: 0 }}
           variant="h5"
         >
-          Donation
+          Donations
         </Typography>
         <Typography
-          sx={{ color: 'text.secondary', pt: 0.5 }}
+          sx={{ color: 'text.secondary', pt: 0.8 }}
         >
           Manage your Team&apos;s Donation Settings.
         </Typography>
@@ -248,6 +297,76 @@ export default function DashboardPage(props: Props): JSX.Element {
           label="Show Link on Team Profile"
           sx={{ px: 2, py: 1 }}
         />
+      </AccordionDetails>
+    </Accordion>
+
+    <Accordion
+      disableGutters
+      expanded={expanded === 'reputation'}
+      onChange={() => setExpanded('reputation')}
+    >
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <Typography
+          sx={{ flexBasis: '240px', flexShrink: 0 }}
+          variant="h5"
+        >
+          Reputation
+        </Typography>
+        <Typography
+          sx={{ color: 'text.secondary', pt: 0.8 }}
+        >
+          View your Team&apos;s Reputation.
+        </Typography>
+      </AccordionSummary>
+      <LinearProgress
+        color="primary"
+        value={0}
+        variant="determinate"
+      />
+      <AccordionDetails sx={{ px: 3, pt: 2 }}>
+        <Typography>
+          Your Team has not yet been rated. Get started by creating a Project!
+        </Typography>
+      </AccordionDetails>
+    </Accordion>
+
+    <Accordion
+      disableGutters
+      expanded={expanded === 'danger'}
+      onChange={() => setExpanded('danger')}
+      sx={{
+        backgroundColor: (theme: Theme) => alpha(theme.palette.error.main, 0.2),
+      }}
+    >
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <Typography
+          sx={{ flexBasis: '240px', flexShrink: 0 }}
+          variant="h5"
+        >
+          Danger Zone
+        </Typography>
+        <Typography
+          sx={{ color: 'text.secondary', pt: 0.8 }}
+        >
+          Delete your Team or Transfer Ownership.
+        </Typography>
+      </AccordionSummary>
+      <AccordionDetails sx={{ px: 3, pt: 2 }}>
+        <Typography gutterBottom>
+          This action is immediate and permanent, and cannot be undone.
+        </Typography>
+        <Typography gutterBottom>
+          This will also delete all your Projects.
+        </Typography>
+        <Button
+          color="error"
+          onClick={showDeleteModal}
+          size="small"
+          sx={{ mt: 0.5, px: 2 }}
+          variant="contained"
+        >
+          Delete Team
+        </Button>
       </AccordionDetails>
     </Accordion>
 
