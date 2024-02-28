@@ -21,8 +21,17 @@ const darkThemeOptions: Theme = createTheme({
     },
   },
   typography: {
-    fontFamily: ['VT323', 'monospace'].join(','),
-    fontSize:   18,
+    fontFamily:  ['VT323', 'monospace'].join(','),
+    fontSize:    18,
+    allVariants: {
+      letterSpacing: '0.2rem',
+      lineHeight:    1,
+      wordSpacing:   '-0.2rem',
+    },
+    body1: {
+      letterSpacing: '0.25rem',
+      lineHeight:    1.25,
+    },
   },
 })
 

@@ -81,14 +81,13 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
         color="inherit"
         onClick={toggleAccessibility}
         sx={{
-          bottom:     '0.75em',
-          cursor:     'pointer',
-          fontSize:   '2em',
-          right:      '0.75em',
-          lineHeight: 1,
-          position:   'absolute',
-          textAlign:  'right',
-          zIndex:     100,
+          bottom:    '0.75em',
+          cursor:    'pointer',
+          fontSize:  '2em',
+          right:     '0.75em',
+          position:  'absolute',
+          textAlign: 'right',
+          zIndex:    100,
         }}
         tabIndex={0}
       >

@@ -195,6 +195,4 @@ body:not(.accessible) {
 body {
   background: var(--background) !important;
   color: var(--accent) !important;
-  letter-spacing: 0.25rem;
-  word-spacing: 0.1rem;
 }

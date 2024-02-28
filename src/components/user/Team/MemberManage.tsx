@@ -89,13 +89,7 @@ export default function TeamMemberManagePage(props: Props): JSX.Element {
           gridTemplateColumns: '1fr auto',
         }}
       >
-        <Box
-          sx={{
-            '.MuiTypography-root': {
-              lineHeight: 1,
-            }
-          }}
-        >
+        <Box>
           <Typography variant="h5">
             {member.username ? `@${member.username}` : member.full_name}
           </Typography>

@@ -29,6 +29,11 @@ const globalStyles: Styles = {
       flex:          '1 1 50%',
       flexDirection: 'column',
       gap:           '16px',
+      
+      'a': {
+        lineHeight: '32px',
+        px:         '8px',
+      }
     },
   },
 }

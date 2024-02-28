@@ -365,11 +365,11 @@ const ToolsHome: NextPage = (): JSX.Element => {
           overflowX: 'hidden',
           overflowY: 'auto',
           p:         6,
-          py:        4,
+          pb:        4,
 
           '&::-webkit-scrollbar': {
-            width:  '0.25em',
-            height: '0.25em',
+            width:  '0.5em',
+            height: '0.5em',
           },
 
           '&::-webkit-scrollbar-thumb': {
@@ -392,7 +392,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
             },
 
             'fieldset legend span': {
-              fontSize: '0.83em',
+              fontSize: '0.9em',
             },
 
             '& > *': {
@@ -649,15 +649,16 @@ const ToolsHome: NextPage = (): JSX.Element => {
           sx={{
             display:             'grid',
             alignItems:          'flex-start',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(calc(192px + 2rem), 1fr))',
+            justifyContent:      'space-around',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(calc(192px + 32px), 1fr))',
             gap:                 1,
             my:                  2,
 
             '& > *': {
               backgroundColor: 'var(--background)',
-              borderRadius:    2,
+              borderRadius:    0.2,
               p:               2,
-              width:           'calc(192px + 2rem)',
+              width:           'calc(192px + 32px)',
 
               '&:hover': {
                 backgroundColor: 'var(--accent)',
@@ -670,13 +671,10 @@ const ToolsHome: NextPage = (): JSX.Element => {
                 whiteSpace:   'nowrap',
               },
 
-              '.MuiTypography-body1': {
-                lineHeight: 0.9,
-              },
-
               '.MuiTypography-body2': {
                 color:    'white',
-                fontSize: '0.7em',
+                fontSize: '0.8em',
+                pt:       1,
               },
             },
           }}
