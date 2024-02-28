@@ -665,7 +665,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               },
 
               '.MuiTypography-root': {
-                // overflow with elipsis
+                // overflow with ellipsis
                 overflow:     'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace:   'nowrap',
