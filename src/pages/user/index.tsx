@@ -86,6 +86,23 @@ const UserPage = (): JSX.Element => {
     setSelectedPage('team/dashboard')
   }, [refreshTeams])
 
+  const [selectedTeamSlugs, setSelectedTeamSlugs] = useState<string[]>([])
+  useEffect(() => {
+    if (selectedTeam === '') return
+
+    supabase
+      .from('team_plugins')
+      .select('plugin_slug')
+      .eq('team_id', selectedTeam)
+      .then(({ data, error }) => {
+        if (error) {
+          console.error(error)
+        } else {
+          setSelectedTeamSlugs(data.map((plugin) => plugin.plugin_slug))
+        }
+      })
+  }, [selectedTeam, supabase])
+
   const pageComponent = useMemo(() => {
     if (loading) return <Loader />
 
@@ -97,6 +114,7 @@ const UserPage = (): JSX.Element => {
     case 'team/dashboard':
       return <TeamDashboardPage
         onTeamChange={handleTeamCreate}
+        slugs={selectedTeamSlugs}
         team={teams.find((team) => team.id === selectedTeam) as Team}
       />  
     case 'team/members':
@@ -116,7 +134,7 @@ const UserPage = (): JSX.Element => {
     default:
       return <ComingSoonPage />
     }
-  }, [loading, selectedPage, handleTeamCreate, teams, selectedTeam])
+  }, [loading, selectedPage, handleTeamCreate, selectedTeamSlugs, teams, selectedTeam])
 
   const handleSelectedTeamChange = useCallback((event: SelectChangeEvent<string>) => {
     if (event.target.value === 'create') {
@@ -155,7 +173,7 @@ const UserPage = (): JSX.Element => {
           '&::-webkit-scrollbar-thumb': {
             backgroundColor: 'var(--accent)',
           },
-        }
+        },
       }}
     >
       <Paper

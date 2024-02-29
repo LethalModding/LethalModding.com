@@ -24,15 +24,32 @@ import { useCallback, useEffect, useState, type ChangeEvent } from 'react'
 import { type Team } from 'types/Team'
 
 type Props = {
-    onTeamChange: (teamID: string) => void
-    team: Team
+  onTeamChange: (teamID: string) => void
+  slugs: string[]
+  team: Team
 }
 
+const slugify = (text: string): string => text
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/^-+|-+$/g, '')
+
 export default function TeamDashboardPage(props: Props): JSX.Element {
-  const { onTeamChange, team } = props
-  
-  const [localTeam, setLocalTeam] = useState<Team>(team)
-  useEffect(() => setLocalTeam(team), [team])
+  const { onTeamChange, slugs, team } = props
+
+  const [localSlugs, setLocalSlugs] = useState<string[]>(slugs ?? [slugify(team.name)])
+  useEffect(() => setLocalSlugs(slugs), [slugs])
+
+  const [localTeam, setLocalTeam] = useState<Team>(team ?? {})
+  useEffect(() => {
+    setLocalTeam(team)
+    
+    setLocalSlugs(prev => {
+      if (!prev.length) return [slugify(team.name)]
+
+      return prev
+    })
+  }, [team])
 
   const [loading, setLoading] = useState(false)
   
@@ -90,6 +107,9 @@ export default function TeamDashboardPage(props: Props): JSX.Element {
         } else {
           enqueueSnackbar('Team deleted', { variant: 'success' })
           onTeamChange('')
+
+          setLocalSlugs([])
+          setLocalTeam({} as Team)
         }
 
         setLoading(false)
@@ -295,6 +315,50 @@ export default function TeamDashboardPage(props: Props): JSX.Element {
           label="Show Link on Team Profile"
           sx={{ px: 2, py: 1 }}
         />
+      </AccordionDetails>
+    </Accordion>
+
+    <Accordion
+      disableGutters
+      expanded={expanded === 'namespace'}
+      onChange={() => setExpanded('namespace')}
+    >
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <Typography
+          sx={{ flexBasis: '240px', flexShrink: 0 }}
+          variant="h5"
+        >
+          Namespaces
+        </Typography>
+        <Typography
+          sx={{ color: 'text.secondary', pt: 0.8 }}
+        >
+          Manage your Team&apos;s Namespaces and Aliases.
+        </Typography>
+      </AccordionSummary>
+      <AccordionDetails
+        sx={{
+          display:             'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap:                 1,
+        }}
+      >
+        <Box sx={{ gridColumn: '1 / span 2' }}>
+          <Typography gutterBottom>
+            Namespaces are how your Team is identified on the platform and mod launchers. Aliases are interchangeable with the primary Namespace. Both are case-insensitive and must be unique, and cannot be changed once set (so be careful!) A Namespace must be at least 3 characters long and can only contain letters, numbers, and hyphens.
+          </Typography>
+        </Box>
+
+        {localSlugs.map((slug, index) => <TextField
+          disabled
+          fullWidth
+          key={index}
+          label={index === 0 ? 'Primary Name' : `Alias ${index}`}
+          name={`slugs[${index}]`}
+          onChange={(event) => setLocalSlugs((prevSlugs) => prevSlugs.map((prevSlug, i) => i === index ? event.target.value : prevSlug))}
+          value={slug}
+          variant="filled"
+        />)}
       </AccordionDetails>
     </Accordion>
 

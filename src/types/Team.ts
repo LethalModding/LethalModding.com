@@ -7,7 +7,6 @@ export type Team = {
   deleted_at?: string
 
   // avatar: string
-  slug?: string
   name: string
   bio: string
   location: string
