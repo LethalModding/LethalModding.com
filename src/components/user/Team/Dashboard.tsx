@@ -14,7 +14,6 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import IconButton from '@mui/material/IconButton'
-import LinearProgress from '@mui/material/LinearProgress'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { Theme, alpha } from '@mui/material/styles'
@@ -170,7 +169,6 @@ export default function TeamDashboardPage(props: Props): JSX.Element {
           display:             'grid',
           gridTemplateColumns: '1fr 1fr',
           gap:                 1,
-          pt:                  0,
         }}
       >
         <TextField
@@ -318,12 +316,7 @@ export default function TeamDashboardPage(props: Props): JSX.Element {
           View your Team&apos;s Reputation.
         </Typography>
       </AccordionSummary>
-      <LinearProgress
-        color="primary"
-        value={0}
-        variant="determinate"
-      />
-      <AccordionDetails sx={{ px: 3, pt: 2 }}>
+      <AccordionDetails>
         <Typography>
           Your Team has not yet been rated. Get started by creating a Project!
         </Typography>
@@ -351,7 +344,7 @@ export default function TeamDashboardPage(props: Props): JSX.Element {
           Delete your Team or Transfer Ownership.
         </Typography>
       </AccordionSummary>
-      <AccordionDetails sx={{ px: 3, pt: 2 }}>
+      <AccordionDetails>
         <Typography gutterBottom>
           This action is immediate and permanent, and cannot be undone.
         </Typography>

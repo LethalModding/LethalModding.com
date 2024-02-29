@@ -71,11 +71,11 @@ export default function TeamMemberManagePage(props: Props): JSX.Element {
       sx={{
         display:       'flex',
         flexDirection: 'column',
-        gap:           2,
+        gap:           1,
         p:             2,
       }}
     >
-      <Typography variant="h5">
+      <Typography sx={{ pb: 1.5 }} variant="h5">
         Members
       </Typography>
 

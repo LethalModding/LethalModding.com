@@ -112,12 +112,11 @@ export default function TeamMemberInvitePage(props: Props): JSX.Element {
       sx={{
         display:       'flex',
         flexDirection: 'column',
-        gap:           2,
-        maxWidth:      500,
+        gap:           1,
         p:             2,
       }}
     >
-      <Typography variant="h5">
+      <Typography sx={{ pb: 1.5 }} variant="h5">
         Invite to Team
       </Typography>
 
@@ -177,7 +176,7 @@ export default function TeamMemberInvitePage(props: Props): JSX.Element {
     </Paper>
 
     <Collapse in={!loading}>
-      <Accordion disableGutters>
+      <Accordion disableGutters sx={{ minWidth: 460 }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
         >
