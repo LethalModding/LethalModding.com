@@ -6,12 +6,11 @@ import Badge from '@mui/material/Badge'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Collapse from '@mui/material/Collapse'
-import FormControl from '@mui/material/FormControl'
-import FormHelperText from '@mui/material/FormHelperText'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import Paper from '@mui/material/Paper'
-import Select, { type SelectChangeEvent } from '@mui/material/Select'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import { type SelectChangeEvent } from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
@@ -120,59 +119,57 @@ export default function TeamMemberInvitePage(props: Props): JSX.Element {
         Invite to Team
       </Typography>
 
-      <Box>
-        <TextField
-          fullWidth
-          label="Email"
-          name="email"
-          onChange={handleInputChange}
-          variant="filled"
-          value={email}
-        />
+      <TextField
+        fullWidth
+        label="Email"
+        name="email"
+        onChange={handleInputChange}
+        variant="filled"
+        value={email}
+      />
 
-        <FormControl
-          fullWidth
-          margin="normal"
-          variant="filled"
-        >
-          <InputLabel>Type</InputLabel>
-          <Select
-            label="Type"
-            name="type"
-            onChange={handleSelectChange}
-            value={type}
-          >
-            <MenuItem value="collaborator">
-              Collaborator
-            </MenuItem>
-            <MenuItem value="tester">
-              Tester
-            </MenuItem>
-          </Select>
-          <FormHelperText>
-            {type === 'collaborator'
-              ? 'Collaborators can manage projects.'
-              : 'Testers can only view projects.'}
-          </FormHelperText>
-        </FormControl>
-      </Box>
-
-      <Box
-        sx={{
-          display:        'flex',
-          gap:            1,
-          justifyContent: 'flex-end',
-        }}
+      <RadioGroup
+        name="type"
+        onChange={handleSelectChange}
+        sx={{ my: 0.5, gap: 1 }}
+        value={type}
       >
-        <Button
-          color="primary"
-          disabled={!email}
-          onClick={handleSubmit}
-          variant="contained"
-        >
-          Invite
-        </Button>
-      </Box>
+        <FormControlLabel
+          control={<Radio/>}
+          label={<>
+            Collaborator
+            <Typography
+              color="textSecondary"
+              variant="body2"
+            >
+              Can view, create, and edit projects
+            </Typography>
+          </>}
+          value="collaborator"
+        />
+        <FormControlLabel
+          control={<Radio />}
+          label={<>
+            Tester
+            <Typography
+              color="textSecondary"
+              variant="body2"
+            >
+              Can view and comment on projects
+            </Typography>
+          </>}
+          value="tester"
+        />
+      </RadioGroup>
+
+      <Button
+        color="primary"
+        disabled={!email}
+        onClick={handleSubmit}
+        variant="contained"
+      >
+        Invite
+      </Button>
     </Paper>
 
     <Collapse in={!loading}>
