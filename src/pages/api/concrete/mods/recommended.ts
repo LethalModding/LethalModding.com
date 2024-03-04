@@ -1,9 +1,12 @@
 import { type NextApiRequest, type NextApiResponse } from 'next/types'
 
 const mods = [
+
   'BepInEx/BepInExPack',
   'Evaisa/HookGenPatcher',
   'CharlesE2/HostFixes',
+
+  'Lordfirespeed/Free2Move',
 
   'kuba6000/LC_Masked_Fix',
   'ThePotato/scanForItemsFix',
