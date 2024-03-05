@@ -1467,7 +1467,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.2.60":
+"@types/react@npm:^18.2.63":
   version: 18.2.63
   resolution: "@types/react@npm:18.2.63"
   dependencies:
@@ -7000,7 +7000,7 @@ __metadata:
     "@supabase/supabase-js": ^2.39.7
     "@types/lru-cache": ^7.10.10
     "@types/node": ^20.11.24
-    "@types/react": ^18.2.60
+    "@types/react": ^18.2.63
     "@types/react-dom": ^18.2.19
     "@types/uuid": ^9.0.8
     "@typescript-eslint/eslint-plugin": ^7.1.1
