@@ -18,6 +18,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Loader from 'components/_shared/Loader'
+import ProjectCreatePage from 'components/project/Create'
 import TeamCreatePage from 'components/user/Team/Create'
 import TeamDashboardPage from 'components/user/Team/Dashboard'
 import TeamMemberInvitePage from 'components/user/Team/MemberInvite'
@@ -130,7 +131,9 @@ const TeamPage = (): JSX.Element => {
     case 'team/projects':
       return <ComingSoonPage />
     case 'team/projects/create':
-      return <ComingSoonPage />
+      return <ProjectCreatePage
+        team={teams.find((team) => team.id === selectedTeam) as Team}
+      />
     default:
       return <ComingSoonPage />
     }
