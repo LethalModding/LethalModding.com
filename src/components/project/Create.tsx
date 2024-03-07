@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useSnackbar } from 'notistack'
 import { FormEvent, useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'react'
-import { type Team } from 'types/Team'
+import { type Team } from 'types/db/Team'
 
 type Props = {
   team: Team

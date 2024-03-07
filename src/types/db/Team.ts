@@ -1,10 +1,7 @@
-export type Team = {
-  id: string
-  owner_id: string
+import { Record } from './Record'
 
-  created_at: string
-  updated_at: string
-  deleted_at?: string
+export type Team = Record & {
+  owner_id: string
 
   // avatar: string
   name: string

@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Loader from 'components/_shared/Loader'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { type Team } from 'types/Team'
+import { type Team } from 'types/db/Team'
 
 type UserProfile = {
   id: string

@@ -21,7 +21,7 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Loader from 'components/_shared/Loader'
 import { useSnackbar } from 'notistack'
 import { useCallback, useEffect, useState, type ChangeEvent } from 'react'
-import { type Team } from 'types/Team'
+import { type Team } from 'types/db/Team'
 
 type Props = {
   onTeamChange: (teamID: string) => void

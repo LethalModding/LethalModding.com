@@ -26,7 +26,7 @@ import TeamMemberManagePage from 'components/user/Team/MemberManage'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { type Team } from 'types/Team'
+import { type Team } from 'types/db/Team'
 
 const TeamPage = (): JSX.Element => {
   const [selectedTeam, setSelectedTeam] = useState('')

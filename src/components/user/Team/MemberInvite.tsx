@@ -17,8 +17,8 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Loader from 'components/_shared/Loader'
 import { useSnackbar } from 'notistack'
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'react'
-import { type Team } from 'types/Team'
-import { TeamInvite } from 'types/TeamInvite'
+import { type Team } from 'types/db/Team'
+import { TeamInvite } from 'types/db/TeamInvite'
 import InviteListItem from '../inviteListItem'
 
 type Props = {
