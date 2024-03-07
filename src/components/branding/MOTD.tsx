@@ -44,7 +44,7 @@ const externalLinks = [
 
 const internalLinks = [
   {
-    href:  '/user',
+    href:  '/team',
     label: '> LethalModding (WIP)',
   },
   {

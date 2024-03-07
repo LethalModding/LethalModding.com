@@ -27,7 +27,7 @@ import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { type Team } from 'types/Team'
 
-const UserPage = (): JSX.Element => {
+const TeamPage = (): JSX.Element => {
   const [selectedTeam, setSelectedTeam] = useState('')
 
   const supabase = useSupabaseClient()
@@ -71,7 +71,7 @@ const UserPage = (): JSX.Element => {
     }
 
     if (!different) return
-    router.replace(`/user/${selectedPage}`, undefined, { shallow: true })
+    router.replace(`/team/${selectedPage}`, undefined, { shallow: true })
   }, [router, selectedPage])
 
   // Return user to /create if they don't have a team
@@ -298,6 +298,6 @@ export function ComingSoonPage(): JSX.Element {
   </>
 }
 
-UserPage.auth = true
+TeamPage.auth = true
 
-export default UserPage
+export default TeamPage
