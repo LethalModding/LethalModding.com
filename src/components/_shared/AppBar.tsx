@@ -104,13 +104,17 @@ export default function AppBar(): JSX.Element {
         </Link>
 
         <List disablePadding>
+          <ListSubheader disableSticky sx={{ mb: -1, mt: 0.5 }}>
+            Account
+          </ListSubheader>
+
           <ListItemButton selected={router.pathname === '/team'}>
             <Link onClick={closeDrawer} href="/team">
               Your Team
             </Link>
           </ListItemButton>
           
-          <ListSubheader disableSticky sx={{ }}>
+          <ListSubheader disableSticky sx={{ mb: -1, mt: 0.5 }}>
             Tools
           </ListSubheader>
 
@@ -120,7 +124,7 @@ export default function AppBar(): JSX.Element {
             </Link>
           </ListItemButton>
 
-          <ListSubheader disableSticky>
+          <ListSubheader disableSticky sx={{ mb: -1, mt: 0.5 }}>
             Community
           </ListSubheader>
 
