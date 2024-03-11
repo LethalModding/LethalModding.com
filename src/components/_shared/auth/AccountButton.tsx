@@ -34,31 +34,30 @@ export default function AccountButton(): JSX.Element {
     supabase.auth.signOut()
   }, [supabase])
 
+  const selectedTeam = 'LethalModding.com'
+
   if (session?.user.id) {
     return <>
       <ListItemButton
         onClick={openMenu}
         sx={{
-          flexGrow: 0,
-          py:       0,
-
           '.MuiTypography-root': {
-            lineHeight: 1,
+            lineHeight: 0.9,
             textAlign:  'right',
           }
         }}
       >
         <ListItemText
           primary={session.user.user_metadata.full_name}
-          secondary={session.user.email}
+          secondary={selectedTeam}
         />
         <Avatar
           alt={session.user.email}
           src={session.user.user_metadata.avatar_url}
-          sx={{ ml: 1 }}
+          sx={{ ml: 1, mb: 0.1 }}
         />
       </ListItemButton>
-    
+
       <Menu
         anchorEl={menuEl}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -103,7 +102,6 @@ export default function AccountButton(): JSX.Element {
       color="primary"
       onClick={showLoginDialog}
       size="small"
-      sx={{ mr: 1 }}
       variant="outlined"
     >
       <AccountCircleIcon sx={{ mr: 1 }} />
