@@ -19,6 +19,7 @@ import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Loader from 'components/_shared/Loader'
 import ProjectCreatePage from 'components/project/Create'
+import ProjectManagePage from 'components/project/Manage'
 import TeamCreatePage from 'components/user/Team/Create'
 import TeamDashboardPage from 'components/user/Team/Dashboard'
 import TeamMemberInvitePage from 'components/user/Team/MemberInvite'
@@ -129,7 +130,9 @@ const TeamPage = (): JSX.Element => {
         team={teams.find((team) => team.id === selectedTeam) as Team}
       />
     case 'team/projects':
-      return <ComingSoonPage />
+      return <ProjectManagePage
+        team={teams.find((team) => team.id === selectedTeam) as Team}
+      />
     case 'team/projects/create':
       return <ProjectCreatePage
         team={teams.find((team) => team.id === selectedTeam) as Team}

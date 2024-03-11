@@ -5,5 +5,6 @@ export type Project = Record & {
   team_id: string
 
   name: string
+  summary: string
   type: 'public' | 'private'
 }
