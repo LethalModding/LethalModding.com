@@ -42,7 +42,7 @@ export default function AccountButton(): JSX.Element {
         onClick={openMenu}
         sx={{
           '.MuiTypography-root': {
-            lineHeight: 0.9,
+            lineHeight: 1,
             textAlign:  'right',
           }
         }}

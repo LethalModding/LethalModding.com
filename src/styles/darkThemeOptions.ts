@@ -25,7 +25,7 @@ const darkThemeOptions: Theme = createTheme({
     fontSize:    18,
     allVariants: {
       letterSpacing: '0.2rem',
-      lineHeight:    1,
+      lineHeight:    0.98,
       wordSpacing:   '-0.2rem',
     },
     body1: {

@@ -179,7 +179,7 @@ export default function TeamDashboardPage(props: Props): JSX.Element {
           Profile
         </Typography>
         <Typography
-          sx={{ color: 'text.secondary', pt: 0.8 }}
+          sx={{ color: 'text.secondary', pt: 0.55 }}
         >
           Manage your Team&apos;s Public Profile.
         </Typography>
@@ -277,7 +277,7 @@ export default function TeamDashboardPage(props: Props): JSX.Element {
           Donations
         </Typography>
         <Typography
-          sx={{ color: 'text.secondary', pt: 0.8 }}
+          sx={{ color: 'text.secondary', pt: 0.55 }}
         >
           Manage your Team&apos;s Donation Settings.
         </Typography>
@@ -331,7 +331,7 @@ export default function TeamDashboardPage(props: Props): JSX.Element {
           Namespaces
         </Typography>
         <Typography
-          sx={{ color: 'text.secondary', pt: 0.8 }}
+          sx={{ color: 'text.secondary', pt: 0.55 }}
         >
           Manage your Team&apos;s Namespaces and Aliases.
         </Typography>
@@ -375,7 +375,7 @@ export default function TeamDashboardPage(props: Props): JSX.Element {
           Reputation
         </Typography>
         <Typography
-          sx={{ color: 'text.secondary', pt: 0.8 }}
+          sx={{ color: 'text.secondary', pt: 0.55 }}
         >
           View your Team&apos;s Reputation.
         </Typography>
@@ -403,7 +403,7 @@ export default function TeamDashboardPage(props: Props): JSX.Element {
           Danger Zone
         </Typography>
         <Typography
-          sx={{ color: 'text.secondary', pt: 0.8 }}
+          sx={{ color: 'text.secondary', pt: 0.55 }}
         >
           Delete your Team or Transfer Ownership.
         </Typography>
