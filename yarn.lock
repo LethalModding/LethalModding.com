@@ -1305,9 +1305,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@supabase/supabase-js@npm:^2.39.7":
-  version: 2.39.7
-  resolution: "@supabase/supabase-js@npm:2.39.7"
+"@supabase/supabase-js@npm:^2.39.8":
+  version: 2.39.8
+  resolution: "@supabase/supabase-js@npm:2.39.8"
   dependencies:
     "@supabase/functions-js": 2.1.5
     "@supabase/gotrue-js": 2.62.2
@@ -1315,7 +1315,7 @@ __metadata:
     "@supabase/postgrest-js": 1.9.2
     "@supabase/realtime-js": 2.9.3
     "@supabase/storage-js": 2.5.5
-  checksum: f2cc7c7841762d3161f53b19e82b0eb860d72510729114ed45a38aff0427c5897e4a176092b370b68fcd621b385de4d3b90fc43fe39d129d09c04b6da5a407d7
+  checksum: 8a4f0dcf7621adb533a095f1d037aedddda7bd8ed7175d9fec1830d590edacaf630abf2e3e076553d3c184a66f64c451fe12b21ceeae2040e075482a9a5175af
   languageName: node
   linkType: hard
 
@@ -6020,7 +6020,7 @@ __metadata:
     "@octokit/rest": ^20.0.2
     "@supabase/auth-helpers-nextjs": ^0.9.0
     "@supabase/auth-helpers-react": ^0.4.2
-    "@supabase/supabase-js": ^2.39.7
+    "@supabase/supabase-js": ^2.39.8
     "@types/lru-cache": ^7.10.10
     "@types/node": ^20.11.29
     "@types/react": ^18.2.67
