@@ -20,6 +20,10 @@ import darkThemeOptions from 'styles/darkThemeOptions'
 import 'styles/globals.css'
 import createEmotionCache from 'utility/createEmotionCache'
 
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+TimeAgo.addDefaultLocale(en)
+
 interface MyAppProps extends Omit<AppProps, 'Component'> {
   Component: AppProps['Component'] & { auth?: boolean }
   emotionCache?: EmotionCache

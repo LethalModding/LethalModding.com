@@ -9,6 +9,7 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Head from 'next/head'
 import { useParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
+import ReactTimeAgo from 'react-time-ago'
 import { type Profile } from 'types/db/Profile'
 import { type Project } from 'types/db/Project'
 import { type Team } from 'types/db/Team'
@@ -151,10 +152,10 @@ const ProjectPage = (): JSX.Element => {
           Details
         </Typography>
         <Typography variant="body1">
-          Created: {project?.created_at} (by {creator?.username || 'Unknown'})
+          Created: <ReactTimeAgo date={new Date(project?.created_at ?? 0)} /> (by {creator?.username || 'Unknown'})
         </Typography>
         <Typography variant="body1">
-          Updated: {project?.updated_at}
+          Updated: <ReactTimeAgo date={new Date(project?.updated_at ?? 0)} />
         </Typography>
       </Paper>
     </Box>
