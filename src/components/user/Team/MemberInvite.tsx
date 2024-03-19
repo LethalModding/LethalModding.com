@@ -17,18 +17,11 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Loader from 'components/_shared/Loader'
 import { useSnackbar } from 'notistack'
 import { useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'react'
-import { type Team } from 'types/db/Team'
-import { TeamInvite } from 'types/db/TeamInvite'
+import { useAppStore } from 'store'
+import { type TeamInvite } from 'types/db/TeamInvite'
 import InviteListItem from '../inviteListItem'
 
-type Props = {
-  onTeamChange: (teamID: string) => void
-  team: Team
-}
-
-export default function TeamMemberInvitePage(props: Props): JSX.Element {
-  const { team } = props
-  
+export default function TeamMemberInvitePage(): JSX.Element {
   const [email, setEmail] = useState('')
   const [type, setType] = useState('collaborator')
   const [loading, setLoading] = useState(true)
@@ -58,11 +51,12 @@ export default function TeamMemberInvitePage(props: Props): JSX.Element {
     })
   }, [invites])
 
+  const teamID = useAppStore(state => state.selectedTeamID)
   const refreshInvites = useCallback(() => {
     supabase
       .from('team_invites')
       .select('*')
-      .eq('team_id', team.id)
+      .eq('team_id', teamID)
       .then(({ data, error }) => {
         setLoading(false)
 
@@ -72,7 +66,7 @@ export default function TeamMemberInvitePage(props: Props): JSX.Element {
           setInvites(data)
         }
       })
-  }, [supabase, team.id])
+  }, [supabase, teamID])
   useEffect(() => refreshInvites(), [refreshInvites])
 
   const { enqueueSnackbar } = useSnackbar()
@@ -82,7 +76,7 @@ export default function TeamMemberInvitePage(props: Props): JSX.Element {
     
     supabase
       .from('team_invites')
-      .insert({ team_id: team.id, email, type })
+      .insert({ team_id: teamID, email, type })
       .then(({ error }) => {
         setLoading(false)
 
@@ -96,7 +90,7 @@ export default function TeamMemberInvitePage(props: Props): JSX.Element {
 
         setEmail('')
       })
-  }, [email, enqueueSnackbar, refreshInvites, supabase, team.id, type])
+  }, [email, enqueueSnackbar, refreshInvites, supabase, teamID, type])
 
   return <Box
     sx={{

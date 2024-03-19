@@ -6,32 +6,16 @@ import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Loader from 'components/_shared/Loader'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { type Team } from 'types/db/Team'
+import { useAppStore } from 'store'
+import { Profile } from 'types/db/Profile'
 
-type UserProfile = {
-  id: string
-
-  created_at: string
-  updated_at: string
-  deleted_at?: string
-
-  avatar_url: string
-  full_name: string
-  username?: string
-}
-
-type Props = {
-  onTeamChange: (teamID: string) => void
-  team: Team
-}
-
-export default function TeamMemberManagePage(props: Props): JSX.Element {
-  const { team } = props
-  
+export default function TeamMemberManagePage(): JSX.Element {
   const supabase = useSupabaseClient()
+
+  const team = useAppStore(state => state.selectedTeam)
   
   const [loading, setLoading] = useState(true)
-  const [members, setMembers] = useState<UserProfile[]>([])
+  const [members, setMembers] = useState<Profile[]>([])
   const sortedMembers = useMemo(() => {
     return members.sort((a, b) => {
       return a.created_at < b.created_at ? 1 : -1
@@ -39,6 +23,8 @@ export default function TeamMemberManagePage(props: Props): JSX.Element {
   }, [members])
 
   const refreshMembers = useCallback(() => {
+    if (!team) return
+
     const members = team.members || []
     members.push(team.owner_id)
 
@@ -55,7 +41,7 @@ export default function TeamMemberManagePage(props: Props): JSX.Element {
           setMembers(data)
         }
       })
-  }, [supabase, team.members, team.owner_id])
+  }, [supabase, team])
   useEffect(() => refreshMembers(), [refreshMembers])
 
   return <Box
@@ -94,11 +80,11 @@ export default function TeamMemberManagePage(props: Props): JSX.Element {
             {member.username ? `@${member.username}` : member.full_name}
           </Typography>
           <Typography variant="body2">
-            {member.id === team.owner_id ? 'Owner' : ''}
+            {member.id === team?.owner_id ? 'Owner' : ''}
           </Typography>
         </Box>
 
-        {member.id !== team.owner_id ? <IconButton size="small">
+        {member.id !== team?.owner_id ? <IconButton size="small">
           <DeleteIcon fontSize="inherit" />
         </IconButton> : null}
       </Box>)}

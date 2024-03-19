@@ -21,31 +21,48 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Loader from 'components/_shared/Loader'
 import { useSnackbar } from 'notistack'
 import { useCallback, useEffect, useState, type ChangeEvent } from 'react'
+import { useAppStore } from 'store'
 import { type Team } from 'types/db/Team'
-
-type Props = {
-  onTeamChange: (teamID: string) => void
-  slugs: string[]
-  team: Team
-}
 
 const slugify = (text: string): string => text
   .toLowerCase()
   .replace(/[^a-z0-9]+/g, '-')
   .replace(/^-+|-+$/g, '')
 
-export default function TeamDashboardPage(props: Props): JSX.Element {
-  const { onTeamChange, slugs, team } = props
+export default function TeamDashboardPage(): JSX.Element {
+  const team = useAppStore(state => state.selectedTeam)
+  const [slugs, setSlugs] = useState<string[]>([])
 
-  const [localSlugs, setLocalSlugs] = useState<string[]>(slugs ?? [slugify(team.name)])
+  const supabase = useSupabaseClient()
+  useEffect(() => {
+    if (!team) return
+
+    supabase
+      .from('team_slugs')
+      .select('slug')
+      .eq('team_id', team.id)
+      .then(({ data, error }) => {
+        if (error) {
+          console.error(error)
+        } else {
+          setSlugs(data.map((team) => team.slug))
+        }
+      })
+  }, [supabase, team])
+
+  const [localSlugs, setLocalSlugs] = useState<string[]>(slugs ?? [slugify(team?.name || '')])
   useEffect(() => setLocalSlugs(slugs), [slugs])
 
-  const [localTeam, setLocalTeam] = useState<Team>(team ?? {})
+  const [localTeam, setLocalTeam] = useState<Team>({
+    name:    '',
+    socials: '',
+  } as Team)
   useEffect(() => {
+    if (!team) return
     setLocalTeam(team)
     
     setLocalSlugs(prev => {
-      if (!prev.length) return [slugify(team.name)]
+      if (!prev.length) return [slugify(team.name || '')]
 
       return prev
     })
@@ -66,8 +83,8 @@ export default function TeamDashboardPage(props: Props): JSX.Element {
 
   const [expanded, setExpanded] = useState<string>('profile')
   
-  const supabase = useSupabaseClient()
   const { enqueueSnackbar } = useSnackbar()
+  const setTeam = useAppStore(state => state.setSelectedTeam)
   const handleSubmit = useCallback(() => {
     setLoading(true)
     
@@ -75,23 +92,26 @@ export default function TeamDashboardPage(props: Props): JSX.Element {
       .from('teams')
       .update(localTeam)
       .eq('id', localTeam.id)
-      .then(({ error }) => {
+      .select()
+      .single()
+      .then(({ data, error }) => {
         if (error) {
           enqueueSnackbar('Unable to save changes', { variant: 'error' })
           console.error(error)
         } else {
           enqueueSnackbar('Changes saved', { variant: 'success' })
-          onTeamChange(localTeam.id)
+          setTeam(data)
         }
 
         setLoading(false)
       })
-  }, [enqueueSnackbar, localTeam, onTeamChange, supabase])
+  }, [enqueueSnackbar, localTeam, setTeam, supabase])
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const showDeleteModal = useCallback(() => setDeleteModalOpen(true), [])
   const hideDeleteModal = useCallback(() => setDeleteModalOpen(false), [])
 
+  const setSelectedTeamID = useAppStore(state => state.setSelectedTeamID)
   const [confirmationName, setConfirmationName] = useState('')
   const confirmDeleteTeam = useCallback(() => {
     setLoading(true)
@@ -106,7 +126,7 @@ export default function TeamDashboardPage(props: Props): JSX.Element {
           console.error(error)
         } else {
           enqueueSnackbar('Team deleted', { variant: 'success' })
-          onTeamChange('')
+          setSelectedTeamID('')
 
           setLocalSlugs([])
           setLocalTeam({} as Team)
@@ -114,7 +134,7 @@ export default function TeamDashboardPage(props: Props): JSX.Element {
 
         setLoading(false)
       })
-  }, [enqueueSnackbar, localTeam.id, onTeamChange, supabase])
+  }, [enqueueSnackbar, localTeam.id, setSelectedTeamID, supabase])
 
   return <>
     <Loader open={loading} />

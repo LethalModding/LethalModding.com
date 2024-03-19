@@ -11,11 +11,7 @@ import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useSnackbar } from 'notistack'
 import { FormEvent, useCallback, useEffect, useMemo, useState, type ChangeEvent } from 'react'
-import { type Team } from 'types/db/Team'
-
-type Props = {
-  team: Team
-}
+import { useAppStore } from 'store'
 
 function slugEncode(str: string): string {
   return str
@@ -25,9 +21,7 @@ function slugEncode(str: string): string {
     .replace(/^-|-$/g, '')
 }
 
-export default function ProjectCreatePage(props: Props): JSX.Element {
-  const { team } = props
-
+export default function ProjectCreatePage(): JSX.Element {
   const [name, setName] = useState('')
   const [type, setType] = useState('public')
 
@@ -49,6 +43,7 @@ export default function ProjectCreatePage(props: Props): JSX.Element {
 
   const { enqueueSnackbar } = useSnackbar()
   const supabase = useSupabaseClient()
+  const selectedTeamID = useAppStore(state => state.selectedTeamID)
   const handleSubmit = useCallback((event: FormEvent) => {
     event.preventDefault()
     if (!name) return
@@ -56,7 +51,7 @@ export default function ProjectCreatePage(props: Props): JSX.Element {
     supabase
       .from('projects')
       .insert({
-        team_id: team.id,
+        team_id: selectedTeamID,
         name,
         type,
       })
@@ -69,16 +64,16 @@ export default function ProjectCreatePage(props: Props): JSX.Element {
           enqueueSnackbar('Project created', { variant: 'success' })
         }
       })
-  }, [enqueueSnackbar, name, supabase, team, type])
+  }, [enqueueSnackbar, name, selectedTeamID, supabase, type])
 
   const [slugs, setSlugs] = useState<string[]>([])
   useEffect(() => {
-    if (team.id === '') return
+    if (selectedTeamID === '') return
 
     supabase
       .from('team_slugs')
       .select('name')
-      .eq('team_id', team.id)
+      .eq('team_id', selectedTeamID)
       .then(({ data, error }) => {
         if (error) {
           console.error(error)
@@ -86,8 +81,9 @@ export default function ProjectCreatePage(props: Props): JSX.Element {
           setSlugs(data.map((slug) => slug.name))
         }
       })
-  }, [team, supabase])
+  }, [selectedTeamID, supabase])
 
+  const teamName = useAppStore(state => state.selectedTeam?.name || '')
   const projectURL = useMemo(() => {
     // use first slug
     const slugName = slugEncode(name)
@@ -96,8 +92,8 @@ export default function ProjectCreatePage(props: Props): JSX.Element {
     }
 
     // generate slug from name
-    return `${slugEncode(team.name)}/${slugName}`
-  }, [name, slugs, team.name])
+    return `${slugEncode(teamName)}/${slugName}`
+  }, [name, slugs, teamName])
 
   return <Box
     sx={{

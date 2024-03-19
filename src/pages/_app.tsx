@@ -46,7 +46,6 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
 
   const isAccessible = useAppStore(state => state.isAccessible)
   const toggleAccessibility = useAppStore(state => state.toggleAccessibility)
-
   useEffect(() => {
     if (isAccessible) {
       document.body.classList.add('accessible')
@@ -57,6 +56,33 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
 
   // Create a new supabase browser client on every first render.
   const [supabaseClient] = useState(() => createPagesBrowserClient())
+
+  // when the selectedTeamID changes, update the selectedTeam
+  const selectedTeamID = useAppStore(state => state.selectedTeamID)
+  const setSelectedTeam = useAppStore(state => state.setSelectedTeam)
+  useEffect(() => {
+    if (supabaseClient === null) return
+    console.log('selectedTeamID', selectedTeamID)
+
+    if (selectedTeamID === '') {
+      console.log('set selectedTeam empty')
+      setSelectedTeam(null)
+    } else {
+      supabaseClient
+        .from('teams')
+        .select('*')
+        .eq('id', selectedTeamID)
+        .single()
+        .then(({ data, error }) => {
+          if (error) {
+            console.error(error)
+          } else {
+            console.log('set selectedTeam', data)
+            setSelectedTeam(data)
+          }
+        })
+    }
+  }, [selectedTeamID, setSelectedTeam, supabaseClient])
 
   return <CacheProvider value={emotionCache}>
     <Head>

@@ -11,14 +11,9 @@ import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useSnackbar } from 'notistack'
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react'
+import { useAppStore } from 'store'
 
-type Props = {
-    onTeamCreate: (teamID: string) => void
-}
-
-export default function TeamCreatePage(props: Props): JSX.Element {
-  const { onTeamCreate } = props
-
+export default function TeamCreatePage(): JSX.Element {
   const [name, setName] = useState('')
   const [type, setType] = useState('public')
 
@@ -40,6 +35,7 @@ export default function TeamCreatePage(props: Props): JSX.Element {
 
   const { enqueueSnackbar } = useSnackbar()
   const supabase = useSupabaseClient()
+  const setSelectedTeamID = useAppStore(state => state.setSelectedTeamID)
   const handleSubmit = useCallback((event: FormEvent) => {
     event.preventDefault()
     if (!name) return
@@ -48,16 +44,17 @@ export default function TeamCreatePage(props: Props): JSX.Element {
       .from('teams')
       .insert({ name, type })
       .select()
+      .single()
       .then(({ data, error }) => {
         if (error) {
           enqueueSnackbar('Unable to create Team', { variant: 'error' })
           console.error(error)
         } else {
           enqueueSnackbar('Team created', { variant: 'success' })
-          onTeamCreate(data[0].id)
+          setSelectedTeamID(data.id)
         }
       })
-  }, [enqueueSnackbar, name, onTeamCreate, supabase, type])
+  }, [enqueueSnackbar, name, setSelectedTeamID, supabase, type])
 
   return <Box
     sx={{

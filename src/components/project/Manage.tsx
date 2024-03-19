@@ -10,25 +10,21 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Loader from 'components/_shared/Loader'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useAppStore } from 'store'
 import { Project } from 'types/db/Project'
-import { type Team } from 'types/db/Team'
 
-type Props = {
-  team: Team
-}
-
-export default function ProjectManagePage(props: Props): JSX.Element {
-  const { team } = props
-
+export default function ProjectManagePage(): JSX.Element {
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
+
+  const selectedTeamID = useAppStore(state => state.selectedTeamID)
 
   const supabase = useSupabaseClient()
   useEffect(() => {
     supabase
       .from('projects')
       .select('*')
-      .eq('team_id', team.id)
+      .eq('team_id', selectedTeamID)
       .then(({ data, error }) => {
         if (error) {
           console.error(error)
@@ -37,7 +33,7 @@ export default function ProjectManagePage(props: Props): JSX.Element {
         }
         setLoading(false)
       })
-  }, [supabase, team.id])
+  }, [supabase, selectedTeamID])
 
   const router = useRouter()
 

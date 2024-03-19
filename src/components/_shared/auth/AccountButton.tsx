@@ -40,17 +40,17 @@ export default function AccountButton(): JSX.Element {
     supabase.auth.signOut()
   }, [supabase])
 
-  const selectedTeam = useAppStore(state => state.selectedTeam)
-  const setSelectedTeam = useAppStore(state => state.setSelectedTeam)
+  const selectedTeamID = useAppStore(state => state.selectedTeamID)
+  const setSelectedTeamID = useAppStore(state => state.setSelectedTeamID)
 
   const handleSelectedTeamChange = useCallback((event: SelectChangeEvent<string>) => {
     if (event.target.value === 'create') {
-      setSelectedTeam('create')
+      setSelectedTeamID('create')
       return
     }
 
-    setSelectedTeam(event.target.value)
-  }, [setSelectedTeam])
+    setSelectedTeamID(event.target.value)
+  }, [setSelectedTeamID])
 
   const [teams, setTeams] = useState<Partial<Team>[]>([])
   const [loading, setLoading] = useState(true)
@@ -64,15 +64,15 @@ export default function AccountButton(): JSX.Element {
         } else {
           setTeams(data)
 
-          if (selectedTeam === '' || (selectedTeam !== 'create' &&
-            !data.find((team) => team.id === selectedTeam))) {
-            setSelectedTeam(data?.[0]?.id)
+          if (selectedTeamID === '' || (selectedTeamID !== 'create' &&
+            !data.find((team) => team.id === selectedTeamID))) {
+            setSelectedTeamID(data?.[0]?.id)
           }
         }
 
         setLoading(false)
       })
-  }, [selectedTeam, setSelectedTeam, supabase])
+  }, [selectedTeamID, setSelectedTeamID, supabase])
   useEffect(() => refreshTeams(), [refreshTeams])
 
   if (session?.user.id) {
@@ -88,7 +88,7 @@ export default function AccountButton(): JSX.Element {
       >
         <ListItemText
           primary={session.user.user_metadata.full_name}
-          secondary={selectedTeam}
+          secondary={teams?.find((team) => team.id === selectedTeamID)?.name || 'No Team'}
         />
         <Avatar
           alt={session.user.email}
@@ -113,7 +113,7 @@ export default function AccountButton(): JSX.Element {
             <Select
               label="Team"
               onChange={handleSelectedTeamChange}
-              value={selectedTeam}
+              value={selectedTeamID}
             >
               {teams.map((team) => <MenuItem key={team.id} value={team.id}>
                 {team.name}
