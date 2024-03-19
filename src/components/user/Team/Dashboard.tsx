@@ -24,11 +24,7 @@ import type { ChangeEvent } from 'react'
 import { useCallback, useEffect, useState } from 'react'
 import { useAppStore } from 'store'
 import { type Team } from 'types/db/Team'
-
-const slugify = (text: string): string => text
-  .toLowerCase()
-  .replace(/[^a-z0-9]+/g, '-')
-  .replace(/^-+|-+$/g, '')
+import { slugify } from 'utility/slugify'
 
 export default function TeamDashboardPage(): JSX.Element {
   const team = useAppStore(state => state.selectedTeam)
@@ -51,7 +47,7 @@ export default function TeamDashboardPage(): JSX.Element {
       })
   }, [supabase, team])
 
-  const [localSlugs, setLocalSlugs] = useState<string[]>(slugs ?? [slugify(team?.name || '')])
+  const [localSlugs, setLocalSlugs] = useState<string[]>(slugs ?? [slugify(team?.name)])
   useEffect(() => setLocalSlugs(slugs), [slugs])
 
   const [localTeam, setLocalTeam] = useState<Team>({
@@ -63,7 +59,7 @@ export default function TeamDashboardPage(): JSX.Element {
     setLocalTeam(team)
     
     setLocalSlugs(prev => {
-      if (!prev.length) return [slugify(team.name || '')]
+      if (!prev.length) return [slugify(team.name)]
 
       return prev
     })

@@ -14,14 +14,7 @@ import { useSnackbar } from 'notistack'
 import type { ChangeEvent, FormEvent } from 'react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAppStore } from 'store'
-
-function slugEncode(str: string): string {
-  return str
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '')
-}
+import { slugify } from 'utility/slugify'
 
 export default function ProjectCreatePage(): JSX.Element {
   const [name, setName] = useState('')
@@ -88,13 +81,13 @@ export default function ProjectCreatePage(): JSX.Element {
   const teamName = useAppStore(state => state.selectedTeam?.name || '')
   const projectURL = useMemo(() => {
     // use first slug
-    const slugName = slugEncode(name)
+    const slugName = slugify(name)
     if (slugs.length > 0) {
       return `${slugs[0]}/${slugName}`
     }
 
     // generate slug from name
-    return `${slugEncode(teamName)}/${slugName}`
+    return `${slugify(teamName)}/${slugName}`
   }, [name, slugs, teamName])
 
   return <Box
