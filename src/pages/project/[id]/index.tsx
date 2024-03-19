@@ -152,7 +152,8 @@ const ProjectPage = (): JSX.Element => {
           Details
         </Typography>
         <Typography variant="body1">
-          Created: <ReactTimeAgo date={new Date(project?.created_at ?? 0)} /> (by {creator?.username || 'Unknown'})
+          Created: <ReactTimeAgo date={new Date(project?.created_at ?? 0)} />
+          {' '}(by {creator?.username || 'Unknown'})
         </Typography>
         <Typography variant="body1">
           Updated: <ReactTimeAgo date={new Date(project?.updated_at ?? 0)} />
