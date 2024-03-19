@@ -104,29 +104,27 @@ export default function AccountButton(): JSX.Element {
         onClose={closeMenu}
         open={Boolean(menuEl)}
       >
-        <MenuItem>
-          <FormControl
-            disabled={loading}
-            fullWidth
-            variant="filled"
+        <FormControl
+          disabled={loading}
+          fullWidth
+          sx={{ m: 1, mt: 0 }}
+          variant="filled"
+        >
+          <InputLabel>Team</InputLabel>
+          <Select
+            label="Team"
+            onChange={handleSelectedTeamChange}
+            value={selectedTeamID}
           >
-            <InputLabel>Team</InputLabel>
-            <Select
-              label="Team"
-              onChange={handleSelectedTeamChange}
-              value={selectedTeamID}
-            >
-              {teams.map((team) => <MenuItem key={team.id} value={team.id}>
-                {team.name}
-              </MenuItem>)}
-              <Divider />
-              <MenuItem value="create">
-                <em>Create New Team</em>
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </MenuItem>
-        <Divider />
+            {teams.map((team) => <MenuItem key={team.id} value={team.id}>
+              {team.name}
+            </MenuItem>)}
+            <Divider />
+            <MenuItem value="create">
+              <em>Create New Team</em>
+            </MenuItem>
+          </Select>
+        </FormControl>
         <MenuItem>
           <AccountCircleIcon sx={{ mr: 2 }} />
           Account
