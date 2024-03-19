@@ -8,15 +8,23 @@ import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
 import Divider from '@mui/material/Divider'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
+import Select, { type SelectChangeEvent } from '@mui/material/Select'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
-import { useCallback, useState, type MouseEvent } from 'react'
+import type { MouseEvent } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { type PageProps } from 'types/PageProps'
+import { type Team } from 'types/db/Team'
 import LoginButtons from './LoginButtons'
 
-export default function AccountButton(): JSX.Element {
+export default function AccountButton(props: PageProps): JSX.Element {
+  const { selectedTeam, setSelectedTeam } = props
+
   const [loginDialogOpen, setLoginDialogOpen] = useState(false)
   const hideLoginDialog = useCallback(() => setLoginDialogOpen(false), [])
   const showLoginDialog = useCallback(() => setLoginDialogOpen(true), [])
@@ -34,7 +42,37 @@ export default function AccountButton(): JSX.Element {
     supabase.auth.signOut()
   }, [supabase])
 
-  const selectedTeam = 'LethalModding.com'
+  const handleSelectedTeamChange = useCallback((event: SelectChangeEvent<string>) => {
+    if (event.target.value === 'create') {
+      setSelectedTeam('create')
+      return
+    }
+
+    setSelectedTeam(event.target.value)
+  }, [setSelectedTeam])
+
+  const [teams, setTeams] = useState<Partial<Team>[]>([])
+  const [loading, setLoading] = useState(true)
+  const refreshTeams = useCallback(() => {
+    supabase
+      .from('teams')
+      .select('id,name')
+      .then(({ data, error }) => {
+        if (error) {
+          console.error(error)
+        } else {
+          setTeams(data)
+
+          if (selectedTeam === '' || (selectedTeam !== 'create' &&
+            !data.find((team) => team.id === selectedTeam))) {
+            setSelectedTeam(data?.[0]?.id)
+          }
+        }
+
+        setLoading(false)
+      })
+  }, [selectedTeam, setSelectedTeam, supabase])
+  useEffect(() => refreshTeams(), [refreshTeams])
 
   if (session?.user.id) {
     return <>
@@ -64,6 +102,29 @@ export default function AccountButton(): JSX.Element {
         onClose={closeMenu}
         open={Boolean(menuEl)}
       >
+        <MenuItem>
+          <FormControl
+            disabled={loading}
+            fullWidth
+            variant="filled"
+          >
+            <InputLabel>Team</InputLabel>
+            <Select
+              label="Team"
+              onChange={handleSelectedTeamChange}
+              value={selectedTeam}
+            >
+              {teams.map((team) => <MenuItem key={team.id} value={team.id}>
+                {team.name}
+              </MenuItem>)}
+              <Divider />
+              <MenuItem value="create">
+                <em>Create New Team</em>
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </MenuItem>
+        <Divider />
         <MenuItem>
           <AccountCircleIcon sx={{ mr: 2 }} />
           Account

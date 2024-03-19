@@ -4,17 +4,12 @@ import PluginIcon from '@mui/icons-material/Extension'
 import UsersIcon from '@mui/icons-material/Group'
 import InviteIcon from '@mui/icons-material/PersonAdd'
 import Box from '@mui/material/Box'
-import Divider from '@mui/material/Divider'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import ListSubheader from '@mui/material/ListSubheader'
-import MenuItem from '@mui/material/MenuItem'
 import Paper from '@mui/material/Paper'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
 import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Loader from 'components/_shared/Loader'
@@ -27,10 +22,11 @@ import TeamMemberManagePage from 'components/user/Team/MemberManage'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { type PageProps } from 'types/PageProps'
 import { type Team } from 'types/db/Team'
 
-const TeamPage = (): JSX.Element => {
-  const [selectedTeam, setSelectedTeam] = useState('')
+const TeamPage = (props: PageProps): JSX.Element => {
+  const { selectedTeam, setSelectedTeam } = props
 
   const supabase = useSupabaseClient()
 
@@ -54,7 +50,7 @@ const TeamPage = (): JSX.Element => {
 
         setLoading(false)
       })
-  }, [selectedTeam, supabase])
+  }, [selectedTeam, setSelectedTeam, supabase])
   useEffect(() => refreshTeams(), [refreshTeams])
 
   const [selectedPage, setSelectedPage] = useState('team/dashboard')
@@ -86,21 +82,21 @@ const TeamPage = (): JSX.Element => {
     refreshTeams()
     setSelectedTeam(teamID)
     setSelectedPage('team/dashboard')
-  }, [refreshTeams])
+  }, [refreshTeams, setSelectedTeam])
 
   const [selectedTeamSlugs, setSelectedTeamSlugs] = useState<string[]>([])
   useEffect(() => {
     if (selectedTeam === '') return
 
     supabase
-      .from('team_plugins')
-      .select('plugin_slug')
+      .from('team_slugs')
+      .select('slug')
       .eq('team_id', selectedTeam)
       .then(({ data, error }) => {
         if (error) {
           console.error(error)
         } else {
-          setSelectedTeamSlugs(data.map((plugin) => plugin.plugin_slug))
+          setSelectedTeamSlugs(data.map((team) => team.slug))
         }
       })
   }, [selectedTeam, supabase])
@@ -142,19 +138,6 @@ const TeamPage = (): JSX.Element => {
     }
   }, [loading, selectedPage, handleTeamCreate, selectedTeamSlugs, teams, selectedTeam])
 
-  const handleSelectedTeamChange = useCallback((event: SelectChangeEvent<string>) => {
-    if (event.target.value === 'create') {
-      setSelectedPage('team/create')
-      setSelectedTeam('create')
-      return
-    }
-
-    setSelectedTeam(event.target.value)
-    if (selectedPage === 'team/create') {
-      setSelectedPage('team/dashboard')
-    }
-  }, [selectedPage])
-
   return <>
     <Head>
       <title>Your Source for Lethal Company Mods</title>
@@ -193,26 +176,6 @@ const TeamPage = (): JSX.Element => {
           }
         }}
       >
-        <FormControl
-          fullWidth
-          variant="filled"
-        >
-          <InputLabel>Team</InputLabel>
-          <Select
-            label="Team"
-            onChange={handleSelectedTeamChange}
-            value={selectedTeam}
-          >
-            {teams.map((team) => <MenuItem key={team.id} value={team.id}>
-              {team.name}
-            </MenuItem>)}
-            <Divider />
-            <MenuItem value="create">
-              <em>Create New Team</em>
-            </MenuItem>
-          </Select>
-        </FormControl>
-
         <List disablePadding>
           <ListItemButton
             disabled={selectedPage === 'team/create'}

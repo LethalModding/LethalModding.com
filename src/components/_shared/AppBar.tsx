@@ -5,15 +5,16 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListSubheader from '@mui/material/ListSubheader'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import Typography from '@mui/material/Typography'
-import { Theme } from '@mui/material/styles'
+import { type Theme } from '@mui/material/styles'
 import useMediaQuery from '@mui/system/useMediaQuery'
 import Link from 'components/mui/Link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
+import { type PageProps } from 'types/PageProps'
 import AccountButton from './auth/AccountButton'
 
-export default function AppBar(): JSX.Element {
+export default function AppBar(props: PageProps): JSX.Element {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
 
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -166,6 +167,6 @@ export default function AppBar(): JSX.Element {
       </ListItemButton>
     </>}
 
-    <AccountButton />
+    <AccountButton {...props} />
   </MuiAppBar>
 }

@@ -15,7 +15,7 @@ import Loader from 'components/_shared/Loader'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { SnackbarProvider } from 'notistack'
-import { useCallback, useState, type FunctionComponent, type PropsWithChildren } from 'react'
+import { useCallback, useEffect, useState, type FunctionComponent, type PropsWithChildren } from 'react'
 import darkThemeOptions from 'styles/darkThemeOptions'
 import 'styles/globals.css'
 import createEmotionCache from 'utility/createEmotionCache'
@@ -43,22 +43,22 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
     },
   } = props
 
-  const [isAccessible, setIsAccessible] = useState<boolean>(false)
+  const [isAccessible, setIsAccessible] = useState<boolean>(true)
   const toggleAccessibility = useCallback(() => {
-    const newState = !isAccessible
-
-    if (newState) {
+    setIsAccessible(is => !is)
+  }, [])
+  useEffect(() => {
+    if (isAccessible) {
       document.body.classList.add('accessible')
     } else {
       document.body.classList.remove('accessible')
     }
-
-    setIsAccessible(newState)
   }, [isAccessible])
 
   // Create a new supabase browser client on every first render.
   const [supabaseClient] = useState(() => createPagesBrowserClient())
 
+  const [selectedTeam, setSelectedTeam] = useState<string>('')
   return <CacheProvider value={emotionCache}>
     <Head>
       <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -71,12 +71,23 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
           supabaseClient={supabaseClient}
           initialSession={initialSession}
         >
-          <AppBar />
+          <AppBar
+            selectedTeam={selectedTeam}
+            setSelectedTeam={setSelectedTeam}
+          />
 
           {Component.auth ? <AuthWrapper>
-            <Component {...pageProps} />
+            <Component
+              selectedTeam={selectedTeam}
+              setSelectedTeam={setSelectedTeam}
+              {...pageProps}
+            />
           </AuthWrapper> : (
-            <Component {...pageProps} />
+            <Component
+              selectedTeam={selectedTeam}
+              setSelectedTeam={setSelectedTeam}
+              {...pageProps}
+            />
           )}
         </SessionContextProvider>}
       </SnackbarProvider>
