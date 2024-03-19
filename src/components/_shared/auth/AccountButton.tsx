@@ -18,13 +18,11 @@ import Select, { type SelectChangeEvent } from '@mui/material/Select'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import type { MouseEvent } from 'react'
 import { useCallback, useEffect, useState } from 'react'
-import { type PageProps } from 'types/PageProps'
+import { useAppStore } from 'store'
 import { type Team } from 'types/db/Team'
 import LoginButtons from './LoginButtons'
 
-export default function AccountButton(props: PageProps): JSX.Element {
-  const { selectedTeam, setSelectedTeam } = props
-
+export default function AccountButton(): JSX.Element {
   const [loginDialogOpen, setLoginDialogOpen] = useState(false)
   const hideLoginDialog = useCallback(() => setLoginDialogOpen(false), [])
   const showLoginDialog = useCallback(() => setLoginDialogOpen(true), [])
@@ -41,6 +39,9 @@ export default function AccountButton(props: PageProps): JSX.Element {
   const signOut = useCallback(() => {
     supabase.auth.signOut()
   }, [supabase])
+
+  const selectedTeam = useAppStore(state => state.selectedTeam)
+  const setSelectedTeam = useAppStore(state => state.setSelectedTeam)
 
   const handleSelectedTeamChange = useCallback((event: SelectChangeEvent<string>) => {
     if (event.target.value === 'create') {

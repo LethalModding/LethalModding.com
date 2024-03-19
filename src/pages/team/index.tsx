@@ -22,13 +22,14 @@ import TeamMemberManagePage from 'components/user/Team/MemberManage'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { type PageProps } from 'types/PageProps'
+import { useAppStore } from 'store'
 import { type Team } from 'types/db/Team'
 
-const TeamPage = (props: PageProps): JSX.Element => {
-  const { selectedTeam, setSelectedTeam } = props
-
+const TeamPage = (): JSX.Element => {
   const supabase = useSupabaseClient()
+
+  const selectedTeam = useAppStore((state) => state.selectedTeam)
+  const setSelectedTeam = useAppStore((state) => state.setSelectedTeam)
 
   const [teams, setTeams] = useState<Team[]>([])
   const [loading, setLoading] = useState(true)

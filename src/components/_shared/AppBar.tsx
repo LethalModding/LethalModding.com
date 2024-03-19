@@ -11,10 +11,9 @@ import Link from 'components/mui/Link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
-import { type PageProps } from 'types/PageProps'
 import AccountButton from './auth/AccountButton'
 
-export default function AppBar(props: PageProps): JSX.Element {
+export default function AppBar(): JSX.Element {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
 
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -167,6 +166,6 @@ export default function AppBar(props: PageProps): JSX.Element {
       </ListItemButton>
     </>}
 
-    <AccountButton {...props} />
+    <AccountButton />
   </MuiAppBar>
 }
