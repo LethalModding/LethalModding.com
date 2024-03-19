@@ -10,20 +10,20 @@ import ThemeProvider from '@mui/system/ThemeProvider'
 import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import AppBar from 'components/_shared/AppBar'
-import AuthWrapper from 'components/_shared/auth/Wrapper'
 import Loader from 'components/_shared/Loader'
+import AuthWrapper from 'components/_shared/auth/Wrapper'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { SnackbarProvider } from 'notistack'
-import { useEffect, useState, type FunctionComponent, type PropsWithChildren } from 'react'
+import type { FunctionComponent, PropsWithChildren } from 'react'
+import { useEffect, useState } from 'react'
+import { useAppStore } from 'store'
 import darkThemeOptions from 'styles/darkThemeOptions'
 import 'styles/globals.css'
 import createEmotionCache from 'utility/createEmotionCache'
 
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-import { useAppStore } from 'store'
-TimeAgo.addDefaultLocale(en)
 
 interface MyAppProps extends Omit<AppProps, 'Component'> {
   Component: AppProps['Component'] & { auth?: boolean }
@@ -44,6 +44,8 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
     },
   } = props
 
+  useEffect(() => TimeAgo.addDefaultLocale(en), [])
+
   const isAccessible = useAppStore(state => state.isAccessible)
   const toggleAccessibility = useAppStore(state => state.toggleAccessibility)
   useEffect(() => {
@@ -62,10 +64,8 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
   const setSelectedTeam = useAppStore(state => state.setSelectedTeam)
   useEffect(() => {
     if (supabaseClient === null) return
-    console.log('selectedTeamID', selectedTeamID)
 
     if (selectedTeamID === '') {
-      console.log('set selectedTeam empty')
       setSelectedTeam(null)
     } else {
       supabaseClient
@@ -77,7 +77,6 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
           if (error) {
             console.error(error)
           } else {
-            console.log('set selectedTeam', data)
             setSelectedTeam(data)
           }
         })
