@@ -1,6 +1,7 @@
-import { type Profile } from 'types/db/Profile'
-import { type Team } from 'types/db/Team'
-import { create, type StateCreator } from 'zustand'
+import type { Profile } from 'types/db/Profile'
+import type { Team } from 'types/db/Team'
+import type { StateCreator } from 'zustand'
+import { create } from 'zustand'
 
 export type AppState = {
   isAccessible: boolean

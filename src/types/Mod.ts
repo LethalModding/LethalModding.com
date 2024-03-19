@@ -1,5 +1,5 @@
-import { type ModStub } from './ModStub'
-import { type ModVersion } from './ModVersion'
+import type { ModStub } from './ModStub'
+import type { ModVersion } from './ModVersion'
 
 export type Mod = ModStub & {
   categories: string[]

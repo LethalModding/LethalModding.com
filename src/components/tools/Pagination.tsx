@@ -2,10 +2,12 @@ import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import Link from '@mui/material/Link'
 import MenuItem from '@mui/material/MenuItem'
-import Select, { type SelectChangeEvent } from '@mui/material/Select'
+import type { SelectChangeEvent } from '@mui/material/Select'
+import Select from '@mui/material/Select'
 import Typography from '@mui/material/Typography'
-import { useCallback, type Dispatch, type SetStateAction } from 'react'
-import { ModSort } from 'types/ModSort'
+import type { Dispatch, SetStateAction } from 'react'
+import { useCallback } from 'react'
+import type { ModSort } from 'types/ModSort'
 
 type Props = {
   pageNumber: number

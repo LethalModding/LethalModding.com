@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useSnackbar } from 'notistack'
 import { useCallback } from 'react'
-import { type TeamInvite } from 'types/db/TeamInvite'
+import type { TeamInvite } from 'types/db/TeamInvite'
 
 type Props = {
   expanded?: boolean

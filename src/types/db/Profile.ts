@@ -1,4 +1,4 @@
-import { Record } from './Record'
+import type { Record } from './Record'
 
 export type Profile = Record & {
   avatar_url?: string | null

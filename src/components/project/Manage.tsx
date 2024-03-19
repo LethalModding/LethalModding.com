@@ -11,7 +11,7 @@ import Loader from 'components/_shared/Loader'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useAppStore } from 'store'
-import { Project } from 'types/db/Project'
+import type { Project } from 'types/db/Project'
 
 export default function ProjectManagePage(): JSX.Element {
   const [projects, setProjects] = useState<Project[]>([])

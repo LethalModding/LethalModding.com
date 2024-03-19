@@ -7,8 +7,9 @@ import ListItemButton from '@mui/material/ListItemButton'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
-import { useCallback, useState, type Dispatch, type MouseEvent, type SetStateAction } from 'react'
-import { type Profile } from 'types/Profile'
+import type { Dispatch, MouseEvent, SetStateAction } from 'react'
+import { useCallback, useState } from 'react'
+import type { Profile } from 'types/Profile'
 
 type Props = {
   onSelect: Dispatch<SetStateAction<Profile>>

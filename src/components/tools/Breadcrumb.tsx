@@ -1,5 +1,4 @@
 import Typography from '@mui/material/Typography'
-
 import TypedText from 'components/branding/TypedText'
 import Link from 'components/mui/Link'
 import { Fragment } from 'react'

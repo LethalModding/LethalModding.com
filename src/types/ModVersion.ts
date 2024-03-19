@@ -1,4 +1,4 @@
-import { type ModStub } from './ModStub'
+import type { ModStub } from './ModStub'
 
 export type ModVersion = ModStub & {
   dependencies: string[]

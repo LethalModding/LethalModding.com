@@ -1,4 +1,4 @@
-import { Record } from './Record'
+import type { Record } from './Record'
 
 export type Project = Record & {
   created_by: string
