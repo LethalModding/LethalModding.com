@@ -24,7 +24,7 @@ import {
   type ChangeEvent,
 } from 'react'
 import { type Mod } from 'types/Mod'
-import { ModSort } from 'types/ModSort'
+import { type ModSort } from 'types/ModSort'
 
 type Filters = {
   hasDonation: boolean | null

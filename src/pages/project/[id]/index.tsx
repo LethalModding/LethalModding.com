@@ -10,9 +10,9 @@ import Head from 'next/head'
 import { useParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import ReactTimeAgo from 'react-time-ago'
-import { type Profile } from 'types/db/Profile'
-import { type Project } from 'types/db/Project'
-import { type Team } from 'types/db/Team'
+import type { Profile } from 'types/db/Profile'
+import type { Project } from 'types/db/Project'
+import type { Team } from 'types/db/Team'
 
 const ProjectPage = (): JSX.Element => {
   const { id } = useParams()
@@ -28,11 +28,8 @@ const ProjectPage = (): JSX.Element => {
       .eq('id', id)
       .single()
       .then(({ data, error }) => {
-        if (error) {
-          console.error(error)
-        } else {
-          setProject(data)
-        }
+        if (error) console.error(error)
+        else setProject(data)
       })
   }, [id, supabase])
   useEffect(() => refreshProject(), [refreshProject])
@@ -46,11 +43,8 @@ const ProjectPage = (): JSX.Element => {
       .eq('id', project.team_id)
       .single()
       .then(({ data, error }) => {
-        if (error) {
-          console.error(error)
-        } else {
-          setTeam(data)
-        }
+        if (error) console.error(error)
+        else setTeam(data)
       })
   }, [project, supabase])
   useEffect(() => refreshTeam(), [refreshTeam])
@@ -65,11 +59,8 @@ const ProjectPage = (): JSX.Element => {
       .eq('id', project.created_by)
       .single()
       .then(({ data, error }) => {
-        if (error) {
-          console.error(error)
-        } else {
-          setCreator(data)
-        }
+        if (error) console.error(error)
+        else setCreator(data)
       })
   }, [project, supabase])
   useEffect(() => refreshCreator(), [refreshCreator])
@@ -95,7 +86,7 @@ const ProjectPage = (): JSX.Element => {
           backgroundColor: 'var(--accent)',
         },
       }}
-    > 
+    >
       <Paper
         sx={{
           display:        'flex',
