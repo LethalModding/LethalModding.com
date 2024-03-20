@@ -1,11 +1,4 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import Accordion from '@mui/material/Accordion'
-import AccordionDetails from '@mui/material/AccordionDetails'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import Badge from '@mui/material/Badge'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import Collapse from '@mui/material/Collapse'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Paper from '@mui/material/Paper'
 import Radio from '@mui/material/Radio'
@@ -14,18 +7,14 @@ import type { SelectChangeEvent } from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
-import Loader from 'components/_shared/Loader'
 import { useSnackbar } from 'notistack'
 import type { ChangeEvent } from 'react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useAppStore } from 'store'
-import type { TeamInvite } from 'types/db/TeamInvite'
-import InviteListItem from '../inviteListItem'
 
 export default function TeamMemberInvitePage(): JSX.Element {
   const [email, setEmail] = useState('')
   const [type, setType] = useState('collaborator')
-  const [loading, setLoading] = useState(true)
 
   const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     switch (event.target.name) {
@@ -43,74 +32,42 @@ export default function TeamMemberInvitePage(): JSX.Element {
     }
   }, [])
 
-  const supabase = useSupabaseClient()
-
-  const [invites, setInvites] = useState<TeamInvite[]>([])
-  const sortedInvites = useMemo(() => {
-    return invites.sort((a, b) => {
-      return a.created_at < b.created_at ? 1 : -1
-    })
-  }, [invites])
-
   const teamID = useAppStore(state => state.selectedTeamID)
-  const refreshInvites = useCallback(() => {
-    supabase
-      .from('team_invites')
-      .select('*')
-      .eq('team_id', teamID)
-      .then(({ data, error }) => {
-        setLoading(false)
-
-        if (error) {
-          console.error(error)
-        } else {
-          setInvites(data)
-        }
-      })
-  }, [supabase, teamID])
-  useEffect(() => refreshInvites(), [refreshInvites])
-
+  const supabase = useSupabaseClient()
   const { enqueueSnackbar } = useSnackbar()
-
   const handleSubmit = useCallback(() => {
-    setLoading(true)
     
     supabase
       .from('team_invites')
       .insert({ team_id: teamID, email, type })
       .then(({ error }) => {
-        setLoading(false)
-
         if (error) {
           enqueueSnackbar(`Error inviting ${email}`, { variant: 'error' })
           console.error(error)
         } else {
           enqueueSnackbar(`Invited ${email}`, { variant: 'success' })
-          refreshInvites()
         }
 
         setEmail('')
       })
-  }, [email, enqueueSnackbar, refreshInvites, supabase, teamID, type])
+  }, [email, enqueueSnackbar, supabase, teamID, type])
 
-  return <Box
-    sx={{
-      display:    'grid',
-      height:     '100%',
-      placeItems: 'center'
-    }}
-  >
-    <Loader open={loading} />
-
+  return <>
     <Paper
       sx={{
         display:       'flex',
         flexDirection: 'column',
         gap:           1,
+        m:             2,
         p:             2,
       }}
     >
-      <Typography sx={{ pb: 1.5 }} variant="h5">
+      <Typography
+        sx={{
+          pb: 1.5
+        }}
+        variant="h5"
+      >
         Invite to Team
       </Typography>
 
@@ -126,22 +83,12 @@ export default function TeamMemberInvitePage(): JSX.Element {
       <RadioGroup
         name="type"
         onChange={handleSelectChange}
-        sx={{ my: 0.5, gap: 1 }}
+        sx={{
+          gap: 1,
+          my:  0.5,
+        }}
         value={type}
       >
-        <FormControlLabel
-          control={<Radio/>}
-          label={<>
-            Collaborator
-            <Typography
-              color="textSecondary"
-              variant="body2"
-            >
-              Can view, create, and edit projects
-            </Typography>
-          </>}
-          value="collaborator"
-        />
         <FormControlLabel
           control={<Radio />}
           label={<>
@@ -155,6 +102,19 @@ export default function TeamMemberInvitePage(): JSX.Element {
           </>}
           value="tester"
         />
+        <FormControlLabel
+          control={<Radio/>}
+          label={<>
+            Collaborator
+            <Typography
+              color="textSecondary"
+              variant="body2"
+            >
+              Can view, create, and edit projects
+            </Typography>
+          </>}
+          value="collaborator"
+        />
       </RadioGroup>
 
       <Button
@@ -166,32 +126,5 @@ export default function TeamMemberInvitePage(): JSX.Element {
         Invite
       </Button>
     </Paper>
-
-    <Collapse in={!loading}>
-      <Accordion disableGutters sx={{ minWidth: 460 }}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-        >
-          <Typography variant="h5">
-            Invite History
-            <Badge
-              badgeContent={<Box sx={{ pl: 0.25, whiteSpace: 'nowrap' }}>
-                {invites.filter(x => !x.deleted_at).length} pending
-              </Box>}
-              color="primary"
-              sx={{ ml: 8 }}
-            />
-          </Typography>
-        </AccordionSummary>
-
-        <AccordionDetails>
-          {sortedInvites.map((invite) => <InviteListItem
-            invite={invite}
-            key={invite.id}
-            refresh={refreshInvites}
-          />)}
-        </AccordionDetails>
-      </Accordion>
-    </Collapse>
-  </Box>
+  </>
 }
