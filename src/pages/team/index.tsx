@@ -22,10 +22,10 @@ const TeamPage = (): JSX.Element => {
     switch (selectedPage) {
     //   case 'team/create':
     //     return <TeamCreatePage />
-    case 'dashboard':
-      return <TeamProfilePage />
     case 'members':
       return <TeamMemberManagePage />
+    case 'profile':
+      return <TeamProfilePage />
     case 'projects':
       return <ProjectManagePage />
     //   case 'team/projects/create':
@@ -119,7 +119,7 @@ const TeamMenu = (
     </Paper>
     
     <Paper>
-      <ListItemButton onClick={() => setSelectedPage('dashboard')}>
+      <ListItemButton onClick={() => setSelectedPage('profile')}>
         <ProfileIcon />
         <CardHeader
           title="Profile"
@@ -139,7 +139,7 @@ const TeamMenu = (
     </Paper>
     
     <Paper>
-      <ListItemButton onClick={() => setSelectedPage('dashboard')}>
+      <ListItemButton onClick={() => setSelectedPage('profile')}>
         <SettingsIcon />
         <CardHeader
           title="Settings"
