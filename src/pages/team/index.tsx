@@ -1,64 +1,41 @@
-import AddIcon from '@mui/icons-material/Add'
-import DashboardIcon from '@mui/icons-material/Dashboard'
-import PluginIcon from '@mui/icons-material/Extension'
-import UsersIcon from '@mui/icons-material/Group'
-import InviteIcon from '@mui/icons-material/PersonAdd'
+import ProfileIcon from '@mui/icons-material/AccountCircle'
+import PuzzleIcon from '@mui/icons-material/Extension'
+import UserGroupIcon from '@mui/icons-material/People'
+import SettingsIcon from '@mui/icons-material/Settings'
 import Box from '@mui/material/Box'
-import List from '@mui/material/List'
+import CardHeader from '@mui/material/CardHeader'
 import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import ListSubheader from '@mui/material/ListSubheader'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
-import ProjectCreatePage from 'components/project/Create'
+import Link from 'components/mui/Link'
 import ProjectManagePage from 'components/project/Manage'
-import TeamCreatePage from 'components/user/Team/Create'
-import TeamDashboardPage from 'components/user/Team/Dashboard'
-import TeamMemberInvitePage from 'components/user/Team/MemberInvite'
-import TeamMemberManagePage from 'components/user/Team/MemberManage'
+import TeamMemberManagePage from 'components/Team/MemberManage'
+import TeamProfilePage from 'components/Team/Profile'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
+import { useAppStore } from 'store'
 
 const TeamPage = (): JSX.Element => {
-  const [selectedPage, setSelectedPage] = useState('team/dashboard')
-  const router = useRouter()
-  useEffect(() => {
-    if (selectedPage === 'default' || !router.query.page) return
-
-    const currentPage = selectedPage.split('/')
-    let different = false
-
-    for (let i = 0; i < currentPage.length; i++) {
-      if (router.query.page[i] !== currentPage[i]) {
-        different = true
-        break
-      }
-    }
-
-    if (!different) return
-    router.replace(`/team/${selectedPage}`, undefined, { shallow: true })
-  }, [router, selectedPage])
+  const [selectedPage, setSelectedPage] = useState('')
 
   const pageComponent = useMemo(() => {
     switch (selectedPage) {
-    case 'team/create':
-      return <TeamCreatePage />
-    case 'team/dashboard':
-      return <TeamDashboardPage />
-    case 'team/members':
+    //   case 'team/create':
+    //     return <TeamCreatePage />
+    case 'dashboard':
+      return <TeamProfilePage />
+    case 'members':
       return <TeamMemberManagePage />
-    case 'team/members/invite':
-      return <TeamMemberInvitePage />
-    case 'team/projects':
+    case 'projects':
       return <ProjectManagePage />
-    case 'team/projects/create':
-      return <ProjectCreatePage />
+    //   case 'team/projects/create':
+    //     return <ProjectCreatePage />
     default:
-      return <ComingSoonPage />
+      return null
     }
   }, [selectedPage])
+
+  const selectedTeam = useAppStore(state => state.selectedTeam)
 
   return <>
     <Head>
@@ -67,126 +44,110 @@ const TeamPage = (): JSX.Element => {
 
     <Box
       sx={{
-        display:             'grid',
-        gridTemplateColumns: '280px 1fr',
+        display:       'flex',
+        flexDirection: 'column',
+        height:        'calc(100vh - 56px)',
 
-        '& > *': {
-          height: 'calc(100vh - 56px)',
+        overflowX: 'hidden',
+        overflowY: 'auto',
 
-          overflowX: 'hidden',
-          overflowY: 'auto',
+        '&::-webkit-scrollbar': {
+          width:  '0.25em',
+          height: '0.25em',
+        },
 
-          '&::-webkit-scrollbar': {
-            width:  '0.25em',
-            height: '0.25em',
-          },
-
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: 'var(--accent)',
-          },
+        '&::-webkit-scrollbar-thumb': {
+          backgroundColor: 'var(--accent)',
         },
       }}
     >
       <Paper
         elevation={4}
         sx={{
-          borderRadius: 0,
-          zIndex:       1,
-
-          '.MuiListSubheader-root': {
-            userSelect: 'none',
-          }
+          p: 4,
         }}
       >
-        <List disablePadding>
-          <ListItemButton
-            disabled={selectedPage === 'team/create'}
-            onClick={() => setSelectedPage('team/dashboard')}
-            selected={selectedPage === 'team/dashboard'}
-          >
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItemButton>
-        </List>
-        <List
-          disablePadding
-          subheader={
-            <ListSubheader>
-              Members
-            </ListSubheader>
-          }
-        >
-          <ListItemButton
-            disabled={selectedPage === 'team/create'}
-            onClick={() => setSelectedPage('team/members/invite')}
-            selected={selectedPage === 'team/members/invite'}
-          >
-            <ListItemIcon>
-              <InviteIcon />
-            </ListItemIcon>
-            <ListItemText primary="Invite" />
-          </ListItemButton>
-          <ListItemButton
-            disabled={selectedPage === 'team/create'}
-            onClick={() => setSelectedPage('team/members')}
-            selected={selectedPage === 'team/members'}
-          >
-            <ListItemIcon>
-              <UsersIcon />
-            </ListItemIcon>
-            <ListItemText primary="Manage" />
-          </ListItemButton>
-        </List>
-
-        <List
-          disablePadding
-          subheader={
-            <ListSubheader>
-              Projects
-            </ListSubheader>
-          }
-        >
-          <ListItemButton
-            disabled={selectedPage === 'team/create'}
-            onClick={() => setSelectedPage('team/projects/create')}
-            selected={selectedPage === 'team/projects/create'}
-          >
-            <ListItemIcon>
-              <AddIcon />
-            </ListItemIcon>
-            <ListItemText primary="Create" />
-          </ListItemButton>
-          <ListItemButton
-            disabled={selectedPage === 'team/create'}
-            onClick={() => setSelectedPage('team/projects')}
-            selected={selectedPage === 'team/projects'}
-          >
-            <ListItemIcon>
-              <PluginIcon />
-            </ListItemIcon>
-            <ListItemText primary="Manage" />
-          </ListItemButton>
-        </List>
+        <Typography variant="h4">
+          {selectedPage !== '' ? <>
+            <Link
+              onClick={() => setSelectedPage('')}
+              sx={{ textDecoration: 'none' }}
+            >
+              {selectedTeam?.name || 'Team'}
+            </Link>
+            {' > '}
+            {selectedPage.charAt(0).toUpperCase() + selectedPage.slice(1)}
+          </> : selectedTeam?.name || 'Team'}
+        </Typography>
       </Paper>
 
-      <Box>
-        {pageComponent}
-      </Box>
+      {pageComponent
+        ? pageComponent
+        : <TeamMenu setSelectedPage={setSelectedPage} />}
     </Box>
   </>
 }
 
-export function ComingSoonPage(): JSX.Element {
-  return <>
-    <Typography
-      align="center"
-      variant="h2"
-    >
-      Coming Soon
-    </Typography>
-  </>
+const TeamMenu = (
+  { setSelectedPage }: { setSelectedPage: (page: string) => void }
+): JSX.Element => {
+  return <Box
+    sx={{
+      display:       'flex',
+      flex:          1,
+      flexDirection: 'column',
+      gap:           1.5,
+      m:             2,
+      
+      '.MuiListItemButton-root': {
+        'svg': {
+          color:    'var(--accent)',
+          fontSize: '3em',
+          m:        1,
+        },
+      },
+    }}
+  >
+    <Paper>
+      <ListItemButton onClick={() => setSelectedPage('members')}>
+        <UserGroupIcon />
+        <CardHeader
+          title="Members"
+          subheader="Invite, manage, and remove team members"
+        />
+      </ListItemButton>
+    </Paper>
+    
+    <Paper>
+      <ListItemButton onClick={() => setSelectedPage('dashboard')}>
+        <ProfileIcon />
+        <CardHeader
+          title="Profile"
+          subheader="Manage your team's public image and presence"
+        />
+      </ListItemButton>
+    </Paper>
+
+    <Paper>
+      <ListItemButton onClick={() => setSelectedPage('projects')}>
+        <PuzzleIcon />
+        <CardHeader
+          title="Projects"
+          subheader="Create and manage Mods and other projects"
+        />
+      </ListItemButton>
+    </Paper>
+    
+    <Paper>
+      <ListItemButton onClick={() => setSelectedPage('dashboard')}>
+        <SettingsIcon />
+        <CardHeader
+          title="Settings"
+          subheader="Manage your team's privacy and settings"
+        />
+      </ListItemButton>
+    </Paper>
+  </Box>
 }
 
 TeamPage.auth = true
