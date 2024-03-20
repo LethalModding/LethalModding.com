@@ -13,7 +13,7 @@ type Props = {
   refresh: () => void
 }
 
-export default function InviteListItem(props: Props): JSX.Element {
+export default function TeamInviteListItem(props: Props): JSX.Element {
   const { expanded, invite, refresh } = props
 
   const session = useSession()

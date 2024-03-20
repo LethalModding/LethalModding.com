@@ -2,7 +2,7 @@ import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useCallback, useEffect, useState } from 'react'
 import { useAppStore } from 'store'
 import type { TeamInvite } from 'types/db/TeamInvite'
-import InviteListItem from '../inviteListItem'
+import TeamInviteListItem from './InviteListItem'
 
 export default function TeamInvitesList(): JSX.Element | JSX.Element[] {
   const supabase = useSupabaseClient()
@@ -24,7 +24,7 @@ export default function TeamInvitesList(): JSX.Element | JSX.Element[] {
   }, [supabase, teamID])
   useEffect(() => refreshInvites(), [refreshInvites])
 
-  return invites.map((invite) => <InviteListItem
+  return invites.map((invite) => <TeamInviteListItem
     invite={invite}
     key={invite.id}
     refresh={refreshInvites}
