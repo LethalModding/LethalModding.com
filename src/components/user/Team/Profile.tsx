@@ -26,7 +26,7 @@ import { useAppStore } from 'store'
 import { type Team } from 'types/db/Team'
 import { slugify } from 'utility/slugify'
 
-export default function TeamDashboardPage(): JSX.Element {
+export default function TeamProfilePage(): JSX.Element {
   const team = useAppStore(state => state.selectedTeam)
   const [slugs, setSlugs] = useState<string[]>([])
 
