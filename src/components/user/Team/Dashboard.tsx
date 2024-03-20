@@ -51,9 +51,18 @@ export default function TeamDashboardPage(): JSX.Element {
   useEffect(() => setLocalSlugs(slugs), [slugs])
 
   const [localTeam, setLocalTeam] = useState<Team>({
-    name:    '',
-    socials: '',
-  } as Team)
+    id:         '',
+    created_at: '',
+    updated_at: '',
+    deleted_at: '',
+    owner_id:   '',
+    bio:        '',
+    name:       '',
+    location:   '',
+    members:    [],
+    socials:    '',
+    website:    '',
+  })
   useEffect(() => {
     if (!team) return
     setLocalTeam(team)
