@@ -4,24 +4,18 @@ import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
-import Loader from 'components/_shared/Loader'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useAppStore } from 'store'
 import type { Profile } from 'types/db/Profile'
+import TeamInvitesList from './InvitesList'
+import TeamMemberInvitePage from './MemberInvite'
 
 export default function TeamMemberManagePage(): JSX.Element {
   const supabase = useSupabaseClient()
 
   const team = useAppStore(state => state.selectedTeam)
   
-  const [loading, setLoading] = useState(true)
   const [members, setMembers] = useState<Profile[]>([])
-  const sortedMembers = useMemo(() => {
-    return members.sort((a, b) => {
-      return a.created_at < b.created_at ? 1 : -1
-    })
-  }, [members])
-
   const refreshMembers = useCallback(() => {
     if (!team) return
 
@@ -32,40 +26,25 @@ export default function TeamMemberManagePage(): JSX.Element {
       .from('profiles')
       .select('*')
       .in('id', members)
+      .order('username', { ascending: true })
       .then(({ data, error }) => {
-        setLoading(false)
-
         if (error) {
           console.error(error)
         } else {
-          setMembers(data)
+          setMembers(data || [])
         }
       })
   }, [supabase, team])
   useEffect(() => refreshMembers(), [refreshMembers])
 
-  return <Box
-    sx={{
-      display:    'grid',
-      height:     '100%',
-      placeItems: 'center'
-    }}
-  >
-    <Loader open={loading} />
-
-    <Paper
-      sx={{
-        display:       'flex',
-        flexDirection: 'column',
-        gap:           1,
-        p:             2,
-      }}
-    >
-      <Typography sx={{ pb: 1.5 }} variant="h5">
+  return <>
+    <TeamMemberInvitePage />
+    <Paper sx={{ m: 2, mt: 0, p: 2 }}>
+      <Typography gutterBottom variant="h4">
         Members
       </Typography>
 
-      {sortedMembers.map((member) => <Box
+      {members.map(member => <Box
         key={member.id}
         sx={{
           display:             'grid',
@@ -80,7 +59,9 @@ export default function TeamMemberManagePage(): JSX.Element {
             {member.username ? `@${member.username}` : member.full_name}
           </Typography>
           <Typography variant="body2">
-            {member.id === team?.owner_id ? 'Owner' : ''}
+            {member.id === team?.owner_id
+              ? 'Owner'
+              : 'Member'}
           </Typography>
         </Box>
 
@@ -89,5 +70,13 @@ export default function TeamMemberManagePage(): JSX.Element {
         </IconButton> : null}
       </Box>)}
     </Paper>
-  </Box>
+
+    <Paper sx={{ m: 2, mt: 0, p: 2 }}>
+      <Typography gutterBottom variant="h4">
+        Invites
+      </Typography>
+
+      <TeamInvitesList />
+    </Paper>
+  </>
 }
