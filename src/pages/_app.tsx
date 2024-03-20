@@ -44,7 +44,13 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
     },
   } = props
 
-  useEffect(() => TimeAgo.addDefaultLocale(en), [])
+  const [isMounted, setIsMounted] = useState(false)
+  useEffect(() => {
+    if (isMounted) return
+    setIsMounted(true)
+
+    TimeAgo.addLocale(en)
+  }, [isMounted])
 
   const isAccessible = useAppStore(state => state.isAccessible)
   const toggleAccessibility = useAppStore(state => state.toggleAccessibility)
