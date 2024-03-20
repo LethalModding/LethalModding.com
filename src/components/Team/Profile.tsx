@@ -390,31 +390,6 @@ export default function TeamProfilePage(): JSX.Element {
 
     <Accordion
       disableGutters
-      expanded={expanded === 'reputation'}
-      onChange={() => setExpanded('reputation')}
-    >
-      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography
-          sx={{ flexBasis: '240px', flexShrink: 0 }}
-          variant="h5"
-        >
-          Reputation
-        </Typography>
-        <Typography
-          sx={{ color: 'text.secondary', pt: 0.55 }}
-        >
-          View your Team&apos;s Reputation.
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Typography>
-          Your Team has not yet been rated. Get started by creating a Project!
-        </Typography>
-      </AccordionDetails>
-    </Accordion>
-
-    <Accordion
-      disableGutters
       expanded={expanded === 'danger'}
       onChange={() => setExpanded('danger')}
       sx={{
