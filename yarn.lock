@@ -2483,10 +2483,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"destr@npm:^2.0.1":
-  version: 2.0.2
-  resolution: "destr@npm:2.0.2"
-  checksum: cb63dd477d1c323f95650ce7784f1497466d68150ac0fddd6c99652be45c9dcb997d53fd5eb6c6fda6c0b2a5e5b4fc7fa3c3e18dace3d810ba4cf45d8b55bdd6
+"destr@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "destr@npm:2.0.3"
+  checksum: 4521b145ba6118919a561f7d979d623793695a516d1b9df704de81932601bf9cf21c47278e1cb93a309c88a14f4fd1f18680bb49ebef8b2546cc7f415e7ae48e
   languageName: node
   linkType: hard
 
@@ -4605,10 +4605,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch-native@npm:^1.4.0":
-  version: 1.6.1
-  resolution: "node-fetch-native@npm:1.6.1"
-  checksum: 1a248ada34561ce1010f09ca81cf5cd9c834b51aec957e82b6811d673e209a44630a835da599f0dd0c3d927f15c5f864d6ed494093c4a42601609f988d5919f2
+"node-fetch-native@npm:^1.6.3":
+  version: 1.6.3
+  resolution: "node-fetch-native@npm:1.6.3"
+  checksum: 9601f0dac36288963d65bd25f236b9a12328d8aa00c023aa23f0e1fc3ef48b0b22b092ec616d0f0ec16b4daddd75307b77bdb47addf799f94800182ae592dce9
   languageName: node
   linkType: hard
 
@@ -4818,13 +4818,13 @@ __metadata:
   linkType: hard
 
 "ofetch@npm:^1.3.3":
-  version: 1.3.3
-  resolution: "ofetch@npm:1.3.3"
+  version: 1.3.4
+  resolution: "ofetch@npm:1.3.4"
   dependencies:
-    destr: ^2.0.1
-    node-fetch-native: ^1.4.0
-    ufo: ^1.3.0
-  checksum: 945d757b25ba144f9f45d9de3382de743f0950e68e76726a4c0d2ef01456fa6700a6b102cc343a4e06f71d5ac59a8affdd9a673751c448f4265996f7f22ffa3d
+    destr: ^2.0.3
+    node-fetch-native: ^1.6.3
+    ufo: ^1.5.3
+  checksum: 46749d5bf88cc924657520fa409ece473ee7d70303a374e0acf8a88883576be515861b2342b4e5d491776e2da9c8c52911c3ef298329619ef34832a5a4ffe64c
   languageName: node
   linkType: hard
 
@@ -6051,10 +6051,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ufo@npm:^1.3.0":
-  version: 1.3.2
-  resolution: "ufo@npm:1.3.2"
-  checksum: f1180bb715ff4dd46152fd4dec41c731e84d7b9eaf1432548a0210b2f7e0cd29de125ac88e582c6a079d8ae5bc9ab04ef2bdbafe125086480b10c1006b81bfce
+"ufo@npm:^1.5.3":
+  version: 1.5.3
+  resolution: "ufo@npm:1.5.3"
+  checksum: 2f54fa543b2e689cc4ab341fe2194937afe37c5ee43cd782e6ecc184e36859e84d4197a43ae4cd6e9a56f793ca7c5b950dfff3f16fadaeef9b6b88b05c88c8ef
   languageName: node
   linkType: hard
 
