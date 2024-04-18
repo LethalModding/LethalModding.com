@@ -1012,12 +1012,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/eslint-plugin-next@npm:14.1.3, @next/eslint-plugin-next@npm:^14.1.3":
+"@next/eslint-plugin-next@npm:14.1.3":
   version: 14.1.3
   resolution: "@next/eslint-plugin-next@npm:14.1.3"
   dependencies:
     glob: 10.3.10
   checksum: 9da2d1266cd44a0912e7d9ba40d534b96237d01479917afa1e341c8ed90f97def87072cb15af41edaf19850733847c1c0db6d9a249d3f3e57bfdb968cb4ce81b
+  languageName: node
+  linkType: hard
+
+"@next/eslint-plugin-next@npm:^14.1.3":
+  version: 14.2.2
+  resolution: "@next/eslint-plugin-next@npm:14.2.2"
+  dependencies:
+    glob: 10.3.10
+  checksum: e517fd751cb2a0392727e13998ef4da9a344bc0b4df96d8dc3845f54ad912acbbf84cd774a0c1fa751d5688d034c5c3a12f12285f062db72520fc4ec8151ef46
   languageName: node
   linkType: hard
 
