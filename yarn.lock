@@ -3397,12 +3397,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"javascript-time-ago@npm:^2.5.9":
-  version: 2.5.9
-  resolution: "javascript-time-ago@npm:2.5.9"
+"javascript-time-ago@npm:^2.5.10":
+  version: 2.5.10
+  resolution: "javascript-time-ago@npm:2.5.10"
   dependencies:
     relative-time-format: ^1.1.6
-  checksum: 401937d46b82c038904d4b9b986b1d10977b77890b0439a6d1b8d2a393cec4c88e7edb06ca9c57f67c0c05308a796cebe930d20f5aa1094bcd8a3fa68e70b2d3
+  checksum: f0ddb6ba9361b96b3ec08fc4720fe84c45c8f71b044968e5c2a3c57d816b4b5d260a9513d25ed77ce9832ab5ac4a5bdd3f21bd0bebb4266b1292e19f39b070c6
   languageName: node
   linkType: hard
 
@@ -4906,7 +4906,7 @@ __metadata:
     eslint-plugin-mui-path-imports: ^0.0.15
     eslint-plugin-react: ^7.34.3
     eslint-plugin-react-hooks: ^4.6.2
-    javascript-time-ago: ^2.5.9
+    javascript-time-ago: ^2.5.10
     lru-cache: ^10.2.0
     next: ^14.2.4
     notistack: ^3.0.1
