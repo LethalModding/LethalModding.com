@@ -4916,6 +4916,7 @@ __metadata:
     react-time-ago: ^7.3.3
     typescript: ^5.4.5
     uuid: ^10.0.0
+    webidl-conversions: ^7.0.0
     zustand: ^4.5.2
   languageName: unknown
   linkType: soft
@@ -4991,6 +4992,13 @@ __metadata:
   bin:
     uuid: dist/bin/uuid
   checksum: 4b81611ade2885d2313ddd8dc865d93d8dccc13ddf901745edca8f86d99bc46d7a330d678e7532e7ebf93ce616679fb19b2e3568873ac0c14c999032acb25869
+  languageName: node
+  linkType: hard
+
+"webidl-conversions@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "webidl-conversions@npm:7.0.0"
+  checksum: f05588567a2a76428515333eff87200fae6c83c3948a7482ebb109562971e77ef6dc49749afa58abb993391227c5697b3ecca52018793e0cb4620a48f10bd21b
   languageName: node
   linkType: hard
 
