@@ -14,10 +14,20 @@ export default function LoginButtons(props: Props): JSX.Element {
 
   const supabase = useSupabaseClient()
   const loginWithDiscord = useCallback(() => {
-    supabase.auth.signInWithOAuth({ provider: 'discord' })
+    supabase.auth.signInWithOAuth({
+      provider: 'discord',
+      options:  {
+        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+      }
+    })
   }, [supabase])
   const loginWithGithub = useCallback(() => {
-    supabase.auth.signInWithOAuth({ provider: 'github' })
+    supabase.auth.signInWithOAuth({
+      provider: 'github',
+      options:  {
+        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+      }
+    })
   }, [supabase])
 
   return (
