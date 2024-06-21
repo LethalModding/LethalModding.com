@@ -1,7 +1,5 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import LogoutIcon from '@mui/icons-material/Logout'
-import MessageIcon from '@mui/icons-material/Message'
-import SettingsIcon from '@mui/icons-material/Settings'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -44,14 +42,17 @@ export default function AccountButton(): JSX.Element {
   const selectedTeamID = useAppStore(state => state.selectedTeamID)
   const setSelectedTeamID = useAppStore(state => state.setSelectedTeamID)
 
-  const handleSelectedTeamChange = useCallback((event: SelectChangeEvent<string>) => {
-    if (event.target.value === 'create') {
-      setSelectedTeamID('create')
-      return
-    }
+  const handleSelectedTeamChange = useCallback(
+    (event: SelectChangeEvent<string>) => {
+      if (event.target.value === 'create') {
+        setSelectedTeamID('create')
+        return
+      }
 
-    setSelectedTeamID(event.target.value)
-  }, [setSelectedTeamID])
+      setSelectedTeamID(event.target.value)
+    },
+    [setSelectedTeamID]
+  )
 
   const [teams, setTeams] = useState<Partial<Team>[]>([])
   const [loading, setLoading] = useState(true)
@@ -65,8 +66,11 @@ export default function AccountButton(): JSX.Element {
         } else {
           setTeams(data)
 
-          if (selectedTeamID === '' || (selectedTeamID !== 'create' &&
-            !data.find((team) => team.id === selectedTeamID))) {
+          if (
+            selectedTeamID === '' ||
+            (selectedTeamID !== 'create' &&
+              !data.find(team => team.id === selectedTeamID))
+          ) {
             setSelectedTeamID(data?.[0]?.id)
           }
         }
@@ -77,96 +81,118 @@ export default function AccountButton(): JSX.Element {
   useEffect(() => refreshTeams(), [refreshTeams])
 
   if (session?.user.id) {
-    return <>
-      <ListItemButton
-        onClick={openMenu}
-        sx={{
-          '.MuiTypography-root': {
-            lineHeight: 1,
-            textAlign:  'right',
-          }
-        }}
-      >
-        <ListItemText
-          primary={session.user.user_metadata.full_name}
-          secondary={teams?.find((team) => team.id === selectedTeamID)?.name || 'No Team'}
-        />
-        <Avatar
-          alt={session.user.email}
-          src={session.user.user_metadata.avatar_url}
-          sx={{ ml: 1, mb: 0.1 }}
-        />
-      </ListItemButton>
-
-      <Menu
-        anchorEl={menuEl}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        onClose={closeMenu}
-        open={Boolean(menuEl)}
-      >
-        <FormControl
-          disabled={loading}
-          fullWidth
-          sx={{ m: 1, mt: 0 }}
-          variant="filled"
+    return (
+      <>
+        <ListItemButton
+          onClick={openMenu}
+          sx={{
+            '.MuiTypography-root': {
+              lineHeight: 1,
+              textAlign: 'right',
+            },
+          }}
         >
-          <InputLabel>Team</InputLabel>
-          <Select
-            label="Team"
-            onChange={handleSelectedTeamChange}
-            value={selectedTeamID}
+          <ListItemText
+            primary={session.user.user_metadata.full_name}
+            secondary={
+              teams?.find(team => team.id === selectedTeamID)?.name || 'No Team'
+            }
+          />
+          <Avatar
+            alt={session.user.email}
+            src={session.user.user_metadata.avatar_url}
+            sx={{ ml: 1, mb: 0.1 }}
+          />
+        </ListItemButton>
+
+        <Menu
+          anchorEl={menuEl}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          onClose={closeMenu}
+          open={Boolean(menuEl)}
+          slotProps={{
+            paper: {
+              sx: {
+                minWidth: 260,
+              },
+            },
+          }}
+        >
+          <FormControl
+            disabled={loading}
+            sx={{ m: 1, mt: 0 }}
+            fullWidth
+            variant="filled"
           >
-            {teams.map((team) => <MenuItem key={team.id} value={team.id}>
-              {team.name}
-            </MenuItem>)}
-            <Divider />
-            <MenuItem value="create">
-              <em>Create New Team</em>
-            </MenuItem>
-          </Select>
-        </FormControl>
-        <MenuItem>
-          <AccountCircleIcon sx={{ mr: 2 }} />
-          Account
-        </MenuItem>
-        <MenuItem>
-          <MessageIcon sx={{ mr: 2 }} />
-          Messages
-        </MenuItem>
-        <MenuItem>
-          <SettingsIcon sx={{ mr: 2 }} />
-          Settings
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={signOut} sx={{ color: 'warning.main' }}>
-          <LogoutIcon sx={{ mr: 2 }} />
-          Log Out
-        </MenuItem>
-      </Menu>
-    </>
+            <InputLabel>Team</InputLabel>
+            <Select
+              label="Team"
+              onChange={handleSelectedTeamChange}
+              sx={{ mr: 2 }}
+              value={selectedTeamID}
+            >
+              {teams.map(team => (
+                <MenuItem
+                  key={team.id}
+                  value={team.id}
+                >
+                  {team.name}
+                </MenuItem>
+              ))}
+              <Divider />
+              <MenuItem value="create">
+                <em>Create New Team</em>
+              </MenuItem>
+            </Select>
+          </FormControl>
+          {/* <MenuItem>
+            <AccountCircleIcon sx={{ mr: 2 }} />
+            Account
+          </MenuItem>
+          <MenuItem>
+            <MessageIcon sx={{ mr: 2 }} />
+            Messages
+          </MenuItem>
+          <MenuItem>
+            <SettingsIcon sx={{ mr: 2 }} />
+            Settings
+          </MenuItem> */}
+          <Divider />
+          <MenuItem
+            onClick={signOut}
+            sx={{ color: 'warning.main' }}
+          >
+            <LogoutIcon sx={{ mr: 2 }} />
+            Log Out
+          </MenuItem>
+        </Menu>
+      </>
+    )
   }
 
-  return <>
-    <Dialog
-      fullWidth
-      onClose={hideLoginDialog}
-      open={loginDialogOpen}
-      maxWidth="xs"
-    >
-      <DialogTitle>Login</DialogTitle>
-      <DialogContent>
-        <LoginButtons />
-      </DialogContent>
-    </Dialog>
+  return (
+    <>
+      <Dialog
+        fullWidth
+        onClose={hideLoginDialog}
+        open={loginDialogOpen}
+        maxWidth="xs"
+      >
+        <DialogTitle>Login</DialogTitle>
+        <DialogContent>
+          <LoginButtons />
+        </DialogContent>
+      </Dialog>
 
-    <Button
-      color="primary"
-      onClick={showLoginDialog}
-      size="small"
-      variant="outlined"
-    >
-      <AccountCircleIcon sx={{ mr: 1 }} />
-      Login
-    </Button>
-  </>
+      <Button
+        color="primary"
+        onClick={showLoginDialog}
+        size="small"
+        variant="outlined"
+      >
+        <AccountCircleIcon sx={{ mr: 1 }} />
+        Login
+      </Button>
+    </>
+  )
 }
