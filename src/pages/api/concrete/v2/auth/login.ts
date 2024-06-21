@@ -16,11 +16,11 @@ export default async function handler(
   const { method } = req
 
   switch (method) {
-    case 'POST':
-      return handlePOST(req, res)
-    default:
-      res.setHeader('Allow', ['POST'])
-      res.status(405).end(`Method ${method} Not Allowed`)
+  case 'POST':
+    return handlePOST(req, res)
+  default:
+    res.setHeader('Allow', ['POST'])
+    res.status(405).end(`Method ${method} Not Allowed`)
   }
 }
 
@@ -30,7 +30,7 @@ function isValidEmail(obj: any): obj is ParsedMailbox {
 }
 
 const limiter = rateLimit({
-  interval: 60 * 1000,
+  interval:               60 * 1000,
   uniqueTokenPerInterval: 500,
 })
 
@@ -70,7 +70,7 @@ async function handlePOST(
   }
 
   const { data, error } = await supabaseSERVER.auth.admin.generateLink({
-    email: parsedEmail.address,
+    email:   parsedEmail.address,
     options: {
       redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}`,
     },
@@ -103,13 +103,13 @@ async function handlePOST(
       'Please enable HTML to view this email.',
       (await readTemplate('user-login', {
         ConfirmationURL: `${process.env.NEXT_PUBLIC_BASE_URL}/login/?token=${data.properties.hashed_token}`,
-        FirstName: `${firstName}`,
-        LoginToken: data.properties.hashed_token,
-        LogoSrc: 'cid:lethalmodding-logo.png',
+        FirstName:       `${firstName}`,
+        LoginToken:      data.properties.hashed_token,
+        LogoSrc:         'cid:lethalmodding-logo.png',
       })) ?? undefined,
       {
         inline: {
-          data: logoData,
+          data:     logoData,
           filename: 'lethalmodding-logo.png',
         },
         'o:tracking-clicks': false,
