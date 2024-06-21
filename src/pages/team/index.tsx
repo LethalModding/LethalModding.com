@@ -17,16 +17,16 @@ const TeamPage = (): JSX.Element => {
 
   const pageComponent = useMemo(() => {
     switch (selectedPage) {
-      case 'create':
-        return <TeamCreatePage />
-      case 'members':
-        return <TeamMemberManagePage />
-      case 'profile':
-        return <TeamProfilePage />
-      case 'projects':
-        return <ProjectManagePage />
-      default:
-        return null
+    case 'create':
+      return <TeamCreatePage />
+    case 'members':
+      return <TeamMemberManagePage />
+    case 'profile':
+      return <TeamProfilePage />
+    case 'projects':
+      return <ProjectManagePage />
+    default:
+      return null
     }
   }, [selectedPage])
   const router = useRouter()
@@ -46,15 +46,15 @@ const TeamPage = (): JSX.Element => {
 
       <Box
         sx={{
-          display: 'flex',
+          display:       'flex',
           flexDirection: 'column',
-          height: 'calc(100vh - 56px)',
+          height:        'calc(100vh - 56px)',
 
           overflowX: 'hidden',
           overflowY: 'auto',
 
           '&::-webkit-scrollbar': {
-            width: '0.25em',
+            width:  '0.25em',
             height: '0.25em',
           },
 
