@@ -15,11 +15,15 @@ export default async function handler(
 ): Promise<void> {
   const { method } = req
 
-  switch (method) {
+  switch (method)
+  {
+  case 'OPTIONS':
+    res.status(200).end()
+    break
   case 'POST':
     return handlePOST(req, res)
   default:
-    res.setHeader('Allow', ['POST'])
+    res.setHeader('Allow', ['POST','OPTIONS'])
     res.status(405).end(`Method ${method} Not Allowed`)
   }
 }
@@ -35,7 +39,7 @@ const limiter = rateLimit({
 })
 
 type PostBody = {
-  emailAddress: string
+  email: string
 }
 
 async function handlePOST(
@@ -54,9 +58,9 @@ async function handlePOST(
   //   })
   // }
 
-  const { emailAddress }: PostBody = req.body
+  const { email }: PostBody = req.body
   const parsedEmail: ParsedMailbox | ParsedGroup | null =
-    addrs.parseOneAddress(emailAddress)
+    addrs.parseOneAddress(email)
   if (!parsedEmail || !isValidEmail(parsedEmail)) {
     return res.status(400).json({ error: 'Invalid email address' })
   }
@@ -118,4 +122,6 @@ async function handlePOST(
   } catch (error) {
     return res.status(500).json({ error: 'Failed sending email' })
   }
+
+  return res.status(200).json({ message: 'Email sent' })
 }
