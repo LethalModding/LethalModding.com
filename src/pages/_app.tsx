@@ -69,24 +69,25 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
   const selectedTeamID = useAppStore(state => state.selectedTeamID)
   const setSelectedTeam = useAppStore(state => state.setSelectedTeam)
   useEffect(() => {
+    if (selectedTeamID === '' || selectedTeamID === 'create') {
+      setSelectedTeam(null)
+      return
+    }
+
     if (supabaseClient === null) return
 
-    if (selectedTeamID === '') {
-      setSelectedTeam(null)
-    } else {
-      supabaseClient
-        .from('teams')
-        .select('*')
-        .eq('id', selectedTeamID)
-        .single()
-        .then(({ data, error }) => {
-          if (error) {
-            console.error(error)
-          } else {
-            setSelectedTeam(data)
-          }
-        })
-    }
+    supabaseClient
+      .from('teams')
+      .select('*')
+      .eq('id', selectedTeamID)
+      .single()
+      .then(({ data, error }) => {
+        if (error) {
+          console.error(error)
+        } else {
+          setSelectedTeam(data)
+        }
+      })
   }, [selectedTeamID, setSelectedTeam, supabaseClient])
 
   return <CacheProvider value={emotionCache}>
