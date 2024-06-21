@@ -13,16 +13,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Response>
 ): Promise<void> {
-  const {
-    method,
-  } = req
+  const { method } = req
 
   switch (method) {
-  case 'POST':
-    return handlePOST(req, res)
-  default:
-    res.setHeader('Allow', ['POST'])
-    res.status(405).end(`Method ${method} Not Allowed`)
+    case 'POST':
+      return handlePOST(req, res)
+    default:
+      res.setHeader('Allow', ['POST'])
+      res.status(405).end(`Method ${method} Not Allowed`)
   }
 }
 
@@ -32,7 +30,7 @@ function isValidEmail(obj: any): obj is ParsedMailbox {
 }
 
 const limiter = rateLimit({
-  interval:               60 * 1000,
+  interval: 60 * 1000,
   uniqueTokenPerInterval: 500,
 })
 
@@ -47,7 +45,7 @@ async function handlePOST(
   // // Ensure the user is authenticated and authorized to access the platform
   // const supabaseServerClient = createPagesServerClient({ req, res })
   // const { data: { session } } = await supabaseServerClient.auth.getSession()
-  // 
+  //
   // if (session === null) {
   //   return res.status(401).json({
   //     code:    401,
@@ -57,29 +55,34 @@ async function handlePOST(
   // }
 
   const { emailAddress }: PostBody = req.body
-  const parsedEmail: ParsedMailbox | ParsedGroup | null = addrs.parseOneAddress(emailAddress)
+  const parsedEmail: ParsedMailbox | ParsedGroup | null =
+    addrs.parseOneAddress(emailAddress)
   if (!parsedEmail || !isValidEmail(parsedEmail)) {
     return res.status(400).json({ error: 'Invalid email address' })
   }
 
   try {
-    await limiter.check(res, 10, 'CACHE_TOKEN') // 
+    await limiter.check(res, 10, 'CACHE_TOKEN') //
   } catch {
-    return res.status(429).json({ error: 'Slow down! Wait at least 30 seconds and try again.' })
+    return res
+      .status(429)
+      .json({ error: 'Slow down! Wait at least 30 seconds and try again.' })
   }
 
   const { data, error } = await supabaseSERVER.auth.admin.generateLink({
-    type:    'magiclink',
-    email:   parsedEmail.address,
+    email: parsedEmail.address,
     options: {
       redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}`,
     },
+    type: 'magiclink',
   })
   if (error) return res.status(500).json({ error: 'Failed sending email' })
 
-  let firstName = data.user.user_metadata?.first_name
-    ?? data.user.app_metadata?.first_name
-    ?? data.user.user_metadata?.first_name ?? ''
+  let firstName =
+    data.user.user_metadata?.first_name ??
+    data.user.app_metadata?.first_name ??
+    data.user.user_metadata?.first_name ??
+    ''
 
   const { data: profileData, error: profileError } = await supabaseSERVER
     .from('profiles')
@@ -90,23 +93,24 @@ async function handlePOST(
   if (!profileError && profileData)
     if (!firstName) firstName = profileData.first_name ?? ''
 
-  try
-  {
-    const logoData = await readFile(`${process.cwd()}${logo.src.replace('_next', '.next')}`)
+  try {
+    const logoData = await readFile(
+      `${process.cwd()}${logo.src.replace('_next', '.next')}`
+    )
     await sendEmail(
       parsedEmail.address,
       'LethalModding.com - Your Login Link',
       'Please enable HTML to view this email.',
-      await readTemplate('user-login', {
+      (await readTemplate('user-login', {
         ConfirmationURL: `${process.env.NEXT_PUBLIC_BASE_URL}/login/?token=${data.properties.hashed_token}`,
-        FirstName:       `${firstName}`,
-        LogoSrc:         'cid:lethalmodding-logo.png',
-        LoginToken:      data.properties.hashed_token,
-      }) ?? undefined,
+        FirstName: `${firstName}`,
+        LoginToken: data.properties.hashed_token,
+        LogoSrc: 'cid:lethalmodding-logo.png',
+      })) ?? undefined,
       {
         inline: {
+          data: logoData,
           filename: 'lethalmodding-logo.png',
-          data:     logoData,
         },
         'o:tracking-clicks': false,
       }
