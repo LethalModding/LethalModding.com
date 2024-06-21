@@ -88,7 +88,7 @@ export default function AccountButton(): JSX.Element {
           sx={{
             '.MuiTypography-root': {
               lineHeight: 1,
-              textAlign: 'right',
+              textAlign:  'right',
             },
           }}
         >

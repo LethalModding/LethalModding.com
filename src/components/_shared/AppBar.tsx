@@ -113,7 +113,7 @@ export default function AppBar(): JSX.Element {
               Your Team
             </Link>
           </ListItemButton>
-          
+
           <ListSubheader disableSticky sx={{ mb: -1, mt: 0.5 }}>
             Tools
           </ListSubheader>
@@ -146,7 +146,7 @@ export default function AppBar(): JSX.Element {
           />
         </Link>
       </ListItemButton>
-      
+
       <ListItemButton>
         <Link href="https://discord.gg/lcmod">
           Join the Discord

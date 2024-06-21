@@ -14,7 +14,7 @@ export default function TeamMemberManagePage(): JSX.Element {
   const supabase = useSupabaseClient()
 
   const team = useAppStore(state => state.selectedTeam)
-  
+
   const [members, setMembers] = useState<Profile[]>([])
   const refreshMembers = useCallback(() => {
     if (!team) return

@@ -22,7 +22,7 @@ export default function TeamMenu(props: Props): JSX.Element {
       gridTemplateColumns: '1fr 1fr',
       gap:                 1.5,
       m:                   2,
-      
+
       'svg': {
         color:    (theme) => theme.palette.primary.main,
         fontSize: '3em',
@@ -49,7 +49,7 @@ export default function TeamMenu(props: Props): JSX.Element {
         />
       </ListItemButton>
     </Paper>
-    
+
     <Paper>
       <ListItemButton onClick={() => setSelectedPage('profile')}>
         <ProfileIcon />
@@ -79,7 +79,7 @@ export default function TeamMenu(props: Props): JSX.Element {
         />
       </ListItemButton>
     </Paper>
-    
+
     <Paper>
       <ListItemButton onClick={() => setSelectedPage('profile')}>
         <SettingsIcon />

@@ -43,7 +43,7 @@ export default function TeamInviteListItem(props: Props): JSX.Element {
       gridTemplateColumns: '1fr auto auto',
       alignItems:          'center',
       gap:                 2,
-      
+
       '&:not(:last-child)': {
         borderBottom: '1px solid',
         borderColor:  'divider',

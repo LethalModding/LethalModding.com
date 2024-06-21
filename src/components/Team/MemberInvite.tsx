@@ -36,7 +36,7 @@ export default function TeamMemberInvitePage(): JSX.Element {
   const supabase = useSupabaseClient()
   const { enqueueSnackbar } = useSnackbar()
   const handleSubmit = useCallback(() => {
-    
+
     supabase
       .from('team_invites')
       .insert({ team_id: teamID, email, type })
@@ -103,7 +103,7 @@ export default function TeamMemberInvitePage(): JSX.Element {
           value="tester"
         />
         <FormControlLabel
-          control={<Radio/>}
+          control={<Radio />}
           label={<>
             Collaborator
             <Typography

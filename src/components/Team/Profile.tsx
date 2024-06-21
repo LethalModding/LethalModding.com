@@ -66,7 +66,7 @@ export default function TeamProfilePage(): JSX.Element {
   useEffect(() => {
     if (!team) return
     setLocalTeam(team)
-    
+
     setLocalSlugs(prev => {
       if (!prev.length) return [slugify(team.name)]
 
@@ -75,12 +75,12 @@ export default function TeamProfilePage(): JSX.Element {
   }, [team])
 
   const [loading, setLoading] = useState(false)
-  
+
   const socials = localTeam.socials?.split(',') || ['']
-  
+
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
-    
+
     setLocalTeam((prevTeam) => ({
       ...prevTeam,
       [name]: value,
@@ -88,12 +88,12 @@ export default function TeamProfilePage(): JSX.Element {
   }, [])
 
   const [expanded, setExpanded] = useState<string>('profile')
-  
+
   const { enqueueSnackbar } = useSnackbar()
   const setTeam = useAppStore(state => state.setSelectedTeam)
   const handleSubmit = useCallback(() => {
     setLoading(true)
-    
+
     supabase
       .from('teams')
       .update(localTeam)
@@ -121,7 +121,7 @@ export default function TeamProfilePage(): JSX.Element {
   const [confirmationName, setConfirmationName] = useState('')
   const confirmDeleteTeam = useCallback(() => {
     setLoading(true)
-    
+
     supabase
       .from('teams')
       .delete()
