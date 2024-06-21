@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
+import TeamCreatePage from 'components/Team/Create'
 import TeamMemberManagePage from 'components/Team/MemberManage'
 import TeamMenu from 'components/Team/Menu'
 import TeamProfilePage from 'components/Team/Profile'
@@ -15,18 +16,16 @@ const TeamPage = (): JSX.Element => {
 
   const pageComponent = useMemo(() => {
     switch (selectedPage) {
-    //   case 'team/create':
-    //     return <TeamCreatePage />
-    case 'members':
-      return <TeamMemberManagePage />
-    case 'profile':
-      return <TeamProfilePage />
-    case 'projects':
-      return <ProjectManagePage />
-    //   case 'team/projects/create':
-    //     return <ProjectCreatePage />
-    default:
-      return null
+      case 'create':
+        return <TeamCreatePage />
+      case 'members':
+        return <TeamMemberManagePage />
+      case 'profile':
+        return <TeamProfilePage />
+      case 'projects':
+        return <ProjectManagePage />
+      default:
+        return null
     }
   }, [selectedPage])
 
