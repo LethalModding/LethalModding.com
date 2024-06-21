@@ -22,6 +22,7 @@
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/auth-helpers-react": "^0.5.0",
     "@supabase/supabase-js": "^2.43.5",
+    "email-addresses": "^5.0.0",
     "eslint-plugin-mui-path-imports": "^0.0.15",
     "javascript-time-ago": "^2.5.10",
     "lru-cache": "^10.2.2",

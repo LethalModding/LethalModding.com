@@ -2145,6 +2145,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"email-addresses@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "email-addresses@npm:5.0.0"
+  checksum: e58a510e9caf105313025e1c81488d5391c6404f0bbd7874e8e36a4c14d1ced02ff271748146c13edfa3bd9ce9b25f1194f5369971d77087325f37ab193129bb
+  languageName: node
+  linkType: hard
+
 "emoji-regex@npm:^8.0.0":
   version: 8.0.0
   resolution: "emoji-regex@npm:8.0.0"
@@ -4901,6 +4908,7 @@ __metadata:
     "@types/uuid": ^9.0.8
     "@typescript-eslint/eslint-plugin": ^7.13.1
     "@typescript-eslint/parser": ^7.13.1
+    email-addresses: ^5.0.0
     eslint: ^8
     eslint-config-next: ^14.2.4
     eslint-plugin-mui-path-imports: ^0.0.15
