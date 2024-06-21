@@ -2976,6 +2976,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"handlebars@npm:^4.7.8":
+  version: 4.7.8
+  resolution: "handlebars@npm:4.7.8"
+  dependencies:
+    minimist: ^1.2.5
+    neo-async: ^2.6.2
+    source-map: ^0.6.1
+    uglify-js: ^3.1.4
+    wordwrap: ^1.0.0
+  dependenciesMeta:
+    uglify-js:
+      optional: true
+  bin:
+    handlebars: bin/handlebars
+  checksum: 00e68bb5c183fd7b8b63322e6234b5ac8fbb960d712cb3f25587d559c2951d9642df83c04a1172c918c41bcfc81bfbd7a7718bbce93b893e0135fc99edea93ff
+  languageName: node
+  linkType: hard
+
 "has-bigints@npm:^1.0.1, has-bigints@npm:^1.0.2":
   version: 1.0.2
   resolution: "has-bigints@npm:1.0.2"
@@ -3695,7 +3713,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimist@npm:^1.2.0, minimist@npm:^1.2.6, minimist@npm:^1.2.8, minimist@npm:~1.2.5":
+"minimist@npm:^1.2.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6, minimist@npm:^1.2.8, minimist@npm:~1.2.5":
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
   checksum: 75a6d645fb122dad29c06a7597bddea977258957ed88d7a6df59b5cd3fe4a527e253e9bbf2e783e4b73657f9098b96a5fe96ab8a113655d4109108577ecf85b0
@@ -3732,6 +3750,13 @@ __metadata:
   version: 1.4.0
   resolution: "natural-compare@npm:1.4.0"
   checksum: 23ad088b08f898fc9b53011d7bb78ec48e79de7627e01ab5518e806033861bef68d5b0cd0e2205c2f36690ac9571ff6bcb05eb777ced2eeda8d4ac5b44592c3d
+  languageName: node
+  linkType: hard
+
+"neo-async@npm:^2.6.2":
+  version: 2.6.2
+  resolution: "neo-async@npm:2.6.2"
+  checksum: deac9f8d00eda7b2e5cd1b2549e26e10a0faa70adaa6fdadca701cc55f49ee9018e427f424bac0c790b7c7e2d3068db97f3093f1093975f2acb8f8818b936ed9
   languageName: node
   linkType: hard
 
@@ -4527,6 +4552,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"source-map@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "source-map@npm:0.6.1"
+  checksum: 59ce8640cf3f3124f64ac289012c2b8bd377c238e316fb323ea22fbfe83da07d81e000071d7242cad7a23cd91c7de98e4df8830ec3f133cb6133a5f6e9f67bc2
+  languageName: node
+  linkType: hard
+
 "streamsearch@npm:^1.1.0":
   version: 1.1.0
   resolution: "streamsearch@npm:1.1.0"
@@ -4883,6 +4915,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"uglify-js@npm:^3.1.4":
+  version: 3.18.0
+  resolution: "uglify-js@npm:3.18.0"
+  bin:
+    uglifyjs: bin/uglifyjs
+  checksum: 887733d05d4139a94dffd04a5f07ee7d8be70201c016ea48cb82703778b5c48fadbe6e5e7ac956425522f72e657d3eade23f06ae8a0e2eeed2d684bf6cc25e36
+  languageName: node
+  linkType: hard
+
 "ui-builder-react@workspace:.":
   version: 0.0.0-use.local
   resolution: "ui-builder-react@workspace:."
@@ -4914,6 +4955,7 @@ __metadata:
     eslint-plugin-mui-path-imports: ^0.0.15
     eslint-plugin-react: ^7.34.3
     eslint-plugin-react-hooks: ^4.6.2
+    handlebars: ^4.7.8
     javascript-time-ago: ^2.5.10
     lru-cache: ^10.2.2
     next: ^14.2.4
@@ -5098,6 +5140,13 @@ __metadata:
   version: 1.2.5
   resolution: "word-wrap@npm:1.2.5"
   checksum: f93ba3586fc181f94afdaff3a6fef27920b4b6d9eaefed0f428f8e07adea2a7f54a5f2830ce59406c8416f033f86902b91eb824072354645eea687dff3691ccb
+  languageName: node
+  linkType: hard
+
+"wordwrap@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "wordwrap@npm:1.0.0"
+  checksum: 2a44b2788165d0a3de71fd517d4880a8e20ea3a82c080ce46e294f0b68b69a2e49cff5f99c600e275c698a90d12c5ea32aff06c311f0db2eb3f1201f3e7b2a04
   languageName: node
   linkType: hard
 

@@ -24,6 +24,7 @@
     "@supabase/supabase-js": "^2.43.5",
     "email-addresses": "^5.0.0",
     "eslint-plugin-mui-path-imports": "^0.0.15",
+    "handlebars": "^4.7.8",
     "javascript-time-ago": "^2.5.10",
     "lru-cache": "^10.2.2",
     "next": "^14.2.4",
