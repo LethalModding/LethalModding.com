@@ -6,7 +6,7 @@ import rateLimit from 'server/rate-limit'
 import { supabaseSERVER } from 'server/supabaseServer'
 
 import { promises as fsPromises } from 'fs'
-import logo from 'public/icons/android-chrome-512x512.png'
+import logo from '../../../../../../public/icons/android-chrome-512x512.png'
 const { readFile } = fsPromises
 
 export default async function handler(
