@@ -106,9 +106,8 @@ async function handlePOST(
       'LethalModding.com - Your Login Link',
       'Please enable HTML to view this email.',
       (await readTemplate('user-login', {
-        ConfirmationURL: `${process.env.NEXT_PUBLIC_BASE_URL}/login/?token=${data.properties.hashed_token}`,
+        ConfirmationURL: data.properties.action_link,
         FirstName:       `${firstName}`,
-        LoginToken:      data.properties.hashed_token,
         LogoSrc:         'cid:lethalmodding-logo.png',
       })) ?? undefined,
       {
