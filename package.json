@@ -44,7 +44,7 @@
     "@babel/core": "^7.24.7",
     "@next/eslint-plugin-next": "^14.2.4",
     "@types/lru-cache": "^7.10.10",
-    "@types/node": "^20.14.5",
+    "@types/node": "^20.14.8",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/uuid": "^9.0.8",
@@ -54,7 +54,8 @@
     "eslint-config-next": "^14.2.4",
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "typescript": "^5.4.5"
+    "start-server-and-test": "^2.0.4",
+    "typescript": "^5.5.2"
   },
   "packageManager": "yarn@3.6.4"
 }
