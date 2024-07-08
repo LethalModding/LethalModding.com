@@ -1099,24 +1099,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@supabase/postgrest-js@npm:1.15.5":
-  version: 1.15.5
-  resolution: "@supabase/postgrest-js@npm:1.15.5"
+"@supabase/postgrest-js@npm:1.15.8":
+  version: 1.15.8
+  resolution: "@supabase/postgrest-js@npm:1.15.8"
   dependencies:
     "@supabase/node-fetch": ^2.6.14
-  checksum: 4778fc6da579a92a6c6d755a849122021bf470f585c48558eabd7f2a74c88722861567e18ae6a61bc4ca66cb146c380ff509bca5bcbd88579c00db21c092962a
+  checksum: b2081f76356f35f76e9e6f2e1b4dd1528c96404f4feeebf1ebb8068fb726e182c06f77cbd151c00d751ad9d69bcab4596dd68bf5c90ee7ace2ac22695bed3268
   languageName: node
   linkType: hard
 
-"@supabase/realtime-js@npm:2.9.5":
-  version: 2.9.5
-  resolution: "@supabase/realtime-js@npm:2.9.5"
+"@supabase/realtime-js@npm:2.10.2":
+  version: 2.10.2
+  resolution: "@supabase/realtime-js@npm:2.10.2"
   dependencies:
     "@supabase/node-fetch": ^2.6.14
     "@types/phoenix": ^1.5.4
     "@types/ws": ^8.5.10
     ws: ^8.14.2
-  checksum: 05416dd2618ac90c9e720b06cb6ca080a1757f62d93822ac49f497acc698f2c2fd5e90e44f713ad02ff37f8a4fa158eef8b91d2550210fb04c461c94d6fb4ca1
+  checksum: a98342e6a8437c2c14a86728abd12f21d853f167fb22ede46ef680cc0ef990bf7c8a8403c448ab335d884cfe8c3b2f6c4e3363dcb777511ee3abb6270d65a954
   languageName: node
   linkType: hard
 
@@ -1130,16 +1130,16 @@ __metadata:
   linkType: hard
 
 "@supabase/supabase-js@npm:^2.43.5":
-  version: 2.43.5
-  resolution: "@supabase/supabase-js@npm:2.43.5"
+  version: 2.44.3
+  resolution: "@supabase/supabase-js@npm:2.44.3"
   dependencies:
     "@supabase/auth-js": 2.64.2
     "@supabase/functions-js": 2.4.1
     "@supabase/node-fetch": 2.6.15
-    "@supabase/postgrest-js": 1.15.5
-    "@supabase/realtime-js": 2.9.5
+    "@supabase/postgrest-js": 1.15.8
+    "@supabase/realtime-js": 2.10.2
     "@supabase/storage-js": 2.6.0
-  checksum: 1d610dc9a7c507d4098358b431485dfa3c8992fc22cb7bb5c903a3cbf29a4561238030701cfdbfb97ebb67e3525c543d7731f4004c7cf455dfc9f8f522f0fc68
+  checksum: 2710740c74ee6ce947db4c11fd20937328e9431c945f66abab097411a5180cdd2ad57b7e3f94c4fab69a6109dbbe467aca65397b3e07825da0ae836b5841971a
   languageName: node
   linkType: hard
 
