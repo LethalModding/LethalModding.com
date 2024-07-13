@@ -60,6 +60,8 @@ export default function AccountButton(): JSX.Element {
     supabase
       .from('teams')
       .select('id,name')
+      .order('name')
+      .eq('owner_id', session?.user.id)
       .then(({ data, error }) => {
         if (error) {
           console.error(error)
