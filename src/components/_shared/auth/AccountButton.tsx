@@ -79,7 +79,7 @@ export default function AccountButton(): JSX.Element {
 
         setLoading(false)
       })
-  }, [selectedTeamID, setSelectedTeamID, supabase])
+  }, [selectedTeamID, session?.user.id, setSelectedTeamID, supabase])
   useEffect(() => refreshTeams(), [refreshTeams])
 
   if (session?.user.id) {
