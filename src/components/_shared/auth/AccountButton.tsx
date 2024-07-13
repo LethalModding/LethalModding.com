@@ -16,8 +16,9 @@ import type { SelectChangeEvent } from '@mui/material/Select'
 import Select from '@mui/material/Select'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import type { MouseEvent } from 'react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAppStore } from 'store'
+import { Profile } from 'types/db/Profile'
 import type { Team } from 'types/db/Team'
 import LoginButtons from './LoginButtons'
 
@@ -82,6 +83,32 @@ export default function AccountButton(): JSX.Element {
   }, [selectedTeamID, session?.user.id, setSelectedTeamID, supabase])
   useEffect(() => refreshTeams(), [refreshTeams])
 
+  const [profile, setProfile] = useState<Profile | null>(null)
+  useEffect(() => {
+    const update = async (): Promise<void> => {
+      if (!session?.user.id) return
+
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', session.user.id)
+        .single()
+
+      if (error) {
+        console.error(error)
+      } else {
+        setProfile(data)
+      }
+    }
+
+    void update()
+  }, [session?.user.id, supabase])
+
+  const username = useMemo(() => {
+    if (!session?.user?.user_metadata) return ''
+    return profile?.username || session.user.user_metadata.full_name
+  }, [profile?.username, session?.user?.user_metadata])
+
   if (session?.user.id) {
     return (
       <>
@@ -95,7 +122,7 @@ export default function AccountButton(): JSX.Element {
           }}
         >
           <ListItemText
-            primary={session.user.user_metadata.full_name}
+            primary={username}
             secondary={
               teams?.find(team => team.id === selectedTeamID)?.name || 'No Team'
             }
