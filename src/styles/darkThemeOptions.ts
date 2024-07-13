@@ -24,13 +24,13 @@ const darkThemeOptions: Theme = createTheme({
     fontFamily:  ['VT323', 'monospace'].join(','),
     fontSize:    18,
     allVariants: {
-      letterSpacing: '0.2rem',
-      lineHeight:    0.98,
-      wordSpacing:   '-0.2rem',
+      letterSpacing: '0.25rem',
+      lineHeight:    0.97,
+      wordSpacing:   '-0.1rem',
     },
     body1: {
-      letterSpacing: '0.25rem',
-      lineHeight:    1.25,
+      letterSpacing: '0.3rem',
+      lineHeight:    1.24,
     },
   },
 })
