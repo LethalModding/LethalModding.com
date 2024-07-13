@@ -18,7 +18,8 @@ export default function LoginButtons(props: Props): JSX.Element {
       provider: 'discord',
       options:  {
         redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}`,
-      }
+        scopes:     'identify email',
+      },
     })
   }, [supabase])
   const loginWithGithub = useCallback(() => {
