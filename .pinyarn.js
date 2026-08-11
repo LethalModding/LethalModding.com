@@ -7,24 +7,15 @@ const zlib = require('zlib');
 const { PassThrough } = require('stream');
 
 const config = {
-  "ghTokens": [
-    [
-      "github_pat_",
-      "11AAJTTFQ0REJCNOIAnP5j_f7uJsYJPDzc0vBxTK5HnKH6Vi0UpqPjvmMuK28AQKFDD5DV2J2E3Mim8CQ4"
-    ]
-  ],
   "yarnUrl": "https://raw.githubusercontent.com/yarnpkg/berry/%40yarnpkg/cli/4.0.2/packages/yarnpkg-cli/bin/yarn.js"
 };
 
 const getUrlHash = url => crypto.createHash('sha256').update(url).digest('hex').substring(0, 8);
 
 const YARN_URL_HASH = getUrlHash(config.yarnUrl);
-let BERRY_HEADERS = {
+const BERRY_HEADERS = {
   'User-Agent': `pinyarn/?`
 };
-if (config.yarnUrl.includes('/artifacts/')) {
-  BERRY_HEADERS['Authorization'] = `token ${config.ghTokens[Math.floor(Math.random() * config.ghTokens.length)].join('')}`;
-}
 const YARNRC_YML_PATH = path.join(__dirname, '.yarnrc.yml');
 const PLUGIN_LIST = !fs.existsSync(YARNRC_YML_PATH) ? [] : fs.readFileSync(YARNRC_YML_PATH, 'utf-8')
   .split('\n')
@@ -34,6 +25,25 @@ const YARN_DIR = path.join(__dirname, '.yarn');
 const RELEASES_DIR = path.join(YARN_DIR, 'releases');
 const PLUGIN_DIR = path.join(YARN_DIR, 'plugins');
 const YARN_BINARY = path.join(RELEASES_DIR, `yarn-${YARN_URL_HASH}.cjs`);
+const ALLOWED_DOWNLOAD_HOSTS = new Set(['raw.githubusercontent.com']);
+const MAX_REDIRECTS = 3;
+
+const isPathWithin = (filePath, directory) => {
+  const resolvedPath = path.resolve(filePath);
+  const resolvedDirectory = path.resolve(directory);
+  return resolvedPath.startsWith(`${resolvedDirectory}${path.sep}`);
+};
+
+const validateDownload = (filePath, url) => {
+  if (!isPathWithin(filePath, RELEASES_DIR) && !isPathWithin(filePath, PLUGIN_DIR)) {
+    throw new Error(`Refusing to write outside the Yarn directory: ${filePath}`);
+  }
+
+  const urlParts = new URL(url);
+  if (urlParts.protocol !== 'https:' || !ALLOWED_DOWNLOAD_HOSTS.has(urlParts.hostname)) {
+    throw new Error(`Refusing to download from untrusted URL: ${url}`);
+  }
+};
 
 let stats;
 try {
@@ -42,7 +52,8 @@ try {
 const CURRENT_YARN_BINARYNAME = !stats ? null : fs.readdirSync(RELEASES_DIR)[0];
 const CURRENT_YARN_URL_HASH = !CURRENT_YARN_BINARYNAME ? null : path.basename(CURRENT_YARN_BINARYNAME).slice(0, -path.extname(CURRENT_YARN_BINARYNAME).length).replace('yarn-', '');
 
-const downloadFile = (filePath, url) => {
+const downloadFile = (filePath, url, redirectCount = 0) => {
+  validateDownload(filePath, url);
   const urlParts = new URL(url);
   return new Promise((resolve, reject) =>
     https.get({
@@ -50,10 +61,15 @@ const downloadFile = (filePath, url) => {
       path: urlParts.pathname + urlParts.search,
       headers: BERRY_HEADERS
     }, res => {
-      if (res.statusCode === 301 || res.statusCode === 302) {
-        downloadFile(filePath, res.headers.location).then(resolve, reject);
+      if (res.statusCode >= 300 && res.statusCode < 400) {
+        if (redirectCount >= MAX_REDIRECTS || !res.headers.location) {
+          reject(new Error(`Too many or invalid redirects while downloading ${url}`));
+          return;
+        }
+        const redirectUrl = new URL(res.headers.location, url).toString();
+        downloadFile(filePath, redirectUrl, redirectCount + 1).then(resolve, reject);
       } else if (res.statusCode !== 200) {
-        throw new Error(`Error downloading ${url}, status: ${res.statusCode}`);
+        reject(new Error(`Error downloading ${url}, status: ${res.statusCode}`));
       } else {
         const isZip = res.headers["content-type"] === 'application/zip';
         if (isZip) {
@@ -92,7 +108,8 @@ const downloadFile = (filePath, url) => {
       }
     }).on('error', reject)
   ).catch(err => {
-    fs.unlinkSync(filePath);
+    if (fs.existsSync(filePath))
+      fs.unlinkSync(filePath);
     throw err;
   });
 }
