@@ -7,8 +7,7 @@ const allowedOrigins = [
   'https://lethalmodding.com',
 ]
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function middleware(req)
+export function proxy(req)
 {
   // retrieve the current response
   const res = NextResponse.next()

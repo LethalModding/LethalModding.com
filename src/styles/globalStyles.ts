@@ -39,7 +39,7 @@ const globalStyles: Styles = {
 }
 
 export default function useGlobalStyles(): Styles {
-  const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'))
+  const isDesktop = useMediaQuery('(min-width:900px)', { defaultMatches: true })
 
   return {
     ...globalStyles,
