@@ -118,7 +118,7 @@ async function handlePOST(
         'o:tracking-clicks': false,
       }
     )
-  } catch (error) {
+  } catch {
     return res.status(500).json({ error: 'Failed sending email' })
   }
 
