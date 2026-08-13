@@ -9,13 +9,7 @@ This is the source code for the [LethalModding.com](https://lethalmodding.com/) 
 
 ### First-Time Setup
 
-If this is your first time using NodeJS, you should install Yarn to work with this project:
-
-(You only need to do this once per system you develop on.)
-
-```bash
-npm install -g yarn
-```
+If this is your first time using NodeJS, install Bun to work with this project: [bun.sh](https://bun.sh).
 
 Then, we can clone the repository into a path of your choosing:
 
@@ -24,10 +18,10 @@ git clone https://github.com/LethalModding/LethalModding.com.git LethalModding.c
 cd LethalModding.com
 ```
 
-Finally, install the dependencies using yarn.
+Finally, install the dependencies.
 
 ```bash
-yarn install
+bun install
 ```
 
 ### Running the Dev Server
@@ -35,7 +29,7 @@ yarn install
 You can run the server locally with the following command:
 
 ```bash
-yarn run dev -p 9000
+bun run dev -p 9000
 ```
 
 ## Learn More
