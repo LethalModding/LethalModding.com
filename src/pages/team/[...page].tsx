@@ -1,5 +1,5 @@
-import TeamPage from '.'
+import TeamPage from ".";
 
 export default function Page(): JSX.Element {
-  return <TeamPage />
+	return <TeamPage />;
 }

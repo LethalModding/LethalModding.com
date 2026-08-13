@@ -1,34 +1,35 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server";
 
 // the list of all allowed origins
 const allowedOrigins = [
-  'http://localhost:9000',
-  'http://wails.localhost:34115',
-  'https://lethalmodding.com',
-]
+	"http://localhost:9000",
+	"http://wails.localhost:34115",
+	"https://lethalmodding.com",
+];
 
-export function proxy(req)
-{
-  // retrieve the current response
-  const res = NextResponse.next()
-  const origin = req.headers.get('origin')
-  if (allowedOrigins.includes(origin))
-  {
-    res.headers.append('Access-Control-Allow-Origin', origin)
-  }
+export function proxy(req) {
+	// retrieve the current response
+	const res = NextResponse.next();
+	const origin = req.headers.get("origin");
+	if (allowedOrigins.includes(origin)) {
+		res.headers.append("Access-Control-Allow-Origin", origin);
+	}
 
-  // add the CORS headers to the response
-  res.headers.append('Access-Control-Allow-Credentials', 'true')
-  res.headers.append('Access-Control-Allow-Methods', 'GET,DELETE,PATCH,POST,PUT')
-  res.headers.append(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date'
-  )
+	// add the CORS headers to the response
+	res.headers.append("Access-Control-Allow-Credentials", "true");
+	res.headers.append(
+		"Access-Control-Allow-Methods",
+		"GET,DELETE,PATCH,POST,PUT",
+	);
+	res.headers.append(
+		"Access-Control-Allow-Headers",
+		"X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date",
+	);
 
-  return res
+	return res;
 }
 
 // specify the path regex to apply the middleware to
 export const config = {
-  matcher: '/api/:path*',
-}
+	matcher: "/api/:path*",
+};

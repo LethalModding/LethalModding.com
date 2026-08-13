@@ -1,10 +1,10 @@
-import type { Record } from './Record'
+import type { Record } from "./Record";
 
 export type Project = Record & {
-  created_by: string
-  team_id: string
+	created_by: string;
+	team_id: string;
 
-  name: string
-  summary: string
-  type: 'public' | 'private'
-}
+	name: string;
+	summary: string;
+	type: "public" | "private";
+};
