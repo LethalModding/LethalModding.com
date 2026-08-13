@@ -1,20 +1,13 @@
-import MuiLink from '@mui/material/Link'
-import NextLink from 'next/link'
-import { forwardRef } from 'react'
+import MuiLink, { type LinkProps } from "@mui/material/Link";
+import NextLink from "next/link";
+import { forwardRef } from "react";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Link = forwardRef((props: any, ref: any) => {
-  let { href } = props
+const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => (
+	<NextLink href={props.href ?? "#"} legacyBehavior passHref>
+		<MuiLink ref={ref} {...props} />
+	</NextLink>
+));
 
-  const { onClick } = props
+Link.displayName = "CustomLink";
 
-  if (!href && onClick) href = '#'
-
-  return <NextLink href={href} legacyBehavior passHref>
-    <MuiLink ref={ref} {...props} />
-  </NextLink>
-})
-
-Link.displayName = 'CustomLink'
-
-export default Link
+export default Link;

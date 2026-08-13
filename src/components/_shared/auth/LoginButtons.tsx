@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import GitHubIcon from '@mui/icons-material/GitHub'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'

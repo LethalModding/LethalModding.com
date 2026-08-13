@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import TrashIcon from '@mui/icons-material/Delete'
 import DotsIcon from '@mui/icons-material/MoreVert'
 import Box from '@mui/material/Box'
