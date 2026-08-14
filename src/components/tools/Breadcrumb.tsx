@@ -14,9 +14,9 @@ const Breadcrumb = (props: Props): JSX.Element => {
 		<Typography variant="h2">
 			<Link
 				href="/"
-				style={{
+				sx={{
 					cursor: "pointer",
-					marginRight: 32,
+					marginRight: "32px",
 					textDecoration: "none",
 					"&:hover": {
 						background: "inherit",
