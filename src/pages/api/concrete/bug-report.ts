@@ -78,9 +78,9 @@ export default async function ConcreteBugReport(
 	let message = bugReportTemplate;
 
 	// Bind all environmentData to the message
-	Object.keys(environment).forEach((key) => {
+	for (const key of Object.keys(environment)) {
 		message = message.replace(`{{ ${key} }}`, environment[key]);
-	});
+	}
 
 	message = message
 		.replace("{{ context }}", context)

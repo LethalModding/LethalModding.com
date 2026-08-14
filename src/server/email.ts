@@ -1,8 +1,8 @@
+import { promises as fsPromises } from "node:fs";
+import path from "node:path";
 import FormData from "form-data";
-import { promises as fsPromises } from "fs";
 import Handlebars from "handlebars";
 import Mailgun from "mailgun.js";
-import path from "path";
 
 const mailgun = new Mailgun(FormData);
 
@@ -48,7 +48,7 @@ export async function sendEmail(
 ): Promise<void> {
 	const resp = await mg.messages.create(process.env.MAILGUN_DOMAIN ?? "", {
 		from: `no-reply@${process.env.MAILGUN_DOMAIN}`,
-		to: to instanceof Array ? to : [to],
+		to: Array.isArray(to) ? to : [to],
 		subject,
 		text,
 		html,

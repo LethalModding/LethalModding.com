@@ -312,31 +312,35 @@ const ToolsHome: NextPage = (): JSX.Element => {
 				return sort.direction === "asc"
 					? a.name.localeCompare(b.name)
 					: b.name.localeCompare(a.name);
-			} else if (sort.property === "owner") {
+			}
+			if (sort.property === "owner") {
 				return sort.direction === "asc"
 					? a.owner.localeCompare(b.owner)
 					: b.owner.localeCompare(a.owner);
-			} else if (sort.property === "downloads") {
+			}
+			if (sort.property === "downloads") {
 				const totalA = a.versions.reduce((acc, cur) => acc + cur.downloads, 0);
 				const totalB = b.versions.reduce((acc, cur) => acc + cur.downloads, 0);
 				return sort.direction === "asc" ? totalA - totalB : totalB - totalA;
-			} else if (sort.property === "ratings") {
+			}
+			if (sort.property === "ratings") {
 				return sort.direction === "asc"
 					? a.rating_score - b.rating_score
 					: b.rating_score - a.rating_score;
-			} else if (sort.property === "size") {
+			}
+			if (sort.property === "size") {
 				return sort.direction === "asc"
 					? a.versions[0].file_size - b.versions[0].file_size
 					: b.versions[0].file_size - a.versions[0].file_size;
-			} else if (sort.property === "dependencies") {
+			}
+			if (sort.property === "dependencies") {
 				return sort.direction === "asc"
 					? a.versions[0].dependencies.length -
 							b.versions[0].dependencies.length
 					: b.versions[0].dependencies.length -
 							a.versions[0].dependencies.length;
-			} else {
-				return 0;
 			}
+			return 0;
 		});
 
 		return newMods;

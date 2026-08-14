@@ -1,6 +1,6 @@
+import { promises as fsPromises } from "node:fs";
 import type { ParsedGroup, ParsedMailbox } from "email-addresses";
 import addrs from "email-addresses";
-import { promises as fsPromises } from "fs";
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { readTemplate, sendEmail } from "server/email";
 import rateLimit from "server/rate-limit";

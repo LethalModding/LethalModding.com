@@ -169,16 +169,17 @@ const Pagination = (props: Props): JSX.Element => {
 								{x}
 							</Link>
 						);
-					} else if (x === 2 && pageNumber > 3) {
+					}
+					if (x === 2 && pageNumber > 3) {
 						return "...";
-					} else if (
+					}
+					if (
 						x === Math.ceil(totalResults / pageSize) - 1 &&
 						pageNumber < Math.ceil(totalResults / pageSize) - 1
 					) {
 						return "...";
-					} else {
-						return null;
 					}
+					return null;
 				})}
 			</Box>
 		</>
