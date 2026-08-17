@@ -6,7 +6,7 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"includes": ["**", "!**/public"]
+		"includes": ["**", "!**/.turbo", "!**/public"]
 	},
 	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {

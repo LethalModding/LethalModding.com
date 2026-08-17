@@ -1,0 +1,30 @@
+{
+	"$schema": "https://turborepo.com/schema.json",
+	"ui": "tui",
+	"globalDependencies": ["biome.json", "tsconfig.json"],
+	"globalEnv": [
+		"GITHUB_TOKEN",
+		"MAILGUN_DOMAIN",
+		"MAILGUN_SEND_KEY",
+		"NEXT_PUBLIC_BASE_URL",
+		"NEXT_PUBLIC_BRANDING",
+		"NEXT_PUBLIC_SUPABASE_URL",
+		"NODE_ENV",
+		"SUPABASE_SERVICE_KEY"
+	],
+	"globalPassThroughEnv": ["HOME", "NEXT_RUNTIME", "NO_COLOR", "PATH"],
+	"tasks": {
+		"build": {
+			"inputs": ["$TURBO_DEFAULT$"],
+			"outputs": [".next/**", "!.next/cache/**"]
+		},
+		"dev": {
+			"cache": false,
+			"persistent": true
+		},
+		"lint": {
+			"inputs": ["$TURBO_DEFAULT$"],
+			"outputs": []
+		}
+	}
+}
