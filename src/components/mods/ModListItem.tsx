@@ -10,6 +10,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
+import Image from "next/image";
 import { useState } from "react";
 
 type Props = {
@@ -28,13 +29,11 @@ export default function ModListItem(props: Props): JSX.Element {
 
 	return (
 		<ListItemButton>
-			<img
+			<Image
 				alt={`Mod icon for ${name}`}
 				src={`https://picsum.photos/seed/${id}/96/96`}
-				style={{
-					height: 96,
-					width: 96,
-				}}
+				height={96}
+				width={96}
 			/>
 
 			<Box

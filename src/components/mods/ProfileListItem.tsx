@@ -6,6 +6,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
+import Image from "next/image";
 import type { Dispatch, MouseEvent, SetStateAction } from "react";
 import { useCallback, useState } from "react";
 import type { Profile } from "types/Profile";
@@ -36,13 +37,11 @@ export default function ProfileListItem(props: Props): JSX.Element {
 
 	return (
 		<ListItemButton selected={profile.id === "30"} onClick={handleClick}>
-			<img
+			<Image
 				alt={`Profile icon for ${profile.name}`}
 				src={`https://picsum.photos/seed/${profile.id}/40/40`}
-				style={{
-					height: 40,
-					width: 40,
-				}}
+				height={40}
+				width={40}
 			/>
 
 			<Box

@@ -2,6 +2,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import Image from "next/image";
 import { useCallback } from "react";
 
 type Props = {
@@ -41,14 +42,13 @@ export default function LoginButtons(props: Props): JSX.Element {
 		>
 			<Button onClick={loginWithDiscord} variant="contained">
 				Discord
-				<img
+				<Image
 					alt="Discord"
 					src="/discord-mark-white.svg"
-					style={{
-						height: "16px",
-						marginLeft: "0.5em",
-						width: "auto",
-					}}
+					height={16}
+					width={21}
+					unoptimized
+					style={{ marginLeft: "0.5em" }}
 				/>
 			</Button>
 
