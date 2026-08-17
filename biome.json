@@ -1,20 +1,18 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.5.8/schema.json",
 	"vcs": {
 		"enabled": true,
 		"clientKind": "git",
 		"useIgnoreFile": true
 	},
 	"files": {
-		"ignore": ["public"]
+		"includes": ["**", "!**/public"]
 	},
-	"organizeImports": {
-		"enabled": true
-	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true,
+			"preset": "recommended",
 			"style": {
 				"useImportType": "off"
 			}
@@ -25,7 +23,7 @@
 	},
 	"overrides": [
 		{
-			"include": ["src/pages/_document.tsx"],
+			"includes": ["**/src/pages/_document.tsx"],
 			"linter": {
 				"rules": {
 					"security": {
@@ -35,7 +33,7 @@
 			}
 		},
 		{
-			"include": ["src/components/team/Profile.tsx"],
+			"includes": ["**/src/components/team/Profile.tsx"],
 			"linter": {
 				"rules": {
 					"suspicious": {
