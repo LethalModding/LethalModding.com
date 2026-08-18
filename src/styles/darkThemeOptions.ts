@@ -4,6 +4,13 @@ import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 const darkThemeOptions: Theme = createTheme({
 	palette: {
 		mode: "dark",
+		background: {
+			default: "#121010",
+			paper: "#121010",
+		},
+		text: {
+			primary: "#e8982f",
+		},
 		primary: {
 			main: "#e8982f",
 		},

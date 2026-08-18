@@ -55,78 +55,76 @@ export default function TeamMemberInvitePage(): JSX.Element {
 	}, [email, enqueueSnackbar, supabase, teamID, type]);
 
 	return (
-		<>
-			<Paper
+		<Paper
+			sx={{
+				display: "flex",
+				flexDirection: "column",
+				gap: 1,
+				m: 2,
+				p: 2,
+			}}
+		>
+			<Typography
 				sx={{
-					display: "flex",
-					flexDirection: "column",
-					gap: 1,
-					m: 2,
-					p: 2,
+					pb: 1.5,
 				}}
+				variant="h5"
 			>
-				<Typography
-					sx={{
-						pb: 1.5,
-					}}
-					variant="h5"
-				>
-					Invite to Team
-				</Typography>
+				Invite to Team
+			</Typography>
 
-				<TextField
-					fullWidth
-					label="Email"
-					name="email"
-					onChange={handleInputChange}
-					variant="filled"
-					value={email}
+			<TextField
+				fullWidth
+				label="Email"
+				name="email"
+				onChange={handleInputChange}
+				variant="filled"
+				value={email}
+			/>
+
+			<RadioGroup
+				name="type"
+				onChange={handleSelectChange}
+				sx={{
+					gap: 1,
+					my: 0.5,
+				}}
+				value={type}
+			>
+				<FormControlLabel
+					control={<Radio />}
+					label={
+						<>
+							Tester
+							<Typography color="textSecondary" variant="body2">
+								Can view and comment on projects
+							</Typography>
+						</>
+					}
+					value="tester"
 				/>
+				<FormControlLabel
+					control={<Radio />}
+					label={
+						<>
+							Collaborator
+							<Typography color="textSecondary" variant="body2">
+								Can view, create, and edit projects
+							</Typography>
+						</>
+					}
+					value="collaborator"
+				/>
+			</RadioGroup>
 
-				<RadioGroup
-					name="type"
-					onChange={handleSelectChange}
-					sx={{
-						gap: 1,
-						my: 0.5,
-					}}
-					value={type}
-				>
-					<FormControlLabel
-						control={<Radio />}
-						label={
-							<>
-								Tester
-								<Typography color="textSecondary" variant="body2">
-									Can view and comment on projects
-								</Typography>
-							</>
-						}
-						value="tester"
-					/>
-					<FormControlLabel
-						control={<Radio />}
-						label={
-							<>
-								Collaborator
-								<Typography color="textSecondary" variant="body2">
-									Can view, create, and edit projects
-								</Typography>
-							</>
-						}
-						value="collaborator"
-					/>
-				</RadioGroup>
-
-				<Button
-					color="primary"
-					disabled={!email}
-					onClick={handleSubmit}
-					variant="contained"
-				>
-					Invite
-				</Button>
-			</Paper>
-		</>
+			<Button
+				color="primary"
+				disabled={!email}
+				onClick={handleSubmit}
+				variant="contained"
+			>
+				Invite
+			</Button>
+		</Paper>
 	);
 }
