@@ -1,0 +1,5 @@
+[gates.build]
+run = "bun run build"
+
+[gates.lint]
+run = "bun run lint"
