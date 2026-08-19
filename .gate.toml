@@ -1,5 +1,12 @@
+# next build and next typegen both write .next, and typecheck runs typegen.
+# Left to overlap they clobber each other, and the failure is nondeterministic.
+
 [gates.build]
 run = "bun run build"
+serial = true
 
 [gates.lint]
 run = "bun run lint"
+
+[gates.typecheck]
+serial = true
