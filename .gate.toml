@@ -2,11 +2,11 @@
 # Left to overlap they clobber each other, and the failure is nondeterministic.
 
 [gates.build]
-run = "bun run build"
+run = "bunx turbo run build"
 serial = true
 
 [gates.lint]
-run = "bun run lint"
+run = "bunx turbo run lint"
 
 [gates.typecheck]
 serial = true
