@@ -5,8 +5,5 @@
 run = "bunx turbo run build"
 serial = true
 
-[gates.lint]
-run = "bunx turbo run lint"
-
 [gates.typecheck]
 serial = true

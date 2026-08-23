@@ -12,7 +12,7 @@
 		"NODE_ENV",
 		"SUPABASE_SERVICE_KEY"
 	],
-	"globalPassThroughEnv": ["HOME", "NEXT_RUNTIME", "NO_COLOR", "PATH"],
+	"globalPassThroughEnv": ["CI", "HOME", "NEXT_RUNTIME", "NO_COLOR", "PATH"],
 	"tasks": {
 		"build": {
 			"inputs": ["$TURBO_DEFAULT$"],
@@ -25,6 +25,10 @@
 		"lint": {
 			"inputs": ["$TURBO_DEFAULT$"],
 			"outputs": []
+		},
+		"typecheck": {
+			"inputs": ["$TURBO_DEFAULT$"],
+			"outputs": ["*.tsbuildinfo"]
 		}
 	}
 }
