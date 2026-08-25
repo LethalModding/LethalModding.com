@@ -16,7 +16,7 @@
 	"tasks": {
 		"build": {
 			"inputs": ["$TURBO_DEFAULT$"],
-			"outputs": [".next/**", "!.next/cache/**"]
+			"outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"]
 		},
 		"dev": {
 			"cache": false,
