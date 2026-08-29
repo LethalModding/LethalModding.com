@@ -1,52 +1,42 @@
-# LethalModding.com Website
+<h1 align="center">LethalModding.com</h1>
+
+<div align="center">
 
 [![CodeQL Analysis Workflow Status](https://github.com/LethalModding/LethalModding.com/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/LethalModding/LethalModding.com/actions)
 [![License](https://badgen.net/badge/License/CC-BY-NC-SA-2.0/blue)](https://github.com/LethalModding/LethalModding.com/blob/main/LICENSE.txt)
 
-This is the source code for the [LethalModding.com](https://lethalmodding.com/) website. This is based on the [Next.JS](https://nextjs.org/) framework, and uses [Material UI](https://mui.com/) for styling.
+Source for the [LethalModding.com](https://lethalmodding.com/) community site
 
-## Getting Started
+</div>
 
-### First-Time Setup
+---
 
-If this is your first time using NodeJS, install Bun to work with this project: [bun.sh](https://bun.sh).
+[LethalModding.com](https://lethalmodding.com/) is the public home for the Lethal Modding community — mod discovery, team profiles, project pages, and member tools. The site is a Next.js application with Material UI styling and Supabase-backed authentication.
 
-Then, we can clone the repository into a path of your choosing:
-
-```bash
-git clone https://github.com/LethalModding/LethalModding.com.git LethalModding.com
-cd LethalModding.com
-```
-
-Finally, install the dependencies.
+## Quick start
 
 ```bash
-bun install
+git clone https://github.com/LethalModding/LethalModding.com.git && cd LethalModding.com && bun install && bun run dev
 ```
 
-### Running the Dev Server
+Install, environment variables, and local workflows: [HUMANS.md](HUMANS.md).
 
-You can run the server locally with the following command:
+## Highlights
 
-```bash
-bun run dev -p 9000
-```
+- Mod listings and recommended mods surfaced from community data
+- Team profiles, invites, and member management
+- Project pages for community releases
+- GitHub and Discord sign-in for members
+- Branded email flows for login and notifications
 
-## Learn More
+## Documentation
 
-### TypeScript
+| Document | Purpose |
+| ---------- | --------- |
+| **[HUMANS.md](./HUMANS.md)** | Install, environment, local development, and operations. |
+| **[AGENTS.md](./AGENTS.md)** | Repository layout and conventions for coding agents. |
+| **[LICENSE.txt](./LICENSE.txt)** | CC BY-NC-SA 2.0 license terms. |
 
-- [TypeScript Documentation](https://www.typescriptlang.org/docs/) - learn about TypeScript features.
-- [TypeScript Tutorial](https://www.typescripttutorial.net/) - assumes you know JavaScript already.
+## License
 
-### Next.JS
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Next.js GitHub Repository](https://github.com/vercel/next.js/)
-
-### Material UI
-
-- [Material UI Components](https://mui.com/material-ui/) - index of Material UI components.
-- [Getting Started with Material UI](https://mui.com/material-ui/getting-started/learn/) - learning resources for Material UI.
-- [Material UI GitHub Repository](https://github.com/mui/material-ui)
+Copyright (c) Lethal Modding. Licensed under [CC BY-NC-SA 2.0](LICENSE.txt).
