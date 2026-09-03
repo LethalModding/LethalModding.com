@@ -2,9 +2,6 @@
 	"name": "ui-builder-react",
 	"version": "0.1.0",
 	"private": true,
-	"resolutions": {
-		"postcss": "8.5.26"
-	},
 	"scripts": {
 		"dev": "next dev -p 9000",
 		"build": "next build",
