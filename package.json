@@ -37,7 +37,7 @@
 		"react-time-ago": "^7.4.4",
 		"tr46": "^5.1.1",
 		"uuid": "11.1.1",
-		"webidl-conversions": "^7.0.0",
+		"webidl-conversions": "^8.0.1",
 		"zustand": "^4.5.7"
 	},
 	"devDependencies": {
