@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next/types";
 
+// Public Thunderstore package identifiers (owner/package), grouped by what they fix.
 const mods = [
 	"BepInEx/BepInExPack",
 	"Evaisa/HookGenPatcher",

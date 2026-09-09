@@ -89,6 +89,14 @@
 			}
 		},
 		{
+			"includes": ["**/src/pages/api/concrete/mods/recommended.ts"],
+			"linter": {
+				"rules": {
+					"security": { "noSecrets": "off" }
+				}
+			}
+		},
+		{
 			"includes": ["**/src/components/team/Profile.tsx"],
 			"linter": {
 				"rules": {
