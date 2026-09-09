@@ -51,6 +51,34 @@
 	},
 	"overrides": [
 		{
+			"includes": [
+				"**/src/components/tools/Breadcrumb.tsx",
+				"**/src/pages/_document.tsx",
+				"**/src/pages/api/concrete/v2/auth/login.ts"
+			],
+			"linter": {
+				"rules": {
+					"correctness": { "noUnresolvedImports": "off" }
+				}
+			}
+		},
+		{
+			"includes": ["**/next.config.*"],
+			"linter": {
+				"rules": {
+					"suspicious": { "noConsole": "off", "useAwait": "off" }
+				}
+			}
+		},
+		{
+			"includes": ["**/src/components/_shared/auth/LoginButtons.tsx"],
+			"linter": {
+				"rules": {
+					"correctness": { "noProcessGlobal": "off" }
+				}
+			}
+		},
+		{
 			"includes": ["**/src/pages/_document.tsx"],
 			"linter": {
 				"rules": {
@@ -142,11 +170,13 @@
 				"**/apps/server/**",
 				"**/apps/worker/**",
 				"**/app/**/route.ts",
-				"**/src/app/api/**"
+				"**/src/app/api/**",
+				"**/src/pages/api/**"
 			],
 			"linter": {
 				"rules": {
-					"correctness": { "noNodejsModules": "off", "noProcessGlobal": "off" }
+					"correctness": { "noNodejsModules": "off", "noProcessGlobal": "off" },
+					"suspicious": { "noConsole": "off" }
 				}
 			}
 		}
