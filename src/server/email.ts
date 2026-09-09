@@ -31,11 +31,15 @@ export async function readTemplate(
 	}
 }
 
+export interface EmailBody {
+	subject: string;
+	text: string;
+	html?: string | undefined;
+}
+
 export async function sendEmail(
 	to: string | string[],
-	subject: string,
-	text: string,
-	html?: string,
+	body: EmailBody,
 	options?: {
 		[key: string]:
 			| string
@@ -46,6 +50,7 @@ export async function sendEmail(
 			| undefined;
 	},
 ): Promise<void> {
+	const { subject, text, html } = body;
 	const resp = await mg.messages.create(process.env.MAILGUN_DOMAIN ?? "", {
 		from: `no-reply@${process.env.MAILGUN_DOMAIN}`,
 		to: Array.isArray(to) ? to : [to],

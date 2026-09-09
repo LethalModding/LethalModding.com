@@ -21,20 +21,16 @@ export function TeamCreatePage(): JSX.Element {
 
 	const handleInputChange = useCallback(
 		(event: ChangeEvent<HTMLInputElement>) => {
-			switch (event.target.name) {
-				case "name":
-					setName(event.target.value);
-					break;
+			if (event.target.name === "name") {
+				setName(event.target.value);
 			}
 		},
 		[],
 	);
 
 	const handleSelectChange = useCallback((event: SelectChangeEvent<string>) => {
-		switch (event.target.name) {
-			case "type":
-				setType(event.target.value);
-				break;
+		if (event.target.name === "type") {
+			setType(event.target.value);
 		}
 	}, []);
 

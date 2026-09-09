@@ -115,7 +115,12 @@ export function AccountButton(): JSX.Element {
 			}
 		};
 
-		void update();
+		update().catch((err: unknown) => {
+			enqueueSnackbar(
+				`Unable to load profile: ${err instanceof Error ? err.message : String(err)}`,
+				{ variant: "error" },
+			);
+		});
 	}, [session?.user.id, supabase, enqueueSnackbar]);
 
 	const username = useMemo(() => {

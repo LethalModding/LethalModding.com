@@ -18,20 +18,16 @@ export function TeamMemberInvitePage(): JSX.Element {
 
 	const handleInputChange = useCallback(
 		(event: ChangeEvent<HTMLInputElement>) => {
-			switch (event.target.name) {
-				case "email":
-					setEmail(event.target.value);
-					break;
+			if (event.target.name === "email") {
+				setEmail(event.target.value);
 			}
 		},
 		[],
 	);
 
 	const handleSelectChange = useCallback((event: SelectChangeEvent<string>) => {
-		switch (event.target.name) {
-			case "type":
-				setType(event.target.value);
-				break;
+		if (event.target.name === "type") {
+			setType(event.target.value);
 		}
 	}, []);
 

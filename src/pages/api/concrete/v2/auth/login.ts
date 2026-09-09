@@ -105,13 +105,16 @@ async function handlePOST(
 		);
 		await sendEmail(
 			parsedEmail.address,
-			"LethalModding.com - Your Login Link",
-			"Please enable HTML to view this email.",
-			(await readTemplate("user-login", {
-				ConfirmationURL: data.properties.action_link,
-				FirstName: `${firstName}`,
-				LogoSrc: "cid:lethalmodding-logo.png",
-			})) ?? undefined,
+			{
+				subject: "LethalModding.com - Your Login Link",
+				text: "Please enable HTML to view this email.",
+				html:
+					(await readTemplate("user-login", {
+						ConfirmationURL: data.properties.action_link,
+						FirstName: `${firstName}`,
+						LogoSrc: "cid:lethalmodding-logo.png",
+					})) ?? undefined,
+			},
 			{
 				inline: {
 					data: logoData,
