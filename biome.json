@@ -26,24 +26,53 @@
 			"!**/dist-release"
 		]
 	},
-	"assist": { "actions": { "source": { "organizeImports": "on" } } },
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	},
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"preset": "recommended",
+			"preset": "all",
 			"correctness": {
-				"preset": "all",
 				"noSolidDestructuredProps": "off",
 				"useQwikValidLexicalScope": "off"
 			},
-			"suspicious": { "preset": "all", "noReactSpecificProps": "off" },
-			"security": { "preset": "all" },
-			"a11y": { "preset": "all" },
+			"suspicious": {
+				"noReactSpecificProps": "off"
+			},
 			"performance": {
-				"preset": "all",
 				"useSolidForComponent": "off",
 				"noJsxPropsBind": "off",
 				"noAwaitInLoops": "off"
+			},
+			"style": {
+				"noTernary": "off",
+				"noNestedTernary": "off",
+				"noMagicNumbers": "off",
+				"noJsxLiterals": "off",
+				"noContinue": "off",
+				"noIncrementDecrement": "off",
+				"useDestructuring": "off",
+				"useExportsLast": "off",
+				"useExplicitLengthCheck": "off",
+				"useErrorCause": "off",
+				"useNamingConvention": "off",
+				"useFilenamingConvention": "off",
+				"noProcessEnv": "off",
+				"noExcessiveLinesPerFile": {
+					"level": "on",
+					"options": {
+						"maxLines": 500
+					}
+				}
+			},
+			"complexity": {
+				"noExcessiveCognitiveComplexity": "off",
+				"noExcessiveLinesPerFunction": "off"
 			},
 			"nursery": {
 				"noFloatingPromises": "error",
@@ -63,28 +92,41 @@
 			],
 			"linter": {
 				"rules": {
-					"correctness": { "noUnresolvedImports": "off" }
+					"correctness": {
+						"noUnresolvedImports": "off"
+					}
 				}
 			}
 		},
 		{
-			"includes": ["**/next.config.*"],
+			"includes": [
+				"**/next.config.*"
+			],
 			"linter": {
 				"rules": {
-					"suspicious": { "noConsole": "off", "useAwait": "off" }
+					"suspicious": {
+						"noConsole": "off",
+						"useAwait": "off"
+					}
 				}
 			}
 		},
 		{
-			"includes": ["**/src/components/_shared/auth/LoginButtons.tsx"],
+			"includes": [
+				"**/src/components/_shared/auth/LoginButtons.tsx"
+			],
 			"linter": {
 				"rules": {
-					"correctness": { "noProcessGlobal": "off" }
+					"correctness": {
+						"noProcessGlobal": "off"
+					}
 				}
 			}
 		},
 		{
-			"includes": ["**/src/pages/_document.tsx"],
+			"includes": [
+				"**/src/pages/_document.tsx"
+			],
 			"linter": {
 				"rules": {
 					"security": {
@@ -94,15 +136,21 @@
 			}
 		},
 		{
-			"includes": ["**/src/pages/api/concrete/mods/recommended.ts"],
+			"includes": [
+				"**/src/pages/api/concrete/mods/recommended.ts"
+			],
 			"linter": {
 				"rules": {
-					"security": { "noSecrets": "off" }
+					"security": {
+						"noSecrets": "off"
+					}
 				}
 			}
 		},
 		{
-			"includes": ["**/src/components/team/Profile.tsx"],
+			"includes": [
+				"**/src/components/team/Profile.tsx"
+			],
 			"linter": {
 				"rules": {
 					"suspicious": {
@@ -127,8 +175,13 @@
 						"noProcessGlobal": "off",
 						"noUnresolvedImports": "off"
 					},
-					"security": { "noSecrets": "off" },
-					"performance": { "noAwaitInLoops": "off", "useTopLevelRegex": "off" },
+					"security": {
+						"noSecrets": "off"
+					},
+					"performance": {
+						"noAwaitInLoops": "off",
+						"useTopLevelRegex": "off"
+					},
 					"suspicious": {
 						"noBitwiseOperators": "off",
 						"noMisplacedAssertion": "off",
@@ -151,9 +204,16 @@
 						"noProcessGlobal": "off",
 						"noUnresolvedImports": "off"
 					},
-					"security": { "noSecrets": "off" },
-					"performance": { "noAwaitInLoops": "off", "useTopLevelRegex": "off" },
-					"suspicious": { "noConsole": "off" }
+					"security": {
+						"noSecrets": "off"
+					},
+					"performance": {
+						"noAwaitInLoops": "off",
+						"useTopLevelRegex": "off"
+					},
+					"suspicious": {
+						"noConsole": "off"
+					}
 				}
 			}
 		},
@@ -172,8 +232,12 @@
 						"noProcessGlobal": "off",
 						"noUnresolvedImports": "off"
 					},
-					"performance": { "useTopLevelRegex": "off" },
-					"suspicious": { "noConsole": "off" }
+					"performance": {
+						"useTopLevelRegex": "off"
+					},
+					"suspicious": {
+						"noConsole": "off"
+					}
 				}
 			}
 		},
@@ -188,8 +252,26 @@
 			],
 			"linter": {
 				"rules": {
-					"correctness": { "noNodejsModules": "off", "noProcessGlobal": "off" },
-					"suspicious": { "noConsole": "off" }
+					"correctness": {
+						"noNodejsModules": "off",
+						"noProcessGlobal": "off"
+					},
+					"suspicious": {
+						"noConsole": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": [
+				"**/src/pages/**",
+				"next.config.*"
+			],
+			"linter": {
+				"rules": {
+					"style": {
+						"noDefaultExport": "off"
+					}
 				}
 			}
 		}
