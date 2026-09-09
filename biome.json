@@ -99,9 +99,7 @@
 			}
 		},
 		{
-			"includes": [
-				"**/next.config.*"
-			],
+			"includes": ["**/next.config.*"],
 			"linter": {
 				"rules": {
 					"suspicious": {
@@ -112,9 +110,7 @@
 			}
 		},
 		{
-			"includes": [
-				"**/src/components/_shared/auth/LoginButtons.tsx"
-			],
+			"includes": ["**/src/components/_shared/auth/LoginButtons.tsx"],
 			"linter": {
 				"rules": {
 					"correctness": {
@@ -124,9 +120,7 @@
 			}
 		},
 		{
-			"includes": [
-				"**/src/pages/_document.tsx"
-			],
+			"includes": ["**/src/pages/_document.tsx"],
 			"linter": {
 				"rules": {
 					"security": {
@@ -136,9 +130,7 @@
 			}
 		},
 		{
-			"includes": [
-				"**/src/pages/api/concrete/mods/recommended.ts"
-			],
+			"includes": ["**/src/pages/api/concrete/mods/recommended.ts"],
 			"linter": {
 				"rules": {
 					"security": {
@@ -148,9 +140,7 @@
 			}
 		},
 		{
-			"includes": [
-				"**/src/components/team/Profile.tsx"
-			],
+			"includes": ["**/src/components/team/Profile.tsx"],
 			"linter": {
 				"rules": {
 					"suspicious": {
@@ -263,10 +253,7 @@
 			}
 		},
 		{
-			"includes": [
-				"**/src/pages/**",
-				"next.config.*"
-			],
+			"includes": ["**/src/pages/**", "next.config.*"],
 			"linter": {
 				"rules": {
 					"style": {
