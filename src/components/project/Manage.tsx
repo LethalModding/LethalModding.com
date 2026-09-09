@@ -7,13 +7,15 @@ import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import Loader from "@/components/_shared/Loader";
 import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { useAppStore } from "@/store";
-import type { Project } from "@/types/db/Project";
+import Loader from "@/components/_shared/Loader.tsx";
+import { useAppStore } from "@/store.ts";
+import type { Project } from "@/types/db/Project.ts";
 
 export default function ProjectManagePage(): JSX.Element {
+	const { enqueueSnackbar } = useSnackbar();
 	const [projects, setProjects] = useState<Project[]>([]);
 	const [loading, setLoading] = useState(true);
 
@@ -27,13 +29,15 @@ export default function ProjectManagePage(): JSX.Element {
 			.eq("team_id", selectedTeamID)
 			.then(({ data, error }) => {
 				if (error) {
-					console.error(error);
+					enqueueSnackbar(`Unable to load projects: ${error.message}`, {
+						variant: "error",
+					});
 				} else {
 					setProjects(data);
 				}
 				setLoading(false);
 			});
-	}, [supabase, selectedTeamID]);
+	}, [supabase, selectedTeamID, enqueueSnackbar]);
 
 	const router = useRouter();
 

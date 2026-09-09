@@ -1,4 +1,4 @@
-import { type NextApiRequest, type NextApiResponse } from "next/types";
+import type { NextApiRequest, NextApiResponse } from "next/types";
 
 const mods = [
 	"BepInEx/BepInExPack",
@@ -27,16 +27,18 @@ const mods = [
 	"taffyko/QuickQuitToMenu",
 ];
 
-export default async function ConcreteModsRecommended(
+export default function ConcreteModsRecommended(
 	req: NextApiRequest,
 	res: NextApiResponse,
-): Promise<void> {
+): void {
 	if (req.method === "OPTIONS") {
-		return res.status(204).json({ status: "ok" });
+		res.status(204).json({ status: "ok" });
+		return;
 	}
 
 	if (req.method !== "GET") {
-		return res.status(405).json({ error: "Method Not Allowed" });
+		res.status(405).json({ error: "Method Not Allowed" });
+		return;
 	}
 
 	res.status(200).json(mods);

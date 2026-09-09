@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useSnackbar } from "notistack";
 import { useCallback } from "react";
-import type { TeamInvite } from "@/types/db/TeamInvite";
+import type { TeamInvite } from "@/types/db/TeamInvite.ts";
 
 type Props = {
 	expanded?: boolean;
@@ -30,7 +30,6 @@ export default function TeamInviteListItem(props: Props): JSX.Element {
 
 				if (error) {
 					enqueueSnackbar("Unable to revoke invite", { variant: "error" });
-					console.error(error);
 				} else {
 					enqueueSnackbar("Invite revoked", { variant: "success" });
 				}

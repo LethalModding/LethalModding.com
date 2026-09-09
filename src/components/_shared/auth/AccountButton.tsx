@@ -15,14 +15,16 @@ import MenuItem from "@mui/material/MenuItem";
 import type { SelectChangeEvent } from "@mui/material/Select";
 import Select from "@mui/material/Select";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSnackbar } from "notistack";
 import type { MouseEvent } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useAppStore } from "@/store";
-import { Profile } from "@/types/db/Profile";
-import type { Team } from "@/types/db/Team";
-import LoginButtons from "./LoginButtons";
+import { useAppStore } from "@/store.ts";
+import type { Profile } from "@/types/db/Profile.ts";
+import type { Team } from "@/types/db/Team.ts";
+import LoginButtons from "./LoginButtons.tsx";
 
 export default function AccountButton(): JSX.Element {
+	const { enqueueSnackbar } = useSnackbar();
 	const [loginDialogOpen, setLoginDialogOpen] = useState(false);
 	const hideLoginDialog = useCallback(() => setLoginDialogOpen(false), []);
 	const showLoginDialog = useCallback(() => setLoginDialogOpen(true), []);
@@ -65,7 +67,9 @@ export default function AccountButton(): JSX.Element {
 			.eq("owner_id", session?.user.id)
 			.then(({ data, error }) => {
 				if (error) {
-					console.error(error);
+					enqueueSnackbar(`Unable to load teams: ${error.message}`, {
+						variant: "error",
+					});
 				} else {
 					setTeams(data);
 
@@ -80,7 +84,13 @@ export default function AccountButton(): JSX.Element {
 
 				setLoading(false);
 			});
-	}, [selectedTeamID, session?.user.id, setSelectedTeamID, supabase]);
+	}, [
+		selectedTeamID,
+		session?.user.id,
+		setSelectedTeamID,
+		supabase,
+		enqueueSnackbar,
+	]);
 	useEffect(() => refreshTeams(), [refreshTeams]);
 
 	const [profile, setProfile] = useState<Profile | null>(null);
@@ -95,14 +105,16 @@ export default function AccountButton(): JSX.Element {
 				.single();
 
 			if (error) {
-				console.error(error);
+				enqueueSnackbar(`Unable to load profile: ${error.message}`, {
+					variant: "error",
+				});
 			} else {
 				setProfile(data);
 			}
 		};
 
 		void update();
-	}, [session?.user.id, supabase]);
+	}, [session?.user.id, supabase, enqueueSnackbar]);
 
 	const username = useMemo(() => {
 		if (!session?.user?.user_metadata) return "";

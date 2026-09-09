@@ -60,7 +60,7 @@ export default function ModListItem(props: Props): JSX.Element {
 						{name.replaceAll("_", " ").replaceAll("-", " ")}
 					</Typography>
 
-					{verified && (
+					{verified ? (
 						<VerifiedIcon
 							color="success"
 							fontSize="inherit"
@@ -70,7 +70,7 @@ export default function ModListItem(props: Props): JSX.Element {
 								top: 4,
 							}}
 						/>
-					)}
+					) : null}
 
 					<Typography variant="subtitle2">{owner}</Typography>
 				</Box>

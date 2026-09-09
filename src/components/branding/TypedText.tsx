@@ -46,7 +46,7 @@ export default function TypedText(props: Props): JSX.Element {
 	return (
 		<>
 			{typedText}
-			{isTyping && <span>&#9608;</span>}
+			{isTyping ? <span>&#9608;</span> : null}
 		</>
 	);
 }

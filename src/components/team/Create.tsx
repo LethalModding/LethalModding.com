@@ -13,7 +13,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useSnackbar } from "notistack";
 import type { ChangeEvent, FormEvent } from "react";
 import { useCallback, useState } from "react";
-import { useAppStore } from "@/store";
+import { useAppStore } from "@/store.ts";
 
 export default function TeamCreatePage(): JSX.Element {
 	const [name, setName] = useState("");
@@ -54,7 +54,6 @@ export default function TeamCreatePage(): JSX.Element {
 				.then(({ data, error }) => {
 					if (error) {
 						enqueueSnackbar("Unable to create Team", { variant: "error" });
-						console.error(error);
 					} else {
 						enqueueSnackbar("Team created", { variant: "success" });
 						setSelectedTeamID(data.id);

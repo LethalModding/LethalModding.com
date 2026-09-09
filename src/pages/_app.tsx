@@ -9,21 +9,21 @@ import { createTheme } from "@mui/material/styles";
 import ThemeProvider from "@mui/system/ThemeProvider";
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
-import AppBar from "@/components/_shared/AppBar";
-import AuthWrapper from "@/components/_shared/auth/Wrapper";
-import Loader from "@/components/_shared/Loader";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { SnackbarProvider } from "notistack";
+import { enqueueSnackbar, SnackbarProvider } from "notistack";
 import type { FunctionComponent, PropsWithChildren } from "react";
 import { useEffect, useState } from "react";
-import { useAppStore } from "@/store";
-import darkThemeOptions from "@/styles/darkThemeOptions";
-import "styles/globals.css";
+import AppBar from "@/components/_shared/AppBar.tsx";
+import AuthWrapper from "@/components/_shared/auth/Wrapper.tsx";
+import Loader from "@/components/_shared/Loader.tsx";
+import { useAppStore } from "@/store.ts";
+import darkThemeOptions from "@/styles/darkThemeOptions.ts";
+import "@/styles/globals.css";
 
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
-import createEmotionCache from "@/utility/createEmotionCache";
+import createEmotionCache from "@/utility/createEmotionCache.ts";
 
 interface MyAppProps extends Omit<AppProps, "Component"> {
 	Component: AppProps["Component"] & { auth?: boolean };
@@ -82,7 +82,9 @@ const MyApp: FunctionComponent<MyAppProps> = (
 			.single()
 			.then(({ data, error }) => {
 				if (error) {
-					console.error(error);
+					enqueueSnackbar(`Unable to load team: ${error.message}`, {
+						variant: "error",
+					});
 				} else {
 					setSelectedTeam(data);
 				}

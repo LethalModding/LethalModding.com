@@ -10,7 +10,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useSnackbar } from "notistack";
 import type { ChangeEvent } from "react";
 import { useCallback, useState } from "react";
-import { useAppStore } from "@/store";
+import { useAppStore } from "@/store.ts";
 
 export default function TeamMemberInvitePage(): JSX.Element {
 	const [email, setEmail] = useState("");
@@ -45,7 +45,6 @@ export default function TeamMemberInvitePage(): JSX.Element {
 			.then(({ error }) => {
 				if (error) {
 					enqueueSnackbar(`Error inviting ${email}`, { variant: "error" });
-					console.error(error);
 				} else {
 					enqueueSnackbar(`Invited ${email}`, { variant: "success" });
 				}

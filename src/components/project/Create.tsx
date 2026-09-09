@@ -13,8 +13,8 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useSnackbar } from "notistack";
 import type { ChangeEvent, FormEvent } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useAppStore } from "@/store";
-import { slugify } from "@/utility/slugify";
+import { useAppStore } from "@/store.ts";
+import { slugify } from "@/utility/slugify.ts";
 
 export default function ProjectCreatePage(): JSX.Element {
 	const [name, setName] = useState("");
@@ -58,7 +58,6 @@ export default function ProjectCreatePage(): JSX.Element {
 				.then(({ error }) => {
 					if (error) {
 						enqueueSnackbar("Unable to create Project", { variant: "error" });
-						console.error(error);
 					} else {
 						enqueueSnackbar("Project created", { variant: "success" });
 					}
@@ -77,12 +76,14 @@ export default function ProjectCreatePage(): JSX.Element {
 			.eq("team_id", selectedTeamID)
 			.then(({ data, error }) => {
 				if (error) {
-					console.error(error);
+					enqueueSnackbar(`Unable to load projects: ${error.message}`, {
+						variant: "error",
+					});
 				} else {
 					setSlugs(data.map((slug) => slug.name));
 				}
 			});
-	}, [selectedTeamID, supabase]);
+	}, [selectedTeamID, supabase, enqueueSnackbar]);
 
 	const teamName = useAppStore((state) => state.selectedTeam?.name || "");
 	const projectURL = useMemo(() => {

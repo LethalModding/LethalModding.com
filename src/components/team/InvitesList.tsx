@@ -1,10 +1,12 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
-import { useAppStore } from "@/store";
-import type { TeamInvite } from "@/types/db/TeamInvite";
-import TeamInviteListItem from "./InviteListItem";
+import { useAppStore } from "@/store.ts";
+import type { TeamInvite } from "@/types/db/TeamInvite.ts";
+import TeamInviteListItem from "./InviteListItem.tsx";
 
 export default function TeamInvitesList(): JSX.Element | JSX.Element[] {
+	const { enqueueSnackbar } = useSnackbar();
 	const supabase = useSupabaseClient();
 
 	const [invites, setInvites] = useState<TeamInvite[]>([]);
@@ -16,12 +18,14 @@ export default function TeamInvitesList(): JSX.Element | JSX.Element[] {
 			.eq("team_id", teamID)
 			.then(({ data, error }) => {
 				if (error) {
-					console.error(error);
+					enqueueSnackbar(`Unable to load invites: ${error.message}`, {
+						variant: "error",
+					});
 				} else {
 					setInvites(data);
 				}
 			});
-	}, [supabase, teamID]);
+	}, [supabase, teamID, enqueueSnackbar]);
 	useEffect(() => refreshInvites(), [refreshInvites]);
 
 	return invites.map((invite) => (

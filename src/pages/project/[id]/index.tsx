@@ -8,13 +8,15 @@ import Typography from "@mui/material/Typography";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Head from "next/head";
 import { useParams } from "next/navigation";
+import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
 import ReactTimeAgo from "react-time-ago";
-import type { Profile } from "@/types/db/Profile";
-import type { Project } from "@/types/db/Project";
-import type { Team } from "@/types/db/Team";
+import type { Profile } from "@/types/db/Profile.ts";
+import type { Project } from "@/types/db/Project.ts";
+import type { Team } from "@/types/db/Team.ts";
 
 const ProjectPage = (): JSX.Element => {
+	const { enqueueSnackbar } = useSnackbar();
 	const { id } = useParams();
 	const supabase = useSupabaseClient();
 
@@ -28,10 +30,13 @@ const ProjectPage = (): JSX.Element => {
 			.eq("id", id)
 			.single()
 			.then(({ data, error }) => {
-				if (error) console.error(error);
+				if (error)
+					enqueueSnackbar(`Unable to load project: ${error.message}`, {
+						variant: "error",
+					});
 				else setProject(data);
 			});
-	}, [id, supabase]);
+	}, [id, supabase, enqueueSnackbar]);
 	useEffect(() => refreshProject(), [refreshProject]);
 
 	const refreshTeam = useCallback(() => {
@@ -43,10 +48,13 @@ const ProjectPage = (): JSX.Element => {
 			.eq("id", project.team_id)
 			.single()
 			.then(({ data, error }) => {
-				if (error) console.error(error);
+				if (error)
+					enqueueSnackbar(`Unable to load team: ${error.message}`, {
+						variant: "error",
+					});
 				else setTeam(data);
 			});
-	}, [project, supabase]);
+	}, [project, supabase, enqueueSnackbar]);
 	useEffect(() => refreshTeam(), [refreshTeam]);
 
 	const [creator, setCreator] = useState<Profile | null>(null);
@@ -59,10 +67,13 @@ const ProjectPage = (): JSX.Element => {
 			.eq("id", project.created_by)
 			.single()
 			.then(({ data, error }) => {
-				if (error) console.error(error);
+				if (error)
+					enqueueSnackbar(`Unable to load creator: ${error.message}`, {
+						variant: "error",
+					});
 				else setCreator(data);
 			});
-	}, [project, supabase]);
+	}, [project, supabase, enqueueSnackbar]);
 	useEffect(() => refreshCreator(), [refreshCreator]);
 
 	return (

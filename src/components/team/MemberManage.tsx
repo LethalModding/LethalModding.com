@@ -4,13 +4,15 @@ import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
-import { useAppStore } from "@/store";
-import type { Profile } from "@/types/db/Profile";
-import TeamInvitesList from "./InvitesList";
-import TeamMemberInvitePage from "./MemberInvite";
+import { useAppStore } from "@/store.ts";
+import type { Profile } from "@/types/db/Profile.ts";
+import TeamInvitesList from "./InvitesList.tsx";
+import TeamMemberInvitePage from "./MemberInvite.tsx";
 
 export default function TeamMemberManagePage(): JSX.Element {
+	const { enqueueSnackbar } = useSnackbar();
 	const supabase = useSupabaseClient();
 
 	const team = useAppStore((state) => state.selectedTeam);
@@ -19,22 +21,24 @@ export default function TeamMemberManagePage(): JSX.Element {
 	const refreshMembers = useCallback(() => {
 		if (!team) return;
 
-		const members = team.members || [];
-		members.push(team.owner_id);
+		const memberIDs = team.members || [];
+		memberIDs.push(team.owner_id);
 
 		supabase
 			.from("profiles")
 			.select("*")
-			.in("id", members)
+			.in("id", memberIDs)
 			.order("username", { ascending: true })
 			.then(({ data, error }) => {
 				if (error) {
-					console.error(error);
+					enqueueSnackbar(`Unable to load members: ${error.message}`, {
+						variant: "error",
+					});
 				} else {
 					setMembers(data || []);
 				}
 			});
-	}, [supabase, team]);
+	}, [supabase, team, enqueueSnackbar]);
 	useEffect(() => refreshMembers(), [refreshMembers]);
 
 	return (

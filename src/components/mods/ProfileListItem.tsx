@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import type { Dispatch, MouseEvent, SetStateAction } from "react";
 import { useCallback, useState } from "react";
-import type { Profile } from "@/types/Profile";
+import type { Profile } from "@/types/Profile.ts";
 
 type Props = {
 	onSelect: Dispatch<SetStateAction<Profile>>;
@@ -62,7 +62,7 @@ export default function ProfileListItem(props: Props): JSX.Element {
 					{profile.name}
 				</Typography>
 
-				{profile.owner && (
+				{profile.owner ? (
 					<Typography
 						color="text.secondary"
 						sx={{
@@ -73,7 +73,7 @@ export default function ProfileListItem(props: Props): JSX.Element {
 					>
 						{profile.owner}
 					</Typography>
-				)}
+				) : null}
 			</Box>
 
 			<IconButton

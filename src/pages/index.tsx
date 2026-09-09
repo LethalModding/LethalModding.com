@@ -1,13 +1,13 @@
 import Box from "@mui/material/Box";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import CornerAccents from "@/components/branding/CornerAccents";
-import MOTD from "@/components/branding/MOTD";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ofetch } from "ofetch";
 import { useEffect } from "react";
-import useGlobalStyles from "@/styles/globalStyles";
+import CornerAccents from "@/components/branding/CornerAccents.tsx";
+import MOTD from "@/components/branding/MOTD.tsx";
+import useGlobalStyles from "@/styles/globalStyles.ts";
 
 const Home: NextPage = (): JSX.Element => {
 	const globalStyles = useGlobalStyles();
@@ -21,7 +21,6 @@ const Home: NextPage = (): JSX.Element => {
 
 		const errorHash = parsedHash.get("error_description"); // Something went wrong
 		if (errorHash !== null) {
-			console.log("errorHash", errorHash);
 			return;
 		}
 
@@ -42,20 +41,17 @@ const Home: NextPage = (): JSX.Element => {
 	useEffect(() => {
 		if (!session) return;
 
-		// Send our session to the local client (if it's running)
-		// Assume this will fail (most people don't have the client)
-		try {
-			ofetch("http://localhost:25792/connect", {
-				body: {
-					access_token: session.access_token,
-					refresh_token: session.refresh_token,
-				},
-				cache: "no-cache",
-				method: "POST",
-			});
-		} catch (e) {
-			console.log("Can't talk to Concrete:", e);
-		}
+		// Hand the session to the desktop client if it happens to be listening.
+		// Most visitors do not run it, so a rejected handshake is the normal case
+		// and carries no user-visible consequence.
+		ofetch("http://localhost:25792/connect", {
+			body: {
+				access_token: session.access_token,
+				refresh_token: session.refresh_token,
+			},
+			cache: "no-cache",
+			method: "POST",
+		}).catch(() => undefined);
 	}, [session]);
 
 	return (

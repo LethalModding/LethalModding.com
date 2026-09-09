@@ -1,10 +1,11 @@
 import { promises as fsPromises } from "node:fs";
+import process from "node:process";
 import type { ParsedGroup, ParsedMailbox } from "email-addresses";
 import addrs from "email-addresses";
-import { type NextApiRequest, type NextApiResponse } from "next";
-import { readTemplate, sendEmail } from "@/server/email";
-import rateLimit from "@/server/rate-limit";
-import { supabaseSERVER } from "@/server/supabaseServer";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { readTemplate, sendEmail } from "@/server/email.ts";
+import rateLimit from "@/server/rate-limit.ts";
+import { supabaseSERVER } from "@/server/supabaseServer.ts";
 import logo from "../../../../../../public/icons/android-chrome-512x512.png";
 
 const { readFile } = fsPromises;
@@ -20,7 +21,7 @@ export default async function handler(
 			res.status(200).end();
 			break;
 		case "POST":
-			return handlePOST(req, res);
+			return await handlePOST(req, res);
 		default:
 			res.setHeader("Allow", ["POST", "OPTIONS"]);
 			res.status(405).end(`Method ${method} Not Allowed`);

@@ -14,19 +14,20 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import IconButton from "@mui/material/IconButton";
-import { alpha, Theme } from "@mui/material/styles";
+import { alpha, type Theme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import Loader from "@/components/_shared/Loader";
 import { useSnackbar } from "notistack";
 import type { ChangeEvent } from "react";
 import { useCallback, useEffect, useState } from "react";
-import { useAppStore } from "@/store";
-import { type Team } from "@/types/db/Team";
-import { slugify } from "@/utility/slugify";
+import Loader from "@/components/_shared/Loader.tsx";
+import { useAppStore } from "@/store.ts";
+import type { Team } from "@/types/db/Team.ts";
+import { slugify } from "@/utility/slugify.ts";
 
 export default function TeamProfilePage(): JSX.Element {
+	const { enqueueSnackbar } = useSnackbar();
 	const team = useAppStore((state) => state.selectedTeam);
 	const [slugs, setSlugs] = useState<string[]>([]);
 
@@ -40,12 +41,14 @@ export default function TeamProfilePage(): JSX.Element {
 			.eq("team_id", team.id)
 			.then(({ data, error }) => {
 				if (error) {
-					console.error(error);
+					enqueueSnackbar(`Unable to load team slugs: ${error.message}`, {
+						variant: "error",
+					});
 				} else {
-					setSlugs(data.map((team) => team.slug));
+					setSlugs(data.map((row) => row.slug));
 				}
 			});
-	}, [supabase, team]);
+	}, [supabase, team, enqueueSnackbar]);
 
 	const [localSlugs, setLocalSlugs] = useState<string[]>(
 		slugs ?? [slugify(team?.name)],
@@ -91,7 +94,6 @@ export default function TeamProfilePage(): JSX.Element {
 
 	const [expanded, setExpanded] = useState<string>("profile");
 
-	const { enqueueSnackbar } = useSnackbar();
 	const setTeam = useAppStore((state) => state.setSelectedTeam);
 	const handleSubmit = useCallback(() => {
 		setLoading(true);
@@ -105,7 +107,6 @@ export default function TeamProfilePage(): JSX.Element {
 			.then(({ data, error }) => {
 				if (error) {
 					enqueueSnackbar("Unable to save changes", { variant: "error" });
-					console.error(error);
 				} else {
 					enqueueSnackbar("Changes saved", { variant: "success" });
 					setTeam(data);
@@ -131,7 +132,6 @@ export default function TeamProfilePage(): JSX.Element {
 			.then(({ error }) => {
 				if (error) {
 					enqueueSnackbar("Unable to delete Team", { variant: "error" });
-					console.error(error);
 				} else {
 					enqueueSnackbar("Team deleted", { variant: "success" });
 					setSelectedTeamID("");
