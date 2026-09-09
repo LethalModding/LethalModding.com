@@ -42,7 +42,12 @@
 			"performance": {
 				"preset": "all",
 				"useSolidForComponent": "off",
-				"noJsxPropsBind": "off"
+				"noJsxPropsBind": "off",
+				"noAwaitInLoops": "off"
+			},
+			"nursery": {
+				"noFloatingPromises": "error",
+				"noMisusedPromises": "error"
 			}
 		}
 	},
