@@ -10,6 +10,8 @@ export default function AuthWrapper(props: PropsWithChildren): JSX.Element {
 
 	const [loggedIn, setLoggedIn] = useState<boolean>();
 	useEffect(() => {
+		let active = true;
+
 		async function userLoggedIn(): Promise<boolean> {
 			if (user) return true;
 
@@ -20,7 +22,20 @@ export default function AuthWrapper(props: PropsWithChildren): JSX.Element {
 			return !!session;
 		}
 
-		userLoggedIn().then(setLoggedIn);
+		userLoggedIn()
+			.then((value) => {
+				if (active) setLoggedIn(value);
+			})
+			.catch(() => {
+				// An unreachable session endpoint is indistinguishable from no
+				// session: send the visitor to the login prompt rather than
+				// leaving the wrapper stuck on the loader.
+				if (active) setLoggedIn(false);
+			});
+
+		return () => {
+			active = false;
+		};
 	}, [user, supabase]);
 
 	// if supabase and we're not logged in, then we need to login

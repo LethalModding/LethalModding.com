@@ -51,8 +51,8 @@ const ToolsHome: NextPage = (): JSX.Element => {
 	const [allMods, setAllMods] = useState<Mod[]>([]);
 	useEffect(() => {
 		const timeout = setTimeout(() => {
-			ofetch("https://thunderstore.io/c/lethal-company/api/v1/package/").then(
-				(data) => {
+			ofetch("https://thunderstore.io/c/lethal-company/api/v1/package/")
+				.then((data) => {
 					if (data.error) {
 						console.error(data.error);
 						return;
@@ -64,8 +64,10 @@ const ToolsHome: NextPage = (): JSX.Element => {
 						data?.length ?? 0,
 					);
 					setAllMods(data);
-				},
-			);
+				})
+				.catch((error: unknown) => {
+					console.error("Failed to reach the Thunderstore API", error);
+				});
 		}, 100);
 
 		return () => clearTimeout(timeout);
