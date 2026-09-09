@@ -13,7 +13,7 @@ interface Props {
 	refresh: () => void;
 }
 
-export default function TeamInviteListItem(props: Props): JSX.Element {
+export function TeamInviteListItem(props: Props): JSX.Element {
 	const { expanded, invite, refresh } = props;
 
 	const session = useSession();

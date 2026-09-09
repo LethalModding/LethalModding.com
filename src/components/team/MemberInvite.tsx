@@ -12,7 +12,7 @@ import type { ChangeEvent } from "react";
 import { useCallback, useState } from "react";
 import { useAppStore } from "@/store.ts";
 
-export default function TeamMemberInvitePage(): JSX.Element {
+export function TeamMemberInvitePage(): JSX.Element {
 	const [email, setEmail] = useState("");
 	const [type, setType] = useState("collaborator");
 

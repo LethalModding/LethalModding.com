@@ -8,10 +8,10 @@ import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
 import { useAppStore } from "@/store.ts";
 import type { Profile } from "@/types/db/Profile.ts";
-import TeamInvitesList from "./InvitesList.tsx";
-import TeamMemberInvitePage from "./MemberInvite.tsx";
+import { TeamInvitesList } from "./InvitesList.tsx";
+import { TeamMemberInvitePage } from "./MemberInvite.tsx";
 
-export default function TeamMemberManagePage(): JSX.Element {
+export function TeamMemberManagePage(): JSX.Element {
 	const { enqueueSnackbar } = useSnackbar();
 	const supabase = useSupabaseClient();
 

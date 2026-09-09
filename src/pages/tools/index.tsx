@@ -19,10 +19,10 @@ import {
 	useMemo,
 	useState,
 } from "react";
-import CornerAccents from "@/components/branding/CornerAccents.tsx";
-import Link from "@/components/mui/Link.tsx";
-import Breadcrumb from "@/components/tools/Breadcrumb.tsx";
-import Pagination from "@/components/tools/Pagination.tsx";
+import { CornerAccents } from "@/components/branding/CornerAccents.tsx";
+import { Link } from "@/components/mui/Link.tsx";
+import { Breadcrumb } from "@/components/tools/Breadcrumb.tsx";
+import { Pagination } from "@/components/tools/Pagination.tsx";
 import type { Mod } from "@/types/Mod.ts";
 import type { ModSort } from "@/types/ModSort.ts";
 

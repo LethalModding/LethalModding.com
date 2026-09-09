@@ -9,7 +9,7 @@ interface Props {
 	onDontClick?: () => void;
 }
 
-export default function LoginButtons(props: Props): JSX.Element {
+export function LoginButtons(props: Props): JSX.Element {
 	const { onDontClick } = props;
 
 	const supabase = useSupabaseClient();

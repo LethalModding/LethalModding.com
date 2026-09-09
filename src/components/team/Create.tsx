@@ -15,7 +15,7 @@ import type { ChangeEvent, FormEvent } from "react";
 import { useCallback, useState } from "react";
 import { useAppStore } from "@/store.ts";
 
-export default function TeamCreatePage(): JSX.Element {
+export function TeamCreatePage(): JSX.Element {
 	const [name, setName] = useState("");
 	const [type, setType] = useState("public");
 

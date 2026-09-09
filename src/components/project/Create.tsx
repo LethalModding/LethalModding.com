@@ -16,7 +16,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAppStore } from "@/store.ts";
 import { slugify } from "@/utility/slugify.ts";
 
-export default function ProjectCreatePage(): JSX.Element {
+export function ProjectCreatePage(): JSX.Element {
 	const [name, setName] = useState("");
 	const [type, setType] = useState("public");
 

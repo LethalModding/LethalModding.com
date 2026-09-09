@@ -42,4 +42,4 @@ const darkThemeOptions: Theme = createTheme({
 	},
 });
 
-export default responsiveFontSizes(darkThemeOptions);
+export const darkTheme = responsiveFontSizes(darkThemeOptions);

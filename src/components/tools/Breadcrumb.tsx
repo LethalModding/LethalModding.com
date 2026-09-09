@@ -1,13 +1,13 @@
 import Typography from "@mui/material/Typography";
 import { Fragment } from "react";
-import TypedText from "@/components/branding/TypedText.tsx";
-import Link from "@/components/mui/Link.tsx";
+import { TypedText } from "@/components/branding/TypedText.tsx";
+import { Link } from "@/components/mui/Link.tsx";
 
 interface Props {
 	parts: string[];
 }
 
-const Breadcrumb = (props: Props): JSX.Element => {
+export const Breadcrumb = (props: Props): JSX.Element => {
 	const { parts } = props;
 
 	return (
@@ -40,5 +40,3 @@ const Breadcrumb = (props: Props): JSX.Element => {
 		</Typography>
 	);
 };
-
-export default Breadcrumb;

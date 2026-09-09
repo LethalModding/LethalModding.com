@@ -21,9 +21,9 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAppStore } from "@/store.ts";
 import type { Profile } from "@/types/db/Profile.ts";
 import type { Team } from "@/types/db/Team.ts";
-import LoginButtons from "./LoginButtons.tsx";
+import { LoginButtons } from "./LoginButtons.tsx";
 
-export default function AccountButton(): JSX.Element {
+export function AccountButton(): JSX.Element {
 	const { enqueueSnackbar } = useSnackbar();
 	const [loginDialogOpen, setLoginDialogOpen] = useState(false);
 	const hideLoginDialog = useCallback(() => setLoginDialogOpen(false), []);

@@ -1,7 +1,7 @@
 import process from "node:process";
 import { Octokit } from "@octokit/rest";
 import type { NextApiRequest, NextApiResponse } from "next/types";
-import rateLimit from "@/server/rate-limit.ts";
+import { rateLimit } from "@/server/rate-limit.ts";
 
 const limiter = rateLimit({
 	interval: 60 * 1000, // 60 seconds

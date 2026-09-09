@@ -16,7 +16,7 @@ interface Props {
 	profile: Profile;
 }
 
-export default function ProfileListItem(props: Props): JSX.Element {
+export function ProfileListItem(props: Props): JSX.Element {
 	const { onSelect, profile } = props;
 
 	const handleClick = useCallback(() => onSelect(profile), [onSelect, profile]);

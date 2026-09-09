@@ -3,9 +3,9 @@ import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
 import { useAppStore } from "@/store.ts";
 import type { TeamInvite } from "@/types/db/TeamInvite.ts";
-import TeamInviteListItem from "./InviteListItem.tsx";
+import { TeamInviteListItem } from "./InviteListItem.tsx";
 
-export default function TeamInvitesList(): JSX.Element | JSX.Element[] {
+export function TeamInvitesList(): JSX.Element | JSX.Element[] {
 	const { enqueueSnackbar } = useSnackbar();
 	const supabase = useSupabaseClient();
 

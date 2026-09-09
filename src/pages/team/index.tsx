@@ -4,12 +4,12 @@ import Typography from "@mui/material/Typography";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
-import Link from "@/components/mui/Link.tsx";
-import ProjectManagePage from "@/components/project/Manage.tsx";
-import TeamCreatePage from "@/components/team/Create.tsx";
-import TeamMemberManagePage from "@/components/team/MemberManage.tsx";
-import TeamMenu from "@/components/team/Menu.tsx";
-import TeamProfilePage from "@/components/team/Profile.tsx";
+import { Link } from "@/components/mui/Link.tsx";
+import { ProjectManagePage } from "@/components/project/Manage.tsx";
+import { TeamCreatePage } from "@/components/team/Create.tsx";
+import { TeamMemberManagePage } from "@/components/team/MemberManage.tsx";
+import { TeamMenu } from "@/components/team/Menu.tsx";
+import { TeamProfilePage } from "@/components/team/Profile.tsx";
 import { useAppStore } from "@/store.ts";
 
 const TeamPage = (): JSX.Element => {

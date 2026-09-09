@@ -1,8 +1,8 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Link from "@/components/mui/Link.tsx";
-import useGlobalStyles from "@/styles/globalStyles.ts";
-import TypedText from "./TypedText.tsx";
+import { Link } from "@/components/mui/Link.tsx";
+import { useGlobalStyles } from "@/styles/globalStyles.ts";
+import { TypedText } from "./TypedText.tsx";
 
 const styles = {
 	titleBox: {
@@ -53,7 +53,7 @@ const internalLinks = [
 	},
 ];
 
-export default function MOTD(): JSX.Element {
+export function MOTD(): JSX.Element {
 	const globalStyles = useGlobalStyles();
 
 	return (

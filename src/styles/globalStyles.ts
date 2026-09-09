@@ -38,7 +38,7 @@ const globalStyles: Styles = {
 	},
 };
 
-export default function useGlobalStyles(): Styles {
+export function useGlobalStyles(): Styles {
 	const isDesktop = useMediaQuery("(min-width:900px)", {
 		defaultMatches: true,
 	});

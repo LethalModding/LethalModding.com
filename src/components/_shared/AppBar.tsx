@@ -10,10 +10,10 @@ import useMediaQuery from "@mui/system/useMediaQuery";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
-import Link from "@/components/mui/Link.tsx";
-import AccountButton from "./auth/AccountButton.tsx";
+import { Link } from "@/components/mui/Link.tsx";
+import { AccountButton } from "./auth/AccountButton.tsx";
 
-export default function AppBar(): JSX.Element {
+export function AppBar(): JSX.Element {
 	const isMobile = useMediaQuery((theme: Theme) =>
 		theme.breakpoints.down("sm"),
 	);

@@ -19,7 +19,7 @@ interface Props {
 	sort: ModSort;
 }
 
-const Pagination = (props: Props): JSX.Element => {
+export const Pagination = (props: Props): JSX.Element => {
 	const {
 		pageNumber,
 		pageSize,
@@ -185,5 +185,3 @@ const Pagination = (props: Props): JSX.Element => {
 		</>
 	);
 };
-
-export default Pagination;

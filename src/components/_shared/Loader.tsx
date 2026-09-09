@@ -6,7 +6,7 @@ interface Props {
 	open?: boolean;
 }
 
-export default function Loader(props: Props): JSX.Element {
+export function Loader(props: Props): JSX.Element {
 	const { open = true } = props;
 
 	return (

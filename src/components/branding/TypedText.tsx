@@ -7,7 +7,7 @@ interface Props {
 	typingSpeed?: number;
 }
 
-export default function TypedText(props: Props): JSX.Element {
+export function TypedText(props: Props): JSX.Element {
 	const {
 		finalText,
 		initialText = "",

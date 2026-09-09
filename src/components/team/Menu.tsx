@@ -13,7 +13,7 @@ interface Props {
 	setSelectedPage: (page: string) => void;
 }
 
-export default function TeamMenu(props: Props): JSX.Element {
+export function TeamMenu(props: Props): JSX.Element {
 	const { setSelectedPage } = props;
 
 	return (

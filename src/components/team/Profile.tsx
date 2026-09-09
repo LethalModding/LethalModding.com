@@ -21,12 +21,12 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useSnackbar } from "notistack";
 import type { ChangeEvent } from "react";
 import { useCallback, useEffect, useState } from "react";
-import Loader from "@/components/_shared/Loader.tsx";
+import { Loader } from "@/components/_shared/Loader.tsx";
 import { useAppStore } from "@/store.ts";
 import type { Team } from "@/types/db/Team.ts";
 import { slugify } from "@/utility/slugify.ts";
 
-export default function TeamProfilePage(): JSX.Element {
+export function TeamProfilePage(): JSX.Element {
 	const { enqueueSnackbar } = useSnackbar();
 	const team = useAppStore((state) => state.selectedTeam);
 	const [slugs, setSlugs] = useState<string[]>([]);

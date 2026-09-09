@@ -11,8 +11,8 @@ import type { DocumentContext } from "next/document";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 import type { NextRouter } from "next/router";
 import { Children } from "react";
-import darkThemeOptions from "@/styles/darkThemeOptions.ts";
-import createEmotionCache from "@/utility/createEmotionCache.ts";
+import { darkTheme as darkThemeOptions } from "@/styles/darkThemeOptions.ts";
+import { createEmotionCache } from "@/utility/createEmotionCache.ts";
 
 export default class MyDocument extends Document {
 	render(): JSX.Element {

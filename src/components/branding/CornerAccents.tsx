@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 
-export default function CornerAccents(): JSX.Element {
+export function CornerAccents(): JSX.Element {
 	const longDimension = "clamp(0.5rem, 5vw, 8rem)";
 	const shortDimension = "clamp(0.5rem, 0.75vw, 4rem)";
 

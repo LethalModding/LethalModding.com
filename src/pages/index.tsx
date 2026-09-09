@@ -5,9 +5,9 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { ofetch } from "ofetch";
 import { useEffect } from "react";
-import CornerAccents from "@/components/branding/CornerAccents.tsx";
-import MOTD from "@/components/branding/MOTD.tsx";
-import useGlobalStyles from "@/styles/globalStyles.ts";
+import { CornerAccents } from "@/components/branding/CornerAccents.tsx";
+import { MOTD } from "@/components/branding/MOTD.tsx";
+import { useGlobalStyles } from "@/styles/globalStyles.ts";
 
 const Home: NextPage = (): JSX.Element => {
 	const globalStyles = useGlobalStyles();

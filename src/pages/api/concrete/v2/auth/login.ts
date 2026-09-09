@@ -4,7 +4,7 @@ import type { ParsedGroup, ParsedMailbox } from "email-addresses";
 import addrs from "email-addresses";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { readTemplate, sendEmail } from "@/server/email.ts";
-import rateLimit from "@/server/rate-limit.ts";
+import { rateLimit } from "@/server/rate-limit.ts";
 import { supabaseSERVER } from "@/server/supabaseServer.ts";
 import logo from "../../../../../../public/icons/android-chrome-512x512.png";
 

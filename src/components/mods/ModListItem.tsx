@@ -21,7 +21,7 @@ interface Props {
 	verified?: boolean;
 }
 
-export default function ModListItem(props: Props): JSX.Element {
+export function ModListItem(props: Props): JSX.Element {
 	const { id, name, owner, summary, verified } = props;
 
 	const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);

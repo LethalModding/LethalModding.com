@@ -10,11 +10,11 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import Loader from "@/components/_shared/Loader.tsx";
+import { Loader } from "@/components/_shared/Loader.tsx";
 import { useAppStore } from "@/store.ts";
 import type { Project } from "@/types/db/Project.ts";
 
-export default function ProjectManagePage(): JSX.Element {
+export function ProjectManagePage(): JSX.Element {
 	const { enqueueSnackbar } = useSnackbar();
 	const [projects, setProjects] = useState<Project[]>([]);
 	const [loading, setLoading] = useState(true);
