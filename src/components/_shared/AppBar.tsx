@@ -7,11 +7,11 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import type { Theme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/system/useMediaQuery";
-import Link from "@/components/mui/Link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
-import AccountButton from "./auth/AccountButton";
+import Link from "@/components/mui/Link.tsx";
+import AccountButton from "./auth/AccountButton.tsx";
 
 export default function AppBar(): JSX.Element {
 	const isMobile = useMediaQuery((theme: Theme) =>

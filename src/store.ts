@@ -1,7 +1,7 @@
-import type { Profile } from "@/types/db/Profile";
-import type { Team } from "@/types/db/Team";
 import type { StateCreator } from "zustand";
 import { create } from "zustand";
+import type { Profile } from "@/types/db/Profile.ts";
+import type { Team } from "@/types/db/Team.ts";
 
 export type AppState = {
 	isAccessible: boolean;

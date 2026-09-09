@@ -1,4 +1,4 @@
-import type { Record } from "./Record";
+import type { Record } from "./Record.ts";
 
 export type Team = Record & {
 	owner_id: string;

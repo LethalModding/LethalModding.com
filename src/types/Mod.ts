@@ -1,5 +1,5 @@
-import type { ModStub } from "./ModStub";
-import type { ModVersion } from "./ModVersion";
+import type { ModStub } from "./ModStub.ts";
+import type { ModVersion } from "./ModVersion.ts";
 
 export type Mod = ModStub & {
 	categories: string[];

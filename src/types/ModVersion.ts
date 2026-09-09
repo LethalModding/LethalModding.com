@@ -1,4 +1,4 @@
-import type { ModStub } from "./ModStub";
+import type { ModStub } from "./ModStub.ts";
 
 export type ModVersion = ModStub & {
 	dependencies: string[];

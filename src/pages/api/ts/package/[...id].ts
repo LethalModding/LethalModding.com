@@ -1,4 +1,4 @@
-import { type NextApiRequest, type NextApiResponse } from "next/types";
+import type { NextApiRequest, NextApiResponse } from "next/types";
 import { ofetch } from "ofetch";
 
 // https://thunderstore.io/api/experimental/package/
