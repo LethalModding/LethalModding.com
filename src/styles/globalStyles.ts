@@ -1,9 +1,9 @@
 import { useMediaQuery } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 
-type Styles = {
+interface Styles {
 	[key: string]: SxProps<Theme>;
-};
+}
 
 const globalStyles: Styles = {
 	container: {

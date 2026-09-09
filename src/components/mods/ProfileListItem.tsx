@@ -11,10 +11,10 @@ import type { Dispatch, MouseEvent, SetStateAction } from "react";
 import { useCallback, useState } from "react";
 import type { Profile } from "@/types/Profile.ts";
 
-type Props = {
+interface Props {
 	onSelect: Dispatch<SetStateAction<Profile>>;
 	profile: Profile;
-};
+}
 
 export default function ProfileListItem(props: Props): JSX.Element {
 	const { onSelect, profile } = props;

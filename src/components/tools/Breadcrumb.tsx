@@ -3,9 +3,9 @@ import { Fragment } from "react";
 import TypedText from "@/components/branding/TypedText.tsx";
 import Link from "@/components/mui/Link.tsx";
 
-type Props = {
+interface Props {
 	parts: string[];
-};
+}
 
 const Breadcrumb = (props: Props): JSX.Element => {
 	const { parts } = props;
@@ -25,20 +25,18 @@ const Breadcrumb = (props: Props): JSX.Element => {
 			>
 				#
 			</Link>
-			{parts.map((part, index) => {
-				return (
-					<Fragment key={parts.slice(0, index + 1).join("/")}>
-						<TypedText
-							finalText={part}
-							startDelay={index * 300}
-							typingSpeed={5}
-						/>
-						{index < parts.length - 1 && (
-							<span style={{ margin: "0 16px" }}>/</span>
-						)}
-					</Fragment>
-				);
-			})}
+			{parts.map((part, index) => (
+				<Fragment key={parts.slice(0, index + 1).join("/")}>
+					<TypedText
+						finalText={part}
+						startDelay={index * 300}
+						typingSpeed={5}
+					/>
+					{index < parts.length - 1 && (
+						<span style={{ margin: "0 16px" }}>/</span>
+					)}
+				</Fragment>
+			))}
 		</Typography>
 	);
 };

@@ -70,7 +70,9 @@ const TeamPage = (): JSX.Element => {
 					}}
 				>
 					<Typography variant="h4">
-						{selectedPage !== "" ? (
+						{selectedPage === "" ? (
+							selectedTeam?.name || "Team"
+						) : (
 							<>
 								<Link
 									onClick={() => setSelectedPage("")}
@@ -81,8 +83,6 @@ const TeamPage = (): JSX.Element => {
 								{" > "}
 								{selectedPage.charAt(0).toUpperCase() + selectedPage.slice(1)}
 							</>
-						) : (
-							selectedTeam?.name || "Team"
 						)}
 					</Typography>
 				</Paper>

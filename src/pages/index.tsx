@@ -28,7 +28,9 @@ const Home: NextPage = (): JSX.Element => {
 		const refresh_token = parsedHash.get("refresh_token");
 
 		// enforce certain query params
-		if (!access_token || !refresh_token) return;
+		if (!(access_token && refresh_token)) {
+			return;
+		}
 
 		// The redirect runs either way: it is what strips the token fragment from
 		// the URL, and a failed exchange simply leaves the visitor signed out.
@@ -42,8 +44,8 @@ const Home: NextPage = (): JSX.Element => {
 
 		supabase.auth
 			.setSession({
-				access_token: access_token,
-				refresh_token: refresh_token,
+				access_token,
+				refresh_token,
 			})
 			.then(clearTokenFragment)
 			.catch(clearTokenFragment);
@@ -51,7 +53,9 @@ const Home: NextPage = (): JSX.Element => {
 
 	const session = useSession();
 	useEffect(() => {
-		if (!session) return;
+		if (!session) {
+			return;
+		}
 
 		// Hand the session to the desktop client if it happens to be listening.
 		// Most visitors do not run it, so a rejected handshake is the normal case

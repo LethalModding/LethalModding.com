@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 
-type Props = {
+interface Props {
 	finalText: string;
 	initialText?: string;
 	startDelay?: number;
 	typingSpeed?: number;
-};
+}
 
 export default function TypedText(props: Props): JSX.Element {
 	const {
@@ -27,7 +27,9 @@ export default function TypedText(props: Props): JSX.Element {
 	}, [startDelay]);
 
 	useEffect(() => {
-		if (!isTyping) return;
+		if (!isTyping) {
+			return;
+		}
 
 		const timeout = setTimeout(() => {
 			const nextChar = finalText[typedText.length];

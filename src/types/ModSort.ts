@@ -1,4 +1,4 @@
-export type ModSort = {
+export interface ModSort {
 	direction: "asc" | "desc";
 	property:
 		| ""
@@ -8,4 +8,4 @@ export type ModSort = {
 		| "ratings"
 		| "size"
 		| "dependencies";
-};
+}

@@ -45,7 +45,9 @@ const MyApp: FunctionComponent<MyAppProps> = (
 
 	const [isMounted, setIsMounted] = useState(false);
 	useEffect(() => {
-		if (isMounted) return;
+		if (isMounted) {
+			return;
+		}
 		setIsMounted(true);
 
 		TimeAgo.addLocale(en);
@@ -73,7 +75,9 @@ const MyApp: FunctionComponent<MyAppProps> = (
 			return;
 		}
 
-		if (supabaseClient === null) return;
+		if (supabaseClient === null) {
+			return;
+		}
 
 		supabaseClient
 			.from("teams")
@@ -134,10 +138,10 @@ const MyApp: FunctionComponent<MyAppProps> = (
 					}}
 					tabIndex={0}
 				>
-					{!isAccessible ? (
-						<AccessibilityNewIcon fontSize="inherit" />
-					) : (
+					{isAccessible ? (
 						<AccessibleForwardIcon fontSize="inherit" />
+					) : (
+						<AccessibilityNewIcon fontSize="inherit" />
 					)}
 				</IconButton>
 			</ThemeProvider>

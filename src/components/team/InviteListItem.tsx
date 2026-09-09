@@ -7,11 +7,11 @@ import { useSnackbar } from "notistack";
 import { useCallback } from "react";
 import type { TeamInvite } from "@/types/db/TeamInvite.ts";
 
-type Props = {
+interface Props {
 	expanded?: boolean;
 	invite: TeamInvite;
 	refresh: () => void;
-};
+}
 
 export default function TeamInviteListItem(props: Props): JSX.Element {
 	const { expanded, invite, refresh } = props;

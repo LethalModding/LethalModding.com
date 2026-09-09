@@ -19,7 +19,9 @@ export default function TeamMemberManagePage(): JSX.Element {
 
 	const [members, setMembers] = useState<Profile[]>([]);
 	const refreshMembers = useCallback(() => {
-		if (!team) return;
+		if (!team) {
+			return;
+		}
 
 		const memberIDs = team.members || [];
 		memberIDs.push(team.owner_id);
@@ -69,11 +71,11 @@ export default function TeamMemberManagePage(): JSX.Element {
 							</Typography>
 						</Box>
 
-						{member.id !== team?.owner_id ? (
+						{member.id === team?.owner_id ? null : (
 							<IconButton size="small">
 								<DeleteIcon fontSize="inherit" />
 							</IconButton>
-						) : null}
+						)}
 					</Box>
 				))}
 			</Paper>

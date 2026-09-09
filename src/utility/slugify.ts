@@ -1,5 +1,7 @@
 export const slugify = (text?: string | null): string => {
-	if (!text) return "";
+	if (!text) {
+		return "";
+	}
 
 	return (
 		text

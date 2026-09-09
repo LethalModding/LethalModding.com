@@ -37,9 +37,9 @@ const limiter = rateLimit({
 	uniqueTokenPerInterval: 500,
 });
 
-type PostBody = {
+interface PostBody {
 	email: string;
-};
+}
 
 async function handlePOST(
 	req: NextApiRequest,
@@ -60,7 +60,7 @@ async function handlePOST(
 	const { email }: PostBody = req.body;
 	const parsedEmail: ParsedMailbox | ParsedGroup | null =
 		addrs.parseOneAddress(email);
-	if (!parsedEmail || !isValidEmail(parsedEmail)) {
+	if (!(parsedEmail && isValidEmail(parsedEmail))) {
 		return res.status(400).json({ error: "Invalid email address" });
 	}
 
@@ -79,7 +79,9 @@ async function handlePOST(
 		},
 		type: "magiclink",
 	});
-	if (error) return res.status(500).json({ error: "Failed sending email" });
+	if (error) {
+		return res.status(500).json({ error: "Failed sending email" });
+	}
 
 	let firstName =
 		data.user.user_metadata?.first_name ??
@@ -93,8 +95,9 @@ async function handlePOST(
 		.eq("user_id", data.user.id)
 		.single();
 
-	if (!profileError && profileData)
-		if (!firstName) firstName = profileData.first_name ?? "";
+	if (!profileError && profileData && !firstName) {
+		firstName = profileData.first_name ?? "";
+	}
 
 	try {
 		const logoData = await readFile(

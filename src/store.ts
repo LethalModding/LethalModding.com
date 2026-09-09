@@ -3,19 +3,19 @@ import { create } from "zustand";
 import type { Profile } from "@/types/db/Profile.ts";
 import type { Team } from "@/types/db/Team.ts";
 
-export type AppState = {
+export interface AppState {
 	isAccessible: boolean;
 	localProfile: Profile | null;
 	selectedTeamID: string;
 	selectedTeam: Team | null;
-};
+}
 
-export type AppActions = {
+export interface AppActions {
 	toggleAccessibility: () => void;
 	setLocalProfile: (profile: Profile | null) => void;
 	setSelectedTeamID: (team: string) => void;
 	setSelectedTeam: (team: Team | null) => void;
-};
+}
 
 export type AppStore = AppState & AppActions;
 

@@ -26,7 +26,7 @@ import Pagination from "@/components/tools/Pagination.tsx";
 import type { Mod } from "@/types/Mod.ts";
 import type { ModSort } from "@/types/ModSort.ts";
 
-type Filters = {
+interface Filters {
 	hasDonation: boolean | null;
 	hasNSFW: boolean | null;
 	hasWebsite: boolean | null;
@@ -43,7 +43,7 @@ type Filters = {
 	name: string;
 	owner: string;
 	[key: string]: string | number | boolean | null | undefined;
-};
+}
 
 const MEBI = 1024 * 1024;
 
@@ -354,9 +354,10 @@ const ToolsHome: NextPage = (): JSX.Element => {
 	const [pageNumber, setPageNumber] = useState<number>(1);
 	const [pageSize, setPageSize] = useState<number>(100);
 
-	const thisPage = useMemo(() => {
-		return sortedMods.slice((pageNumber - 1) * pageSize, pageNumber * pageSize);
-	}, [sortedMods, pageNumber, pageSize]);
+	const thisPage = useMemo(
+		() => sortedMods.slice((pageNumber - 1) * pageSize, pageNumber * pageSize),
+		[sortedMods, pageNumber, pageSize],
+	);
 
 	return (
 		<>

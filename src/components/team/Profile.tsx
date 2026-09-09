@@ -33,7 +33,9 @@ export default function TeamProfilePage(): JSX.Element {
 
 	const supabase = useSupabaseClient();
 	useEffect(() => {
-		if (!team) return;
+		if (!team) {
+			return;
+		}
 
 		supabase
 			.from("team_slugs")
@@ -69,11 +71,15 @@ export default function TeamProfilePage(): JSX.Element {
 		website: "",
 	});
 	useEffect(() => {
-		if (!team) return;
+		if (!team) {
+			return;
+		}
 		setLocalTeam(team);
 
 		setLocalSlugs((prev) => {
-			if (!prev.length) return [slugify(team.name)];
+			if (!prev.length) {
+				return [slugify(team.name)];
+			}
 
 			return prev;
 		});

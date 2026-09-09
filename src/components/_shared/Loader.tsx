@@ -2,9 +2,9 @@ import Backdrop from "@mui/material/Backdrop";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 
-type Props = {
+interface Props {
 	open?: boolean;
-};
+}
 
 export default function Loader(props: Props): JSX.Element {
 	const { open = true } = props;

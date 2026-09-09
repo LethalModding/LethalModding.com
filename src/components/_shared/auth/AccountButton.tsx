@@ -96,7 +96,9 @@ export default function AccountButton(): JSX.Element {
 	const [profile, setProfile] = useState<Profile | null>(null);
 	useEffect(() => {
 		const update = async (): Promise<void> => {
-			if (!session?.user.id) return;
+			if (!session?.user.id) {
+				return;
+			}
 
 			const { data, error } = await supabase
 				.from("profiles")
@@ -117,7 +119,9 @@ export default function AccountButton(): JSX.Element {
 	}, [session?.user.id, supabase, enqueueSnackbar]);
 
 	const username = useMemo(() => {
-		if (!session?.user?.user_metadata) return "";
+		if (!session?.user?.user_metadata) {
+			return "";
+		}
 		return profile?.username || session.user.user_metadata.full_name;
 	}, [profile?.username, session?.user?.user_metadata]);
 

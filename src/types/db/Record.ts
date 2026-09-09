@@ -1,4 +1,4 @@
-export type Record = {
+export interface Record {
 	id: string;
 
 	created_at: string;
@@ -6,4 +6,4 @@ export type Record = {
 	deleted_at: string | null;
 
 	// [key: string]: string | number | boolean | null
-};
+}

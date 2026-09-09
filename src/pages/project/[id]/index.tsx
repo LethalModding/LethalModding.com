@@ -30,17 +30,21 @@ const ProjectPage = (): JSX.Element => {
 			.eq("id", id)
 			.single()
 			.then(({ data, error }) => {
-				if (error)
+				if (error) {
 					enqueueSnackbar(`Unable to load project: ${error.message}`, {
 						variant: "error",
 					});
-				else setProject(data);
+				} else {
+					setProject(data);
+				}
 			});
 	}, [id, supabase, enqueueSnackbar]);
 	useEffect(() => refreshProject(), [refreshProject]);
 
 	const refreshTeam = useCallback(() => {
-		if (project === null) return;
+		if (project === null) {
+			return;
+		}
 
 		supabase
 			.from("teams")
@@ -48,18 +52,22 @@ const ProjectPage = (): JSX.Element => {
 			.eq("id", project.team_id)
 			.single()
 			.then(({ data, error }) => {
-				if (error)
+				if (error) {
 					enqueueSnackbar(`Unable to load team: ${error.message}`, {
 						variant: "error",
 					});
-				else setTeam(data);
+				} else {
+					setTeam(data);
+				}
 			});
 	}, [project, supabase, enqueueSnackbar]);
 	useEffect(() => refreshTeam(), [refreshTeam]);
 
 	const [creator, setCreator] = useState<Profile | null>(null);
 	const refreshCreator = useCallback(() => {
-		if (project === null) return;
+		if (project === null) {
+			return;
+		}
 
 		supabase
 			.from("profiles")
@@ -67,11 +75,13 @@ const ProjectPage = (): JSX.Element => {
 			.eq("id", project.created_by)
 			.single()
 			.then(({ data, error }) => {
-				if (error)
+				if (error) {
 					enqueueSnackbar(`Unable to load creator: ${error.message}`, {
 						variant: "error",
 					});
-				else setCreator(data);
+				} else {
+					setCreator(data);
+				}
 			});
 	}, [project, supabase, enqueueSnackbar]);
 	useEffect(() => refreshCreator(), [refreshCreator]);

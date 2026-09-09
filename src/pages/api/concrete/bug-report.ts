@@ -8,7 +8,7 @@ const limiter = rateLimit({
 	uniqueTokenPerInterval: 500, // Max 500 users per second
 });
 
-type EnvironmentData = {
+interface EnvironmentData {
 	version: string;
 	buildDate: string;
 	branch: string;
@@ -26,7 +26,7 @@ type EnvironmentData = {
 	wineHostVersion: string;
 	wineHostArch: string;
 	wineHostBuild: string;
-};
+}
 
 type BugReportRequest = NextApiRequest & {
 	body: {

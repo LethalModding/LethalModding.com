@@ -5,9 +5,9 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Image from "next/image";
 import { useCallback } from "react";
 
-type Props = {
+interface Props {
 	onDontClick?: () => void;
-};
+}
 
 export default function LoginButtons(props: Props): JSX.Element {
 	const { onDontClick } = props;

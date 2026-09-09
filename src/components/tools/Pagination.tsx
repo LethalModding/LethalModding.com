@@ -9,7 +9,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { useCallback } from "react";
 import type { ModSort } from "@/types/ModSort.ts";
 
-type Props = {
+interface Props {
 	pageNumber: number;
 	pageSize: number;
 	totalResults: number;
@@ -17,7 +17,7 @@ type Props = {
 	setPageSize: (pageSize: number) => void;
 	setSort: Dispatch<SetStateAction<ModSort>>;
 	sort: ModSort;
-};
+}
 
 const Pagination = (props: Props): JSX.Element => {
 	const {

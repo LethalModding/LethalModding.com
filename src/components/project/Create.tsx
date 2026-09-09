@@ -45,7 +45,9 @@ export default function ProjectCreatePage(): JSX.Element {
 	const handleSubmit = useCallback(
 		(event: FormEvent) => {
 			event.preventDefault();
-			if (!name) return;
+			if (!name) {
+				return;
+			}
 
 			supabase
 				.from("projects")
@@ -68,7 +70,9 @@ export default function ProjectCreatePage(): JSX.Element {
 
 	const [slugs, setSlugs] = useState<string[]>([]);
 	useEffect(() => {
-		if (selectedTeamID === "") return;
+		if (selectedTeamID === "") {
+			return;
+		}
 
 		supabase
 			.from("team_slugs")

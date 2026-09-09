@@ -44,7 +44,9 @@ export default function TeamCreatePage(): JSX.Element {
 	const handleSubmit = useCallback(
 		(event: FormEvent) => {
 			event.preventDefault();
-			if (!name) return;
+			if (!name) {
+				return;
+			}
 
 			supabase
 				.from("teams")

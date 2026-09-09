@@ -9,9 +9,9 @@ import CardHeader from "@mui/material/CardHeader";
 import ListItemButton from "@mui/material/ListItemButton";
 import Paper from "@mui/material/Paper";
 
-type Props = {
+interface Props {
 	setSelectedPage: (page: string) => void;
-};
+}
 
 export default function TeamMenu(props: Props): JSX.Element {
 	const { setSelectedPage } = props;

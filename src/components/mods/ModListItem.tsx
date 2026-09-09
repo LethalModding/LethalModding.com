@@ -13,13 +13,13 @@ import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import { useState } from "react";
 
-type Props = {
+interface Props {
 	id: string;
 	name: string;
 	owner: string;
 	summary: string;
 	verified?: boolean;
-};
+}
 
 export default function ModListItem(props: Props): JSX.Element {
 	const { id, name, owner, summary, verified } = props;
