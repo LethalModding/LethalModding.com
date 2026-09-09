@@ -18,6 +18,7 @@
         "@supabase/auth-helpers-react": "^0.5.0",
         "@supabase/supabase-js": "2.112.3",
         "email-addresses": "^5.0.0",
+        "form-data": "^4.0.6",
         "handlebars": "4.7.9",
         "javascript-time-ago": "^2.6.4",
         "lru-cache": "^10.4.3",
@@ -37,7 +38,6 @@
       "devDependencies": {
         "@babel/core": "7.29.6",
         "@biomejs/biome": "<=2.5.7 || >2.5.9",
-        "@types/lru-cache": "^7.10.10",
         "@types/node": "^20.19.43",
         "@types/react": "^18.3.31",
         "@types/react-dom": "^18.3.7",
@@ -302,8 +302,6 @@
     "@turbo/windows-64": ["@turbo/windows-64@2.10.11", "", { "os": "win32", "cpu": "x64" }, "sha512-4aD7edogJ8arK8DOyvjTI2KKwmchD5M/WM4BZgidrtFf7aSgn8Ce2rJnDwmriw980c2cKlHnhXtlGy38VtKB8g=="],
 
     "@turbo/windows-arm64": ["@turbo/windows-arm64@2.10.11", "", { "os": "win32", "cpu": "arm64" }, "sha512-m8tJkIrTrbQ9O1uHxV0GUq623Zg1678xGna8eMsy4KbygUX/wVFgdZDYV/AxyoyaW/U7nyKoBvaDVwm22p9xqA=="],
-
-    "@types/lru-cache": ["@types/lru-cache@7.10.10", "", { "dependencies": { "lru-cache": "*" } }, "sha512-nEpVRPWW9EBmx2SCfNn3ClYxPL7IktPX12HhIoSc/H5mMjdeW3+YsXIpseLQ2xF35+OcpwKQbEUw5VtqE4PDNA=="],
 
     "@types/node": ["@types/node@20.19.43", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-6oYBAi5ikg4Pl+kGsoYtawUMBT2zZMCvPNF7pVLnHZfd1zf38DRiWn/gT01RYCdUqkv7Fhr+C9ot4/tb+2sVvA=="],
 

@@ -24,6 +24,7 @@
 		"@supabase/auth-helpers-react": "^0.5.0",
 		"@supabase/supabase-js": "2.112.3",
 		"email-addresses": "^5.0.0",
+		"form-data": "^4.0.6",
 		"handlebars": "4.7.9",
 		"javascript-time-ago": "^2.6.4",
 		"lru-cache": "^10.4.3",
@@ -43,7 +44,6 @@
 	"devDependencies": {
 		"@babel/core": "7.29.6",
 		"@biomejs/biome": "<=2.5.7 || >2.5.9",
-		"@types/lru-cache": "^7.10.10",
 		"@types/node": "^20.19.43",
 		"@types/react": "^18.3.31",
 		"@types/react-dom": "^18.3.7",
