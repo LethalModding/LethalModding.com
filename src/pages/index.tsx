@@ -30,11 +30,23 @@ const Home: NextPage = (): JSX.Element => {
 		// enforce certain query params
 		if (!access_token || !refresh_token) return;
 
-		supabase.auth.setSession({
-			access_token: access_token,
-			refresh_token: refresh_token,
-		});
-		router.replace("/");
+		// The redirect runs either way: it is what strips the token fragment from
+		// the URL, and a failed exchange simply leaves the visitor signed out.
+		const clearTokenFragment = (): void => {
+			router.replace("/").catch(() => {
+				// next/router rejects a replace only when the navigation is
+				// superseded, which means the visitor already moved on and the
+				// fragment goes with the page they left.
+			});
+		};
+
+		supabase.auth
+			.setSession({
+				access_token: access_token,
+				refresh_token: refresh_token,
+			})
+			.then(clearTokenFragment)
+			.catch(clearTokenFragment);
 	}, [router, supabase]);
 
 	const session = useSession();

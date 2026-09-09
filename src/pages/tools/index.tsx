@@ -49,24 +49,23 @@ const MEBI = 1024 * 1024;
 
 const ToolsHome: NextPage = (): JSX.Element => {
 	const [allMods, setAllMods] = useState<Mod[]>([]);
+	// A failed fetch would otherwise render as an empty result set, which reads
+	// as "Thunderstore has no mods" rather than "the search is unavailable".
+	const [loadError, setLoadError] = useState<string | null>(null);
 	useEffect(() => {
 		const timeout = setTimeout(() => {
 			ofetch("https://thunderstore.io/c/lethal-company/api/v1/package/")
 				.then((data) => {
 					if (data.error) {
-						console.error(data.error);
+						setLoadError(String(data.error));
 						return;
 					}
 
-					console.log(
-						"Got data from Thunderstore API",
-						"entries",
-						data?.length ?? 0,
-					);
+					setLoadError(null);
 					setAllMods(data);
 				})
-				.catch((error: unknown) => {
-					console.error("Failed to reach the Thunderstore API", error);
+				.catch(() => {
+					setLoadError("Could not reach the Thunderstore API.");
 				});
 		}, 100);
 
@@ -386,6 +385,12 @@ const ToolsHome: NextPage = (): JSX.Element => {
 				}}
 			>
 				<Breadcrumb parts={["Tools", "Thunderstore Search"]} />
+
+				{loadError !== null && (
+					<Typography color="error" sx={{ mt: 3 }} variant="body2">
+						{loadError}
+					</Typography>
+				)}
 
 				<Box
 					sx={{
