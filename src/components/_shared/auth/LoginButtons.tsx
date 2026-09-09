@@ -47,7 +47,7 @@ export default function LoginButtons(props: Props): JSX.Element {
 					src="/discord-mark-white.svg"
 					height={16}
 					width={21}
-					unoptimized
+					unoptimized={true}
 					style={{ marginLeft: "0.5em" }}
 				/>
 			</Button>

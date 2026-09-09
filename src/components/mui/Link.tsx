@@ -3,7 +3,7 @@ import NextLink from "next/link";
 import { forwardRef } from "react";
 
 const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => (
-	<NextLink href={props.href ?? "#"} legacyBehavior passHref>
+	<NextLink href={props.href ?? "#"} legacyBehavior={true} passHref={true}>
 		<MuiLink ref={ref} {...props} />
 	</NextLink>
 ));

@@ -118,7 +118,7 @@ export default function ProjectCreatePage(): JSX.Element {
 
 				<Box>
 					<TextField
-						fullWidth
+						fullWidth={true}
 						helperText={projectURL}
 						label="Name"
 						name="name"
@@ -127,7 +127,7 @@ export default function ProjectCreatePage(): JSX.Element {
 						value={name}
 					/>
 
-					<FormControl fullWidth margin="normal" variant="filled">
+					<FormControl fullWidth={true} margin="normal" variant="filled">
 						<InputLabel>Type</InputLabel>
 						<Select
 							label="Type"

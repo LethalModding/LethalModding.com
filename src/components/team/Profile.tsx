@@ -149,7 +149,7 @@ export default function TeamProfilePage(): JSX.Element {
 			<Loader open={loading} />
 
 			<Dialog
-				fullWidth
+				fullWidth={true}
 				maxWidth="md"
 				onClose={hideDeleteModal}
 				open={deleteModalOpen}
@@ -157,17 +157,17 @@ export default function TeamProfilePage(): JSX.Element {
 				<DialogTitle>Delete Team</DialogTitle>
 				<DialogContent sx={{ pb: 0 }}>
 					<DialogContentText>
-						<Typography gutterBottom>
+						<Typography gutterBottom={true}>
 							This action is immediate and permanent, and cannot be undone.
 						</Typography>
-						<Typography gutterBottom>
+						<Typography gutterBottom={true}>
 							This will also delete all your Projects.
 						</Typography>
-						<Typography gutterBottom>
+						<Typography gutterBottom={true}>
 							To confirm, type the Team Name below.
 						</Typography>
 						<TextField
-							fullWidth
+							fullWidth={true}
 							label="Team Name"
 							onChange={(event) => setConfirmationName(event.target.value)}
 							value={confirmationName}
@@ -190,8 +190,8 @@ export default function TeamProfilePage(): JSX.Element {
 			</Dialog>
 
 			<Accordion
-				defaultExpanded
-				disableGutters
+				defaultExpanded={true}
+				disableGutters={true}
 				expanded={expanded === "profile"}
 				onChange={() => setExpanded("profile")}
 			>
@@ -211,7 +211,7 @@ export default function TeamProfilePage(): JSX.Element {
 					}}
 				>
 					<TextField
-						fullWidth
+						fullWidth={true}
 						label="Name"
 						name="name"
 						onChange={handleChange}
@@ -219,7 +219,7 @@ export default function TeamProfilePage(): JSX.Element {
 						value={localTeam.name}
 					/>
 					<TextField
-						fullWidth
+						fullWidth={true}
 						label="Location"
 						name="location"
 						onChange={handleChange}
@@ -227,9 +227,9 @@ export default function TeamProfilePage(): JSX.Element {
 						value={localTeam.location}
 					/>
 					<TextField
-						fullWidth
+						fullWidth={true}
 						label="Bio"
-						multiline
+						multiline={true}
 						name="bio"
 						onChange={handleChange}
 						rows={6}
@@ -241,7 +241,7 @@ export default function TeamProfilePage(): JSX.Element {
 					/>
 					{socials.map((social, index) => (
 						<TextField
-							fullWidth
+							fullWidth={true}
 							inputProps={{
 								type: "url",
 							}}
@@ -283,7 +283,7 @@ export default function TeamProfilePage(): JSX.Element {
 						/>
 					))}
 					<TextField
-						fullWidth
+						fullWidth={true}
 						inputProps={{
 							type: "url",
 						}}
@@ -297,8 +297,8 @@ export default function TeamProfilePage(): JSX.Element {
 			</Accordion>
 
 			<Accordion
-				disabled
-				disableGutters
+				disabled={true}
+				disableGutters={true}
 				expanded={expanded === "donation"}
 				onChange={() => setExpanded("donation")}
 			>
@@ -318,8 +318,8 @@ export default function TeamProfilePage(): JSX.Element {
 					}}
 				>
 					<TextField
-						disabled
-						fullWidth
+						disabled={true}
+						fullWidth={true}
 						inputProps={{
 							type: "url",
 						}}
@@ -330,15 +330,15 @@ export default function TeamProfilePage(): JSX.Element {
 						variant="filled"
 					/>
 					<FormControlLabel
-						checked
-						disabled
+						checked={true}
+						disabled={true}
 						control={<Checkbox sx={{ mr: 1.5 }} />}
 						label="Show Link on Projects by Default"
 						sx={{ px: 2, py: 1 }}
 					/>
 					<FormControlLabel
-						checked
-						disabled
+						checked={true}
+						disabled={true}
 						control={<Checkbox sx={{ mr: 1.5 }} />}
 						label="Show Link on Team Profile"
 						sx={{ px: 2, py: 1 }}
@@ -347,7 +347,7 @@ export default function TeamProfilePage(): JSX.Element {
 			</Accordion>
 
 			<Accordion
-				disableGutters
+				disableGutters={true}
 				expanded={expanded === "namespace"}
 				onChange={() => setExpanded("namespace")}
 			>
@@ -367,7 +367,7 @@ export default function TeamProfilePage(): JSX.Element {
 					}}
 				>
 					<Box sx={{ gridColumn: "1 / span 2" }}>
-						<Typography gutterBottom>
+						<Typography gutterBottom={true}>
 							Namespaces are how your Team is identified on the platform and mod
 							launchers. Aliases are interchangeable with the primary Namespace.
 							Both are case-insensitive and must be unique, and cannot be
@@ -379,8 +379,8 @@ export default function TeamProfilePage(): JSX.Element {
 
 					{localSlugs.map((slug, index) => (
 						<TextField
-							disabled
-							fullWidth
+							disabled={true}
+							fullWidth={true}
 							key={index}
 							label={index === 0 ? "Primary Name" : `Alias ${index}`}
 							name={`slugs[${index}]`}
@@ -399,7 +399,7 @@ export default function TeamProfilePage(): JSX.Element {
 			</Accordion>
 
 			<Accordion
-				disableGutters
+				disableGutters={true}
 				expanded={expanded === "danger"}
 				onChange={() => setExpanded("danger")}
 				sx={{
@@ -416,10 +416,10 @@ export default function TeamProfilePage(): JSX.Element {
 					</Typography>
 				</AccordionSummary>
 				<AccordionDetails>
-					<Typography gutterBottom>
+					<Typography gutterBottom={true}>
 						This action is immediate and permanent, and cannot be undone.
 					</Typography>
-					<Typography gutterBottom>
+					<Typography gutterBottom={true}>
 						This will also delete all your Projects.
 					</Typography>
 					<Button

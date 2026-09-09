@@ -45,7 +45,7 @@ export default function TeamMemberManagePage(): JSX.Element {
 		<>
 			<TeamMemberInvitePage />
 			<Paper sx={{ m: 2, mt: 0, p: 2 }}>
-				<Typography gutterBottom variant="h4">
+				<Typography gutterBottom={true} variant="h4">
 					Members
 				</Typography>
 
@@ -79,7 +79,7 @@ export default function TeamMemberManagePage(): JSX.Element {
 			</Paper>
 
 			<Paper sx={{ m: 2, mt: 0, p: 2 }}>
-				<Typography gutterBottom variant="h4">
+				<Typography gutterBottom={true} variant="h4">
 					Invites
 				</Typography>
 

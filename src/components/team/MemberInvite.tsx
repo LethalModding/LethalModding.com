@@ -73,7 +73,7 @@ export default function TeamMemberInvitePage(): JSX.Element {
 			</Typography>
 
 			<TextField
-				fullWidth
+				fullWidth={true}
 				label="Email"
 				name="email"
 				onChange={handleInputChange}

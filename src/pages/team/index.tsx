@@ -91,7 +91,7 @@ const TeamPage = (): JSX.Element => {
 					pageComponent
 				) : selectedTeam === null ? (
 					<Box sx={{ p: 2 }}>
-						<Typography gutterBottom variant="h5">
+						<Typography gutterBottom={true} variant="h5">
 							Please select a team to view or manage.
 						</Typography>
 						<Typography variant="h6">

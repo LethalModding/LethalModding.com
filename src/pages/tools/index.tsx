@@ -434,7 +434,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
 						<InputLabel>Include</InputLabel>
 						<Select
 							label="Include"
-							multiple
+							multiple={true}
 							onChange={handleIncludesCategoryFilterChange}
 							renderValue={(selected: string[]) => (
 								<Box
@@ -474,7 +474,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
 						<InputLabel>Exclude</InputLabel>
 						<Select
 							label="Exclude"
-							multiple
+							multiple={true}
 							onChange={handleExcludesCategoryFilterChange}
 							renderValue={(selected: string[]) => (
 								<Box

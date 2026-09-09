@@ -97,7 +97,7 @@ const MyApp: FunctionComponent<MyAppProps> = (
 				<meta name="viewport" content="initial-scale=1, width=device-width" />
 			</Head>
 			<ThemeProvider theme={darkTheme}>
-				<CssBaseline enableColorScheme />
+				<CssBaseline enableColorScheme={true} />
 
 				<SnackbarProvider>
 					{supabaseClient === null ? (

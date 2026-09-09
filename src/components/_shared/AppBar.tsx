@@ -107,8 +107,8 @@ export default function AppBar(): JSX.Element {
 							</Typography>
 						</Link>
 
-						<List disablePadding>
-							<ListSubheader disableSticky sx={{ mb: -1, mt: 0.5 }}>
+						<List disablePadding={true}>
+							<ListSubheader disableSticky={true} sx={{ mb: -1, mt: 0.5 }}>
 								Account
 							</ListSubheader>
 
@@ -118,7 +118,7 @@ export default function AppBar(): JSX.Element {
 								</Link>
 							</ListItemButton>
 
-							<ListSubheader disableSticky sx={{ mb: -1, mt: 0.5 }}>
+							<ListSubheader disableSticky={true} sx={{ mb: -1, mt: 0.5 }}>
 								Tools
 							</ListSubheader>
 
@@ -129,7 +129,7 @@ export default function AppBar(): JSX.Element {
 								<Link href="/tools">Search Thunderstore</Link>
 							</ListItemButton>
 
-							<ListSubheader disableSticky sx={{ mb: -1, mt: 0.5 }}>
+							<ListSubheader disableSticky={true} sx={{ mb: -1, mt: 0.5 }}>
 								Community
 							</ListSubheader>
 

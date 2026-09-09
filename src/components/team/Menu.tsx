@@ -32,7 +32,10 @@ export default function TeamMenu(props: Props): JSX.Element {
 			}}
 		>
 			<Paper>
-				<ListItemButton disabled onClick={() => setSelectedPage("donations")}>
+				<ListItemButton
+					disabled={true}
+					onClick={() => setSelectedPage("donations")}
+				>
 					<DonationIcon />
 					<CardHeader title="Donations" subheader="Coming Soon" />
 				</ListItemButton>
@@ -69,7 +72,10 @@ export default function TeamMenu(props: Props): JSX.Element {
 			</Paper>
 
 			<Paper>
-				<ListItemButton disabled onClick={() => setSelectedPage("reputation")}>
+				<ListItemButton
+					disabled={true}
+					onClick={() => setSelectedPage("reputation")}
+				>
 					<ShieldIcon />
 					<CardHeader
 						title="Reputation"

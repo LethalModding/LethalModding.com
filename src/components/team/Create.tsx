@@ -84,7 +84,7 @@ export default function TeamCreatePage(): JSX.Element {
 
 				<Box>
 					<TextField
-						fullWidth
+						fullWidth={true}
 						label="Name"
 						name="name"
 						onChange={handleInputChange}
@@ -92,7 +92,7 @@ export default function TeamCreatePage(): JSX.Element {
 						value={name}
 					/>
 
-					<FormControl fullWidth margin="normal" variant="filled">
+					<FormControl fullWidth={true} margin="normal" variant="filled">
 						<InputLabel>Type</InputLabel>
 						<Select
 							label="Type"

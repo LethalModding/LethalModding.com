@@ -163,7 +163,7 @@ export default function AccountButton(): JSX.Element {
 					<FormControl
 						disabled={loading}
 						sx={{ m: 1, mt: 0 }}
-						fullWidth
+						fullWidth={true}
 						variant="filled"
 					>
 						<InputLabel>Team</InputLabel>
@@ -209,7 +209,7 @@ export default function AccountButton(): JSX.Element {
 	return (
 		<>
 			<Dialog
-				fullWidth
+				fullWidth={true}
 				onClose={hideLoginDialog}
 				open={loginDialogOpen}
 				maxWidth="xs"
