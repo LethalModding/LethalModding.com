@@ -6,15 +6,43 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"includes": ["**", "!**/.turbo", "!**/public"]
+		"includes": [
+			"**",
+			"!**/.turbo",
+			"!**/public",
+			"!**/node_modules",
+			"!**/dist",
+			"!**/.next",
+			"!**/build",
+			"!**/coverage",
+			"!**/generated",
+			"!**/.venv",
+			"!**/playwright-report",
+			"!**/test-results",
+			"!**/*.dc.html",
+			"!**/*.min.js",
+			"!**/vendor",
+			"!**/public/pagefind",
+			"!**/dist-release"
+		]
 	},
 	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
 		"rules": {
 			"preset": "recommended",
-			"style": {
-				"useImportType": "off"
+			"correctness": {
+				"preset": "all",
+				"noSolidDestructuredProps": "off",
+				"useQwikValidLexicalScope": "off"
+			},
+			"suspicious": { "preset": "all", "noReactSpecificProps": "off" },
+			"security": { "preset": "all" },
+			"a11y": { "preset": "all" },
+			"performance": {
+				"preset": "all",
+				"useSolidForComponent": "off",
+				"noJsxPropsBind": "off"
 			}
 		}
 	},
@@ -39,6 +67,86 @@
 					"suspicious": {
 						"noArrayIndexKey": "off"
 					}
+				}
+			}
+		},
+		{
+			"includes": [
+				"**/*.test.ts",
+				"**/*.test.tsx",
+				"**/*.spec.ts",
+				"**/*.spec.tsx",
+				"**/test/**",
+				"**/__tests__/**"
+			],
+			"linter": {
+				"rules": {
+					"correctness": {
+						"noNodejsModules": "off",
+						"noProcessGlobal": "off",
+						"noUnresolvedImports": "off"
+					},
+					"security": { "noSecrets": "off" },
+					"performance": { "noAwaitInLoops": "off", "useTopLevelRegex": "off" },
+					"suspicious": {
+						"noBitwiseOperators": "off",
+						"noMisplacedAssertion": "off",
+						"noSkippedTests": "off",
+						"noConsole": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": [
+				"**/e2e/**",
+				"**/playwright.config.ts",
+				"**/playwright.*.config.ts"
+			],
+			"linter": {
+				"rules": {
+					"correctness": {
+						"noNodejsModules": "off",
+						"noProcessGlobal": "off",
+						"noUnresolvedImports": "off"
+					},
+					"security": { "noSecrets": "off" },
+					"performance": { "noAwaitInLoops": "off", "useTopLevelRegex": "off" },
+					"suspicious": { "noConsole": "off" }
+				}
+			}
+		},
+		{
+			"includes": [
+				"**/scripts/**",
+				"**/tools/**",
+				"**/*.config.ts",
+				"**/*.config.mjs",
+				"**/*.config.js"
+			],
+			"linter": {
+				"rules": {
+					"correctness": {
+						"noNodejsModules": "off",
+						"noProcessGlobal": "off",
+						"noUnresolvedImports": "off"
+					},
+					"performance": { "useTopLevelRegex": "off" },
+					"suspicious": { "noConsole": "off" }
+				}
+			}
+		},
+		{
+			"includes": [
+				"**/src/server/**",
+				"**/apps/server/**",
+				"**/apps/worker/**",
+				"**/app/**/route.ts",
+				"**/src/app/api/**"
+			],
+			"linter": {
+				"rules": {
+					"correctness": { "noNodejsModules": "off", "noProcessGlobal": "off" }
 				}
 			}
 		}
