@@ -5,8 +5,8 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useCallback, useEffect, useState } from "react";
-import { useAppStore } from "store";
-import type { Profile } from "types/db/Profile";
+import { useAppStore } from "@/store";
+import type { Profile } from "@/types/db/Profile";
 import TeamInvitesList from "./InvitesList";
 import TeamMemberInvitePage from "./MemberInvite";
 

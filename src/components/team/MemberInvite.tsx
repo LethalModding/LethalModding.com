@@ -10,7 +10,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useSnackbar } from "notistack";
 import type { ChangeEvent } from "react";
 import { useCallback, useState } from "react";
-import { useAppStore } from "store";
+import { useAppStore } from "@/store";
 
 export default function TeamMemberInvitePage(): JSX.Element {
 	const [email, setEmail] = useState("");

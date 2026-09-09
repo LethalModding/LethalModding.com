@@ -13,7 +13,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useSnackbar } from "notistack";
 import type { ChangeEvent, FormEvent } from "react";
 import { useCallback, useState } from "react";
-import { useAppStore } from "store";
+import { useAppStore } from "@/store";
 
 export default function TeamCreatePage(): JSX.Element {
 	const [name, setName] = useState("");

@@ -1,6 +1,6 @@
 import { Octokit } from "@octokit/rest";
 import { type NextApiRequest, type NextApiResponse } from "next/types";
-import rateLimit from "server/rate-limit";
+import rateLimit from "@/server/rate-limit";
 
 const limiter = rateLimit({
 	interval: 60 * 1000, // 60 seconds

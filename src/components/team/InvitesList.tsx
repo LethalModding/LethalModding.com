@@ -1,7 +1,7 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useCallback, useEffect, useState } from "react";
-import { useAppStore } from "store";
-import type { TeamInvite } from "types/db/TeamInvite";
+import { useAppStore } from "@/store";
+import type { TeamInvite } from "@/types/db/TeamInvite";
 import TeamInviteListItem from "./InviteListItem";
 
 export default function TeamInvitesList(): JSX.Element | JSX.Element[] {

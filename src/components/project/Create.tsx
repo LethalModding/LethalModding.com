@@ -13,8 +13,8 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useSnackbar } from "notistack";
 import type { ChangeEvent, FormEvent } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useAppStore } from "store";
-import { slugify } from "utility/slugify";
+import { useAppStore } from "@/store";
+import { slugify } from "@/utility/slugify";
 
 export default function ProjectCreatePage(): JSX.Element {
 	const [name, setName] = useState("");

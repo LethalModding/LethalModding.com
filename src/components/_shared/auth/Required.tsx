@@ -1,7 +1,7 @@
 import LockIcon from "@mui/icons-material/Lock";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import CornerAccents from "components/branding/CornerAccents";
+import CornerAccents from "@/components/branding/CornerAccents";
 import type { PropsWithChildren } from "react";
 
 export default function AuthRequired(props: PropsWithChildren): JSX.Element {

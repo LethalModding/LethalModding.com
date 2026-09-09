@@ -1,13 +1,13 @@
 import Box from "@mui/material/Box";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import CornerAccents from "components/branding/CornerAccents";
-import MOTD from "components/branding/MOTD";
+import CornerAccents from "@/components/branding/CornerAccents";
+import MOTD from "@/components/branding/MOTD";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ofetch } from "ofetch";
 import { useEffect } from "react";
-import useGlobalStyles from "styles/globalStyles";
+import useGlobalStyles from "@/styles/globalStyles";
 
 const Home: NextPage = (): JSX.Element => {
 	const globalStyles = useGlobalStyles();

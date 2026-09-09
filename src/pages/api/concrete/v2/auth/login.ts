@@ -2,9 +2,9 @@ import { promises as fsPromises } from "node:fs";
 import type { ParsedGroup, ParsedMailbox } from "email-addresses";
 import addrs from "email-addresses";
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { readTemplate, sendEmail } from "server/email";
-import rateLimit from "server/rate-limit";
-import { supabaseSERVER } from "server/supabaseServer";
+import { readTemplate, sendEmail } from "@/server/email";
+import rateLimit from "@/server/rate-limit";
+import { supabaseSERVER } from "@/server/supabaseServer";
 import logo from "../../../../../../public/icons/android-chrome-512x512.png";
 
 const { readFile } = fsPromises;

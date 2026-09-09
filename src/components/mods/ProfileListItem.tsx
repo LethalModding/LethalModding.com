@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import type { Dispatch, MouseEvent, SetStateAction } from "react";
 import { useCallback, useState } from "react";
-import type { Profile } from "types/Profile";
+import type { Profile } from "@/types/Profile";
 
 type Props = {
 	onSelect: Dispatch<SetStateAction<Profile>>;

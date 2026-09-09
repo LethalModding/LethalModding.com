@@ -1,16 +1,16 @@
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import Link from "components/mui/Link";
-import ProjectManagePage from "components/project/Manage";
-import TeamCreatePage from "components/team/Create";
-import TeamMemberManagePage from "components/team/MemberManage";
-import TeamMenu from "components/team/Menu";
-import TeamProfilePage from "components/team/Profile";
+import Link from "@/components/mui/Link";
+import ProjectManagePage from "@/components/project/Manage";
+import TeamCreatePage from "@/components/team/Create";
+import TeamMemberManagePage from "@/components/team/MemberManage";
+import TeamMenu from "@/components/team/Menu";
+import TeamProfilePage from "@/components/team/Profile";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
-import { useAppStore } from "store";
+import { useAppStore } from "@/store";
 
 const TeamPage = (): JSX.Element => {
 	const [selectedPage, setSelectedPage] = useState("");

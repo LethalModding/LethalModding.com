@@ -7,11 +7,11 @@ import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import Loader from "components/_shared/Loader";
+import Loader from "@/components/_shared/Loader";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useAppStore } from "store";
-import type { Project } from "types/db/Project";
+import { useAppStore } from "@/store";
+import type { Project } from "@/types/db/Project";
 
 export default function ProjectManagePage(): JSX.Element {
 	const [projects, setProjects] = useState<Project[]>([]);

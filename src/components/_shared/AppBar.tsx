@@ -7,7 +7,7 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import type { Theme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/system/useMediaQuery";
-import Link from "components/mui/Link";
+import Link from "@/components/mui/Link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";

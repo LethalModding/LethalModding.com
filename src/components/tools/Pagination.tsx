@@ -7,7 +7,7 @@ import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import type { Dispatch, SetStateAction } from "react";
 import { useCallback } from "react";
-import type { ModSort } from "types/ModSort";
+import type { ModSort } from "@/types/ModSort";
 
 type Props = {
 	pageNumber: number;

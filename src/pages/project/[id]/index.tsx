@@ -10,9 +10,9 @@ import Head from "next/head";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import ReactTimeAgo from "react-time-ago";
-import type { Profile } from "types/db/Profile";
-import type { Project } from "types/db/Project";
-import type { Team } from "types/db/Team";
+import type { Profile } from "@/types/db/Profile";
+import type { Project } from "@/types/db/Project";
+import type { Team } from "@/types/db/Team";
 
 const ProjectPage = (): JSX.Element => {
 	const { id } = useParams();

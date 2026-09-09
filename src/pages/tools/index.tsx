@@ -8,10 +8,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { type SelectChangeEvent } from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import CornerAccents from "components/branding/CornerAccents";
-import Link from "components/mui/Link";
-import Breadcrumb from "components/tools/Breadcrumb";
-import Pagination from "components/tools/Pagination";
+import CornerAccents from "@/components/branding/CornerAccents";
+import Link from "@/components/mui/Link";
+import Breadcrumb from "@/components/tools/Breadcrumb";
+import Pagination from "@/components/tools/Pagination";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -23,8 +23,8 @@ import {
 	useMemo,
 	useState,
 } from "react";
-import { type Mod } from "types/Mod";
-import { type ModSort } from "types/ModSort";
+import { type Mod } from "@/types/Mod";
+import { type ModSort } from "@/types/ModSort";
 
 type Filters = {
 	hasDonation: boolean | null;

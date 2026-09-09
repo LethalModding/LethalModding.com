@@ -9,21 +9,21 @@ import { createTheme } from "@mui/material/styles";
 import ThemeProvider from "@mui/system/ThemeProvider";
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
-import AppBar from "components/_shared/AppBar";
-import AuthWrapper from "components/_shared/auth/Wrapper";
-import Loader from "components/_shared/Loader";
+import AppBar from "@/components/_shared/AppBar";
+import AuthWrapper from "@/components/_shared/auth/Wrapper";
+import Loader from "@/components/_shared/Loader";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { SnackbarProvider } from "notistack";
 import type { FunctionComponent, PropsWithChildren } from "react";
 import { useEffect, useState } from "react";
-import { useAppStore } from "store";
-import darkThemeOptions from "styles/darkThemeOptions";
+import { useAppStore } from "@/store";
+import darkThemeOptions from "@/styles/darkThemeOptions";
 import "styles/globals.css";
 
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
-import createEmotionCache from "utility/createEmotionCache";
+import createEmotionCache from "@/utility/createEmotionCache";
 
 interface MyAppProps extends Omit<AppProps, "Component"> {
 	Component: AppProps["Component"] & { auth?: boolean };

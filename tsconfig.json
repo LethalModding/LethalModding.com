@@ -15,8 +15,7 @@
 		"target": "ESNext",
 		"forceConsistentCasingInFileNames": true,
 		"paths": {
-			"@/*": ["./src/*"],
-			"*": ["./src/*"]
+			"@/*": ["./src/*"]
 		},
 		"plugins": [
 			{

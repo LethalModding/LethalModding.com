@@ -17,9 +17,9 @@ import Select from "@mui/material/Select";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import type { MouseEvent } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useAppStore } from "store";
-import { Profile } from "types/db/Profile";
-import type { Team } from "types/db/Team";
+import { useAppStore } from "@/store";
+import { Profile } from "@/types/db/Profile";
+import type { Team } from "@/types/db/Team";
 import LoginButtons from "./LoginButtons";
 
 export default function AccountButton(): JSX.Element {

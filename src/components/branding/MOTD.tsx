@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Link from "components/mui/Link";
-import useGlobalStyles from "styles/globalStyles";
+import Link from "@/components/mui/Link";
+import useGlobalStyles from "@/styles/globalStyles";
 import TypedText from "./TypedText";
 
 const styles = {
