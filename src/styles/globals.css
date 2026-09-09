@@ -202,8 +202,8 @@
 }
 
 :root {
-	--accent: #e8982f;
-	--background: #121010;
+	--accent: rgb(232 152 47);
+	--background: rgb(18 16 16);
 }
 
 a {
@@ -260,6 +260,6 @@ body:not(.accessible) {
 	color: var(--accent);
 
 	/* terminal colors, charcoal and orange/yellow */
-	box-shadow: inset 0 0 5em 1em #000;
+	box-shadow: inset 0 0 5em 1em rgb(0 0 0);
 	font-family: "VT323", monospace;
 }
