@@ -38,7 +38,7 @@ jobs:
       # bun install or a Next.js build in this workflow, so it never had anything to cache.
       # This installs Bun + deps for real (and gives Autobuild below a populated node_modules
       # and real .next/cache to work from) via the fleet's shared Next.js+Bun action.
-      - uses: Rethunk-Tech/gh-actions/setup-nextjs-bun@45d60bff5148282bbbf11e6f2460829eab772cf2 # v1.9
+      - uses: Rethunk-Tech/gh-actions/setup-nextjs-bun@5d07bd8adb2dda1caa11cacd886edf73e2e95afb # v1.10
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
