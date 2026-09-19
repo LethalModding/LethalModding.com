@@ -9,6 +9,7 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import Head from "next/head";
 import { useParams } from "next/navigation";
 import { useSnackbar } from "notistack";
+import type { JSX } from "react";
 import { useCallback, useEffect, useState } from "react";
 import ReactTimeAgo from "react-time-ago";
 import type { Profile } from "@/types/db/Profile.ts";

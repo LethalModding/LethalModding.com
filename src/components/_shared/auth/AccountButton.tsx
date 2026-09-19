@@ -16,7 +16,7 @@ import type { SelectChangeEvent } from "@mui/material/Select";
 import Select from "@mui/material/Select";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useSnackbar } from "notistack";
-import type { MouseEvent } from "react";
+import type { JSX, MouseEvent } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAppStore } from "@/store.ts";
 import type { Profile } from "@/types/db/Profile.ts";

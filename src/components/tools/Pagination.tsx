@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import type { SelectChangeEvent } from "@mui/material/Select";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
-import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, JSX, SetStateAction } from "react";
 import { useCallback } from "react";
 import type { ModSort } from "@/types/ModSort.ts";
 

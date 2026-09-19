@@ -1,4 +1,5 @@
 import Box from "@mui/material/Box";
+import type { JSX } from "react";
 
 export function CornerAccents(): JSX.Element {
 	const longDimension = "clamp(0.5rem, 5vw, 8rem)";

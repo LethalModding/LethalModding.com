@@ -11,7 +11,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useSnackbar } from "notistack";
-import type { ChangeEvent, FormEvent } from "react";
+import type { ChangeEvent, JSX, MouseEvent } from "react";
 import { useCallback, useState } from "react";
 import { useAppStore } from "@/store.ts";
 
@@ -38,7 +38,7 @@ export function TeamCreatePage(): JSX.Element {
 	const supabase = useSupabaseClient();
 	const setSelectedTeamID = useAppStore((state) => state.setSelectedTeamID);
 	const handleSubmit = useCallback(
-		(event: FormEvent) => {
+		(event: MouseEvent<HTMLButtonElement>) => {
 			event.preventDefault();
 			if (!name) {
 				return;

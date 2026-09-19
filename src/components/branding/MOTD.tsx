@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import type { JSX } from "react";
 import { Link } from "@/components/mui/Link.tsx";
 import { useGlobalStyles } from "@/styles/globalStyles.ts";
 import { TypedText } from "./TypedText.tsx";

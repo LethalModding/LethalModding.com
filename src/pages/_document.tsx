@@ -10,6 +10,7 @@ import type {
 import type { DocumentContext } from "next/document";
 import Document, { Head, Html, Main, NextScript } from "next/document";
 import type { NextRouter } from "next/router";
+import type { JSX } from "react";
 import { Children } from "react";
 import { darkTheme as darkThemeOptions } from "@/styles/darkThemeOptions.ts";
 import { createEmotionCache } from "@/utility/createEmotionCache.ts";

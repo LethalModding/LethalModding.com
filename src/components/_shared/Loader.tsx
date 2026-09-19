@@ -1,6 +1,7 @@
 import Backdrop from "@mui/material/Backdrop";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
+import type { JSX } from "react";
 
 interface Props {
 	open?: boolean;

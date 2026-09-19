@@ -12,6 +12,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { ofetch } from "ofetch";
+import type { JSX } from "react";
 import {
 	type ChangeEvent,
 	useCallback,
@@ -323,7 +324,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
 					</FormControl>
 
 					<TextField
-						inputProps={{ min: 0 }}
+						slotProps={{ htmlInput: { min: 0 } }}
 						label="Min. Dependencies"
 						name="minDependencies"
 						onChange={handleFilterChange}
@@ -332,7 +333,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
 						variant="outlined"
 					/>
 					<TextField
-						inputProps={{ min: -1 }}
+						slotProps={{ htmlInput: { min: -1 } }}
 						label="Max. Dependencies"
 						name="maxDependencies"
 						onChange={handleFilterChange}
@@ -341,7 +342,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
 						variant="outlined"
 					/>
 					<TextField
-						inputProps={{ min: 0 }}
+						slotProps={{ htmlInput: { min: 0 } }}
 						label="Min. Downloads"
 						name="minDownloads"
 						onChange={handleFilterChange}
@@ -350,7 +351,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
 						variant="outlined"
 					/>
 					<TextField
-						inputProps={{ min: -1 }}
+						slotProps={{ htmlInput: { min: -1 } }}
 						label="Max. Downloads"
 						name="maxDownloads"
 						onChange={handleFilterChange}
@@ -359,7 +360,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
 						variant="outlined"
 					/>
 					<TextField
-						inputProps={{ min: 0 }}
+						slotProps={{ htmlInput: { min: 0 } }}
 						label="Min. Ratings"
 						name="minRatings"
 						onChange={handleFilterChange}
@@ -368,7 +369,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
 						variant="outlined"
 					/>
 					<TextField
-						inputProps={{ min: -1 }}
+						slotProps={{ htmlInput: { min: -1 } }}
 						label="Max. Ratings"
 						name="maxRatings"
 						onChange={handleFilterChange}
@@ -377,7 +378,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
 						variant="outlined"
 					/>
 					<TextField
-						inputProps={{ min: 0 }}
+						slotProps={{ htmlInput: { min: 0 } }}
 						label="Min. Size (MB)"
 						name="minSize"
 						onChange={handleFilterChange}
@@ -386,7 +387,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
 						variant="outlined"
 					/>
 					<TextField
-						inputProps={{ min: -1 }}
+						slotProps={{ htmlInput: { min: -1 } }}
 						label="Max. Size (MB)"
 						name="maxSize"
 						onChange={handleFilterChange}

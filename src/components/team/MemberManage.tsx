@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useSnackbar } from "notistack";
+import type { JSX } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useAppStore } from "@/store.ts";
 import type { Profile } from "@/types/db/Profile.ts";

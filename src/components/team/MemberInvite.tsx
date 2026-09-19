@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useSnackbar } from "notistack";
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, JSX } from "react";
 import { useCallback, useState } from "react";
 import { useAppStore } from "@/store.ts";
 

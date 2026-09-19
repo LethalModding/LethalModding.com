@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import CardHeader from "@mui/material/CardHeader";
 import ListItemButton from "@mui/material/ListItemButton";
 import Paper from "@mui/material/Paper";
+import type { JSX } from "react";
 
 interface Props {
 	setSelectedPage: (page: string) => void;

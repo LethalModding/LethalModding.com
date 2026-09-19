@@ -4,6 +4,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { ofetch } from "ofetch";
+import type { JSX } from "react";
 import { useEffect } from "react";
 import { CornerAccents } from "@/components/branding/CornerAccents.tsx";
 import { MOTD } from "@/components/branding/MOTD.tsx";

@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
+import type { JSX } from "react";
 import { useEffect, useState } from "react";
 import { Loader } from "@/components/_shared/Loader.tsx";
 import { useAppStore } from "@/store.ts";

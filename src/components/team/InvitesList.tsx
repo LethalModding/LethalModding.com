@@ -1,5 +1,6 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useSnackbar } from "notistack";
+import type { JSX } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useAppStore } from "@/store.ts";
 import type { TeamInvite } from "@/types/db/TeamInvite.ts";

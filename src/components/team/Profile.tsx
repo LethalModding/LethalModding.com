@@ -19,7 +19,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useSnackbar } from "notistack";
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, JSX } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { Loader } from "@/components/_shared/Loader.tsx";
 import { useAppStore } from "@/store.ts";
@@ -248,37 +248,39 @@ export function TeamProfilePage(): JSX.Element {
 					{socials.map((social, index) => (
 						<TextField
 							fullWidth={true}
-							inputProps={{
-								type: "url",
-							}}
-							InputProps={{
-								endAdornment:
-									index === socials.length - 1 ? (
-										<IconButton
-											onClick={() =>
-												setLocalTeam((prevTeam) => ({
-													...prevTeam,
-													socials: `${prevTeam.socials},`,
-												}))
-											}
-										>
-											<AddIcon />
-										</IconButton>
-									) : (
-										<IconButton
-											onClick={() =>
-												setLocalTeam((prevTeam) => ({
-													...prevTeam,
-													socials: prevTeam.socials
-														.split(",")
-														.filter((_, i) => i !== index)
-														.join(","),
-												}))
-											}
-										>
-											<MinusIcon />
-										</IconButton>
-									),
+							slotProps={{
+								htmlInput: {
+									type: "url",
+								},
+								input: {
+									endAdornment:
+										index === socials.length - 1 ? (
+											<IconButton
+												onClick={() =>
+													setLocalTeam((prevTeam) => ({
+														...prevTeam,
+														socials: `${prevTeam.socials},`,
+													}))
+												}
+											>
+												<AddIcon />
+											</IconButton>
+										) : (
+											<IconButton
+												onClick={() =>
+													setLocalTeam((prevTeam) => ({
+														...prevTeam,
+														socials: prevTeam.socials
+															.split(",")
+															.filter((_, i) => i !== index)
+															.join(","),
+													}))
+												}
+											>
+												<MinusIcon />
+											</IconButton>
+										),
+								},
 							}}
 							key={index}
 							label="Social Link"
@@ -290,8 +292,10 @@ export function TeamProfilePage(): JSX.Element {
 					))}
 					<TextField
 						fullWidth={true}
-						inputProps={{
-							type: "url",
+						slotProps={{
+							htmlInput: {
+								type: "url",
+							},
 						}}
 						label="Website"
 						name="website"
@@ -326,8 +330,10 @@ export function TeamProfilePage(): JSX.Element {
 					<TextField
 						disabled={true}
 						fullWidth={true}
-						inputProps={{
-							type: "url",
+						slotProps={{
+							htmlInput: {
+								type: "url",
+							},
 						}}
 						label="Donation Link"
 						sx={{

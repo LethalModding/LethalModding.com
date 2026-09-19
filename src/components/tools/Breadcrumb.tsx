@@ -1,4 +1,5 @@
 import Typography from "@mui/material/Typography";
+import type { JSX } from "react";
 import { Fragment } from "react";
 import { TypedText } from "@/components/branding/TypedText.tsx";
 import { Link } from "@/components/mui/Link.tsx";

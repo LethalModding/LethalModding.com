@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/system/useMediaQuery";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import type { JSX } from "react";
 import { useCallback, useState } from "react";
 import { Link } from "@/components/mui/Link.tsx";
 import { AccountButton } from "./auth/AccountButton.tsx";

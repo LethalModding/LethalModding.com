@@ -31,7 +31,7 @@ Agent conventions. Setup: [HUMANS.md](./HUMANS.md).
 ## Stack invariants
 
 - **Router:** Pages Router (`src/pages`), not App Router.
-- **UI:** MUI v5 + Emotion.
+- **UI:** MUI v9 + Emotion.
 - **Auth:** `@supabase/auth-helpers-nextjs` / `react`; tokens may arrive in URL hash on home.
 - **HTTP:** `ofetch` for client API calls.
 - **Package manager:** Bun — `bun run <script>`.

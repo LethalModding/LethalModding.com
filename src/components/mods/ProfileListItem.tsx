@@ -7,7 +7,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
-import type { Dispatch, MouseEvent, SetStateAction } from "react";
+import type { Dispatch, JSX, MouseEvent, SetStateAction } from "react";
 import { useCallback, useState } from "react";
 import type { Profile } from "@/types/Profile.ts";
 

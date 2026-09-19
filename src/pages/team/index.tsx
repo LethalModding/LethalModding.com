@@ -3,6 +3,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import type { JSX } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "@/components/mui/Link.tsx";
 import { ProjectManagePage } from "@/components/project/Manage.tsx";
