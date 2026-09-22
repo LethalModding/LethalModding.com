@@ -71,8 +71,20 @@
         "noInferrableTypes": "off"
       },
       "complexity": {
-        "noExcessiveCognitiveComplexity": "off",
-        "noExcessiveLinesPerFunction": "off"
+        "noExcessiveCognitiveComplexity": {
+          "level": "on",
+          "options": {
+            "maxAllowedComplexity": 25
+          }
+        },
+        "noExcessiveLinesPerFunction": {
+          "level": "on",
+          "options": {
+            "maxLines": 100,
+            "skipBlankLines": true,
+            "skipIifes": true
+          }
+        }
       },
       "nursery": {
         "noFloatingPromises": "error",
