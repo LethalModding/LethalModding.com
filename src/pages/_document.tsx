@@ -16,7 +16,7 @@ import { darkTheme as darkThemeOptions } from '@/styles/darkThemeOptions.ts'
 import { createEmotionCache } from '@/utility/createEmotionCache.ts'
 
 export default class MyDocument extends Document {
-  render(): JSX.Element {
+  override render(): JSX.Element {
     return (
       <Html lang="en">
         <Head>
