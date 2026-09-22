@@ -38,16 +38,9 @@
 		"enabled": true,
 		"rules": {
 			"preset": "all",
-			"correctness": {
-				"noSolidDestructuredProps": "off",
-				"useQwikValidLexicalScope": "off"
-			},
-			"suspicious": {
-				"noReactSpecificProps": "off"
-			},
+			"correctness": {},
+			"suspicious": {},
 			"performance": {
-				"useSolidForComponent": "off",
-				"noJsxPropsBind": "off",
 				"noAwaitInLoops": "off"
 			},
 			"style": {
@@ -80,6 +73,10 @@
 				"noFloatingPromises": "error",
 				"noMisusedPromises": "error"
 			}
+		},
+		"domains": {
+			"qwik": "none",
+			"solid": "none"
 		}
 	},
 	"formatter": {
@@ -179,6 +176,20 @@
 						"noMisplacedAssertion": "off",
 						"noSkippedTests": "off",
 						"noConsole": "off"
+					},
+					"complexity": {
+						"noExcessiveCognitiveComplexity": "off",
+						"noExcessiveLinesPerFunction": "off"
+					},
+					"style": {
+						"noExcessiveLinesPerFile": {
+							"level": "on",
+							"options": {
+								"maxLines": 1500
+							}
+						},
+						"noMagicNumbers": "off",
+						"noProcessEnv": "off"
 					}
 				}
 			}
