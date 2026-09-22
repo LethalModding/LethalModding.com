@@ -13,113 +13,105 @@ import { useCallback, useState } from "react";
 import { useAppStore } from "@/store.ts";
 
 export function TeamMemberInvitePage(): JSX.Element {
-	const [email, setEmail] = useState("");
-	const [type, setType] = useState("collaborator");
+  const [email, setEmail] = useState("");
+  const [type, setType] = useState("collaborator");
 
-	const handleInputChange = useCallback(
-		(event: ChangeEvent<HTMLInputElement>) => {
-			if (event.target.name === "email") {
-				setEmail(event.target.value);
-			}
-		},
-		[],
-	);
+  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.name === "email") {
+      setEmail(event.target.value);
+    }
+  }, []);
 
-	const handleSelectChange = useCallback((event: SelectChangeEvent<string>) => {
-		if (event.target.name === "type") {
-			setType(event.target.value);
-		}
-	}, []);
+  const handleSelectChange = useCallback((event: SelectChangeEvent<string>) => {
+    if (event.target.name === "type") {
+      setType(event.target.value);
+    }
+  }, []);
 
-	const teamID = useAppStore((state) => state.selectedTeamID);
-	const supabase = useSupabaseClient();
-	const { enqueueSnackbar } = useSnackbar();
-	const handleSubmit = useCallback(() => {
-		supabase
-			.from("team_invites")
-			.insert({ team_id: teamID, email, type })
-			.then(({ error }) => {
-				if (error) {
-					enqueueSnackbar(`Error inviting ${email}`, { variant: "error" });
-				} else {
-					enqueueSnackbar(`Invited ${email}`, { variant: "success" });
-				}
+  const teamID = useAppStore((state) => state.selectedTeamID);
+  const supabase = useSupabaseClient();
+  const { enqueueSnackbar } = useSnackbar();
+  const handleSubmit = useCallback(() => {
+    supabase
+      .from("team_invites")
+      .insert({ team_id: teamID, email, type })
+      .then(({ error }) => {
+        if (error) {
+          enqueueSnackbar(`Error inviting ${email}`, { variant: "error" });
+        } else {
+          enqueueSnackbar(`Invited ${email}`, { variant: "success" });
+        }
 
-				setEmail("");
-			});
-	}, [email, enqueueSnackbar, supabase, teamID, type]);
+        setEmail("");
+      });
+  }, [email, enqueueSnackbar, supabase, teamID, type]);
 
-	return (
-		<Paper
-			sx={{
-				display: "flex",
-				flexDirection: "column",
-				gap: 1,
-				m: 2,
-				p: 2,
-			}}
-		>
-			<Typography
-				sx={{
-					pb: 1.5,
-				}}
-				variant="h5"
-			>
-				Invite to Team
-			</Typography>
+  return (
+    <Paper
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 1,
+        m: 2,
+        p: 2,
+      }}
+    >
+      <Typography
+        sx={{
+          pb: 1.5,
+        }}
+        variant="h5"
+      >
+        Invite to Team
+      </Typography>
 
-			<TextField
-				fullWidth={true}
-				label="Email"
-				name="email"
-				onChange={handleInputChange}
-				variant="filled"
-				value={email}
-			/>
+      <TextField
+        fullWidth={true}
+        label="Email"
+        name="email"
+        onChange={handleInputChange}
+        variant="filled"
+        value={email}
+      />
 
-			<RadioGroup
-				name="type"
-				onChange={handleSelectChange}
-				sx={{
-					gap: 1,
-					my: 0.5,
-				}}
-				value={type}
-			>
-				<FormControlLabel
-					control={<Radio />}
-					label={
-						<>
-							Tester
-							<Typography color="textSecondary" variant="body2">
-								Can view and comment on projects
-							</Typography>
-						</>
-					}
-					value="tester"
-				/>
-				<FormControlLabel
-					control={<Radio />}
-					label={
-						<>
-							Collaborator
-							<Typography color="textSecondary" variant="body2">
-								Can view, create, and edit projects
-							</Typography>
-						</>
-					}
-					value="collaborator"
-				/>
-			</RadioGroup>
+      <RadioGroup
+        name="type"
+        onChange={handleSelectChange}
+        sx={{
+          gap: 1,
+          my: 0.5,
+        }}
+        value={type}
+      >
+        <FormControlLabel
+          control={<Radio />}
+          label={
+            <>
+              Tester
+              <Typography color="textSecondary" variant="body2">
+                Can view and comment on projects
+              </Typography>
+            </>
+          }
+          value="tester"
+        />
+        <FormControlLabel
+          control={<Radio />}
+          label={
+            <>
+              Collaborator
+              <Typography color="textSecondary" variant="body2">
+                Can view, create, and edit projects
+              </Typography>
+            </>
+          }
+          value="collaborator"
+        />
+      </RadioGroup>
 
-			<Button
-				color="primary"
-				disabled={!email}
-				onClick={handleSubmit}
-				variant="contained"
-			>
-				Invite
-			</Button>
-		</Paper>
-	);
+      <Button color="primary" disabled={!email} onClick={handleSubmit} variant="contained">
+        Invite
+      </Button>
+    </Paper>
+  );
 }

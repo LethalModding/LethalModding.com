@@ -2,45 +2,42 @@ import type { NextApiRequest, NextApiResponse } from "next/types";
 
 // Public Thunderstore package identifiers (owner/package), grouped by what they fix.
 const mods = [
-	"BepInEx/BepInExPack",
-	"Evaisa/HookGenPatcher",
-	"CharlesE2/HostFixes",
+  "BepInEx/BepInExPack",
+  "Evaisa/HookGenPatcher",
+  "CharlesE2/HostFixes",
 
-	"Lordfirespeed/Free2Move",
+  "Lordfirespeed/Free2Move",
 
-	"kuba6000/LC_Masked_Fix",
-	"ThePotato/scanForItemsFix",
-	"Hamunii/JetpackFallFix",
-	"ViViKo/ItemClippingFix",
-	"Dev1A3/RecentlyPlayedWith",
-	"ShaosilGaming/FlashlightFix",
-	"EliteMasterEric/SlimeTamingFix",
-	"FutureSavior/Boombox_Sync_Fix",
-	"linkoid/DissonanceLagFix",
-	"Zaggy1024/PathfindingLagFix",
+  "kuba6000/LC_Masked_Fix",
+  "ThePotato/scanForItemsFix",
+  "Hamunii/JetpackFallFix",
+  "ViViKo/ItemClippingFix",
+  "Dev1A3/RecentlyPlayedWith",
+  "ShaosilGaming/FlashlightFix",
+  "EliteMasterEric/SlimeTamingFix",
+  "FutureSavior/Boombox_Sync_Fix",
+  "linkoid/DissonanceLagFix",
+  "Zaggy1024/PathfindingLagFix",
 
-	"itsmeowdev/DoorFix",
-	"monkes_mods/JumpDelayPatch",
+  "itsmeowdev/DoorFix",
+  "monkes_mods/JumpDelayPatch",
 
-	"flerouwu/LC_FastStartup",
-	"BlueAmulet/LogNeuter",
-	"Dev1A3/LobbyInviteOnly",
-	"taffyko/QuickQuitToMenu",
+  "flerouwu/LC_FastStartup",
+  "BlueAmulet/LogNeuter",
+  "Dev1A3/LobbyInviteOnly",
+  "taffyko/QuickQuitToMenu",
 ];
 
-export default function ConcreteModsRecommended(
-	req: NextApiRequest,
-	res: NextApiResponse,
-): void {
-	if (req.method === "OPTIONS") {
-		res.status(204).json({ status: "ok" });
-		return;
-	}
+export default function ConcreteModsRecommended(req: NextApiRequest, res: NextApiResponse): void {
+  if (req.method === "OPTIONS") {
+    res.status(204).json({ status: "ok" });
+    return;
+  }
 
-	if (req.method !== "GET") {
-		res.status(405).json({ error: "Method Not Allowed" });
-		return;
-	}
+  if (req.method !== "GET") {
+    res.status(405).json({ error: "Method Not Allowed" });
+    return;
+  }
 
-	res.status(200).json(mods);
+  res.status(200).json(mods);
 }

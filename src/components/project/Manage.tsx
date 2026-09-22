@@ -16,69 +16,57 @@ import { useAppStore } from "@/store.ts";
 import type { Project } from "@/types/db/Project.ts";
 
 export function ProjectManagePage(): JSX.Element {
-	const { enqueueSnackbar } = useSnackbar();
-	const [projects, setProjects] = useState<Project[]>([]);
-	const [loading, setLoading] = useState(true);
+  const { enqueueSnackbar } = useSnackbar();
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
 
-	const selectedTeamID = useAppStore((state) => state.selectedTeamID);
+  const selectedTeamID = useAppStore((state) => state.selectedTeamID);
 
-	const supabase = useSupabaseClient();
-	useEffect(() => {
-		supabase
-			.from("projects")
-			.select("*")
-			.eq("team_id", selectedTeamID)
-			.then(({ data, error }) => {
-				if (error) {
-					enqueueSnackbar(`Unable to load projects: ${error.message}`, {
-						variant: "error",
-					});
-				} else {
-					setProjects(data);
-				}
-				setLoading(false);
-			});
-	}, [supabase, selectedTeamID, enqueueSnackbar]);
+  const supabase = useSupabaseClient();
+  useEffect(() => {
+    supabase
+      .from("projects")
+      .select("*")
+      .eq("team_id", selectedTeamID)
+      .then(({ data, error }) => {
+        if (error) {
+          enqueueSnackbar(`Unable to load projects: ${error.message}`, {
+            variant: "error",
+          });
+        } else {
+          setProjects(data);
+        }
+        setLoading(false);
+      });
+  }, [supabase, selectedTeamID, enqueueSnackbar]);
 
-	const router = useRouter();
+  const router = useRouter();
 
-	return (
-		<>
-			<Loader open={loading} />
+  return (
+    <>
+      <Loader open={loading} />
 
-			<Paper sx={{ px: 2, pt: 2, pb: 1.5 }}>
-				<Typography variant="h5">Projects</Typography>
-			</Paper>
+      <Paper sx={{ px: 2, pt: 2, pb: 1.5 }}>
+        <Typography variant="h5">Projects</Typography>
+      </Paper>
 
-			{projects.map((project) => (
-				<Paper elevation={1} key={project.id}>
-					<ListItemButton onClick={() => router.push(`/project/${project.id}`)}>
-						<ListItemIcon>
-							<UnpublishedIcon
-								color="inherit"
-								sx={{ color: "text.secondary", ml: 0.75 }}
-							/>
-						</ListItemIcon>
-						<ListItemText
-							primary={project.name}
-							secondary={project.summary || "Not Published"}
-						/>
-						<Typography variant="caption">
-							{project.type === "public" ? (
-								<VisibilityOnIcon
-									color="inherit"
-									sx={{ color: "text.secondary", mt: 1, mr: 2 }}
-								/>
-							) : (
-								<VisibilityOffIcon
-									color="inherit"
-									sx={{ color: "text.secondary", mt: 1, mr: 2 }}
-								/>
-							)}
-						</Typography>
-					</ListItemButton>
-				</Paper>
-			))}
-		</>
-	);
+      {projects.map((project) => (
+        <Paper elevation={1} key={project.id}>
+          <ListItemButton onClick={() => router.push(`/project/${project.id}`)}>
+            <ListItemIcon>
+              <UnpublishedIcon color="inherit" sx={{ color: "text.secondary", ml: 0.75 }} />
+            </ListItemIcon>
+            <ListItemText primary={project.name} secondary={project.summary || "Not Published"} />
+            <Typography variant="caption">
+              {project.type === "public" ? (
+                <VisibilityOnIcon color="inherit" sx={{ color: "text.secondary", mt: 1, mr: 2 }} />
+              ) : (
+                <VisibilityOffIcon color="inherit" sx={{ color: "text.secondary", mt: 1, mr: 2 }} />
+              )}
+            </Typography>
+          </ListItemButton>
+        </Paper>
+      ))}
+    </>
+  );
 }

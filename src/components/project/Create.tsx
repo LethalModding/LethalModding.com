@@ -17,153 +17,140 @@ import { useAppStore } from "@/store.ts";
 import { slugify } from "@/utility/slugify.ts";
 
 export function ProjectCreatePage(): JSX.Element {
-	const [name, setName] = useState("");
-	const [type, setType] = useState("public");
+  const [name, setName] = useState("");
+  const [type, setType] = useState("public");
 
-	const handleInputChange = useCallback(
-		(event: ChangeEvent<HTMLInputElement>) => {
-			if (event.target.name === "name") {
-				setName(event.target.value);
-			}
-		},
-		[],
-	);
+  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.name === "name") {
+      setName(event.target.value);
+    }
+  }, []);
 
-	const handleSelectChange = useCallback((event: SelectChangeEvent<string>) => {
-		if (event.target.name === "type") {
-			setType(event.target.value);
-		}
-	}, []);
+  const handleSelectChange = useCallback((event: SelectChangeEvent<string>) => {
+    if (event.target.name === "type") {
+      setType(event.target.value);
+    }
+  }, []);
 
-	const { enqueueSnackbar } = useSnackbar();
-	const supabase = useSupabaseClient();
-	const selectedTeamID = useAppStore((state) => state.selectedTeamID);
-	const handleSubmit = useCallback(
-		(event: MouseEvent<HTMLButtonElement>) => {
-			event.preventDefault();
-			if (!name) {
-				return;
-			}
+  const { enqueueSnackbar } = useSnackbar();
+  const supabase = useSupabaseClient();
+  const selectedTeamID = useAppStore((state) => state.selectedTeamID);
+  const handleSubmit = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      if (!name) {
+        return;
+      }
 
-			supabase
-				.from("projects")
-				.insert({
-					team_id: selectedTeamID,
-					name,
-					type,
-				})
-				.select()
-				.then(({ error }) => {
-					if (error) {
-						enqueueSnackbar("Unable to create Project", { variant: "error" });
-					} else {
-						enqueueSnackbar("Project created", { variant: "success" });
-					}
-				});
-		},
-		[enqueueSnackbar, name, selectedTeamID, supabase, type],
-	);
+      supabase
+        .from("projects")
+        .insert({
+          team_id: selectedTeamID,
+          name,
+          type,
+        })
+        .select()
+        .then(({ error }) => {
+          if (error) {
+            enqueueSnackbar("Unable to create Project", { variant: "error" });
+          } else {
+            enqueueSnackbar("Project created", { variant: "success" });
+          }
+        });
+    },
+    [enqueueSnackbar, name, selectedTeamID, supabase, type],
+  );
 
-	const [slugs, setSlugs] = useState<string[]>([]);
-	useEffect(() => {
-		if (selectedTeamID === "") {
-			return;
-		}
+  const [slugs, setSlugs] = useState<string[]>([]);
+  useEffect(() => {
+    if (selectedTeamID === "") {
+      return;
+    }
 
-		supabase
-			.from("team_slugs")
-			.select("name")
-			.eq("team_id", selectedTeamID)
-			.then(({ data, error }) => {
-				if (error) {
-					enqueueSnackbar(`Unable to load projects: ${error.message}`, {
-						variant: "error",
-					});
-				} else {
-					setSlugs(data.map((slug) => slug.name));
-				}
-			});
-	}, [selectedTeamID, supabase, enqueueSnackbar]);
+    supabase
+      .from("team_slugs")
+      .select("name")
+      .eq("team_id", selectedTeamID)
+      .then(({ data, error }) => {
+        if (error) {
+          enqueueSnackbar(`Unable to load projects: ${error.message}`, {
+            variant: "error",
+          });
+        } else {
+          setSlugs(data.map((slug) => slug.name));
+        }
+      });
+  }, [selectedTeamID, supabase, enqueueSnackbar]);
 
-	const teamName = useAppStore((state) => state.selectedTeam?.name || "");
-	const projectURL = useMemo(() => {
-		// use first slug
-		const slugName = slugify(name);
-		if (slugs.length > 0) {
-			return `${slugs[0]}/${slugName}`;
-		}
+  const teamName = useAppStore((state) => state.selectedTeam?.name || "");
+  const projectURL = useMemo(() => {
+    // use first slug
+    const slugName = slugify(name);
+    if (slugs.length > 0) {
+      return `${slugs[0]}/${slugName}`;
+    }
 
-		// generate slug from name
-		return `${slugify(teamName)}/${slugName}`;
-	}, [name, slugs, teamName]);
+    // generate slug from name
+    return `${slugify(teamName)}/${slugName}`;
+  }, [name, slugs, teamName]);
 
-	return (
-		<Box
-			sx={{
-				display: "grid",
-				height: "100%",
-				placeItems: "center",
-			}}
-		>
-			<Paper
-				sx={{
-					display: "flex",
-					flexDirection: "column",
-					gap: 2,
-					maxWidth: 520,
-					p: 2,
-				}}
-			>
-				<Typography variant="h5">Create Project</Typography>
+  return (
+    <Box
+      sx={{
+        display: "grid",
+        height: "100%",
+        placeItems: "center",
+      }}
+    >
+      <Paper
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          maxWidth: 520,
+          p: 2,
+        }}
+      >
+        <Typography variant="h5">Create Project</Typography>
 
-				<Box>
-					<TextField
-						fullWidth={true}
-						helperText={projectURL}
-						label="Name"
-						name="name"
-						onChange={handleInputChange}
-						variant="filled"
-						value={name}
-					/>
+        <Box>
+          <TextField
+            fullWidth={true}
+            helperText={projectURL}
+            label="Name"
+            name="name"
+            onChange={handleInputChange}
+            variant="filled"
+            value={name}
+          />
 
-					<FormControl fullWidth={true} margin="normal" variant="filled">
-						<InputLabel>Type</InputLabel>
-						<Select
-							label="Type"
-							name="type"
-							onChange={handleSelectChange}
-							value={type}
-						>
-							<MenuItem value="public">Public</MenuItem>
+          <FormControl fullWidth={true} margin="normal" variant="filled">
+            <InputLabel>Type</InputLabel>
+            <Select label="Type" name="type" onChange={handleSelectChange} value={type}>
+              <MenuItem value="public">Public</MenuItem>
 
-							<MenuItem value="private">Private</MenuItem>
-						</Select>
-						<FormHelperText>
-							{type === "public"
-								? "Public projects are visible to everyone."
-								: "Private projects are only visible to team members."}
-						</FormHelperText>
-					</FormControl>
-				</Box>
+              <MenuItem value="private">Private</MenuItem>
+            </Select>
+            <FormHelperText>
+              {type === "public"
+                ? "Public projects are visible to everyone."
+                : "Private projects are only visible to team members."}
+            </FormHelperText>
+          </FormControl>
+        </Box>
 
-				<Box
-					sx={{
-						display: "flex",
-						gap: 1,
-						justifyContent: "flex-end",
-					}}
-				>
-					<Button
-						color="primary"
-						disabled={!name}
-						onClick={handleSubmit}
-						variant="contained"
-					>
-						Create
-					</Button>
-				</Box>
-			</Paper>
-		</Box>
-	);
+        <Box
+          sx={{
+            display: "flex",
+            gap: 1,
+            justifyContent: "flex-end",
+          }}
+        >
+          <Button color="primary" disabled={!name} onClick={handleSubmit} variant="contained">
+            Create
+          </Button>
+        </Box>
+      </Paper>
+    </Box>
+  );
 }

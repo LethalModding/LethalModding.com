@@ -7,64 +7,58 @@ import Mailgun from "mailgun.js";
 const mailgun = new Mailgun(FormData);
 
 const mg = mailgun.client({
-	username: "api",
-	key: process.env.MAILGUN_SEND_KEY ?? "",
+  username: "api",
+  key: process.env.MAILGUN_SEND_KEY ?? "",
 });
 
 export async function readTemplate(
-	templateName: string,
-	options?: Record<string, unknown>,
+  templateName: string,
+  options?: Record<string, unknown>,
 ): Promise<string | null> {
-	try {
-		const rootPath =
-			process.env.NODE_ENV === "production"
-				? `/app/src/server/${process.env.NEXT_PUBLIC_BRANDING}/emails`
-				: `./src/server/${process.env.NEXT_PUBLIC_BRANDING}/emails`;
+  try {
+    const rootPath =
+      process.env.NODE_ENV === "production"
+        ? `/app/src/server/${process.env.NEXT_PUBLIC_BRANDING}/emails`
+        : `./src/server/${process.env.NEXT_PUBLIC_BRANDING}/emails`;
 
-		const templatePath = path.join(rootPath, `${templateName}.hbs`);
-		const templateContent = await fsPromises.readFile(templatePath, "utf-8");
-		const template = Handlebars.compile(templateContent);
-		return template(options ?? {});
-	} catch (error) {
-		console.error("Error rendering the email template:", error);
-		return null;
-	}
+    const templatePath = path.join(rootPath, `${templateName}.hbs`);
+    const templateContent = await fsPromises.readFile(templatePath, "utf-8");
+    const template = Handlebars.compile(templateContent);
+    return template(options ?? {});
+  } catch (error) {
+    console.error("Error rendering the email template:", error);
+    return null;
+  }
 }
 
 export interface EmailBody {
-	subject: string;
-	text: string;
-	html?: string | undefined;
+  subject: string;
+  text: string;
+  html?: string | undefined;
 }
 
 export async function sendEmail(
-	to: string | string[],
-	body: EmailBody,
-	options?: {
-		[key: string]:
-			| string
-			| string[]
-			| number
-			| boolean
-			| Record<string, unknown>
-			| undefined;
-	},
+  to: string | string[],
+  body: EmailBody,
+  options?: {
+    [key: string]: string | string[] | number | boolean | Record<string, unknown> | undefined;
+  },
 ): Promise<void> {
-	const { subject, text, html } = body;
-	const resp = await mg.messages.create(process.env.MAILGUN_DOMAIN ?? "", {
-		from: `no-reply@${process.env.MAILGUN_DOMAIN}`,
-		to: Array.isArray(to) ? to : [to],
-		subject,
-		text,
-		html,
-		...(options ?? {
-			"o:tracking-clicks": false,
-		}),
-	});
+  const { subject, text, html } = body;
+  const resp = await mg.messages.create(process.env.MAILGUN_DOMAIN ?? "", {
+    from: `no-reply@${process.env.MAILGUN_DOMAIN}`,
+    to: Array.isArray(to) ? to : [to],
+    subject,
+    text,
+    html,
+    ...(options ?? {
+      "o:tracking-clicks": false,
+    }),
+  });
 
-	if (resp.message !== "Queued. Thank you.") {
-		throw new Error("Failed to send email.", { cause: resp });
-	}
+  if (resp.message !== "Queued. Thank you.") {
+    throw new Error("Failed to send email.", { cause: resp });
+  }
 
-	return await Promise.resolve();
+  return await Promise.resolve();
 }

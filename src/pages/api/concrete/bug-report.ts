@@ -4,37 +4,37 @@ import type { NextApiRequest, NextApiResponse } from "next/types";
 import { rateLimit } from "@/server/rate-limit.ts";
 
 const limiter = rateLimit({
-	interval: 60 * 1000, // 60 seconds
-	uniqueTokenPerInterval: 500, // Max 500 users per second
+  interval: 60 * 1000, // 60 seconds
+  uniqueTokenPerInterval: 500, // Max 500 users per second
 });
 
 interface EnvironmentData {
-	version: string;
-	buildDate: string;
-	branch: string;
-	commit: string;
-	commitDate: string;
-	language: string;
-	locale: string;
-	timezone: string;
-	os: string;
-	osVersion: string;
-	osArch: string;
-	osBuild: string;
-	wine: string;
-	wineHost: string;
-	wineHostVersion: string;
-	wineHostArch: string;
-	wineHostBuild: string;
+  version: string;
+  buildDate: string;
+  branch: string;
+  commit: string;
+  commitDate: string;
+  language: string;
+  locale: string;
+  timezone: string;
+  os: string;
+  osVersion: string;
+  osArch: string;
+  osBuild: string;
+  wine: string;
+  wineHost: string;
+  wineHostVersion: string;
+  wineHostArch: string;
+  wineHostBuild: string;
 }
 
 type BugReportRequest = NextApiRequest & {
-	body: {
-		context: string;
-		environment: EnvironmentData;
-		resultExpected: string;
-		resultActual: string;
-	};
+  body: {
+    context: string;
+    environment: EnvironmentData;
+    resultExpected: string;
+    resultActual: string;
+  };
 };
 
 const bugReportTemplate = `
@@ -64,41 +64,41 @@ const bugReportTemplate = `
 
 // NextJS API Route for submitting bug reports
 export default async function ConcreteBugReport(
-	req: BugReportRequest,
-	res: NextApiResponse,
+  req: BugReportRequest,
+  res: NextApiResponse,
 ): Promise<void> {
-	try {
-		await limiter.check(res, 10, "CACHE_TOKEN"); // 10 requests per minute
-	} catch {
-		res.status(429).json({ error: "Rate limit exceeded" });
-		return;
-	}
+  try {
+    await limiter.check(res, 10, "CACHE_TOKEN"); // 10 requests per minute
+  } catch {
+    res.status(429).json({ error: "Rate limit exceeded" });
+    return;
+  }
 
-	const { context, environment, resultExpected, resultActual } = req.body;
+  const { context, environment, resultExpected, resultActual } = req.body;
 
-	let message = bugReportTemplate;
+  let message = bugReportTemplate;
 
-	// Bind all environmentData to the message
-	for (const key of Object.keys(environment)) {
-		message = message.replace(`{{ ${key} }}`, environment[key]);
-	}
+  // Bind all environmentData to the message
+  for (const key of Object.keys(environment)) {
+    message = message.replace(`{{ ${key} }}`, environment[key]);
+  }
 
-	message = message
-		.replace("{{ context }}", context)
-		.replace("{{ resultExpected }}", resultExpected)
-		.replace("{{ resultActual }}", resultActual);
+  message = message
+    .replace("{{ context }}", context)
+    .replace("{{ resultExpected }}", resultExpected)
+    .replace("{{ resultActual }}", resultActual);
 
-	const octokit = new Octokit({
-		auth: process.env.GITHUB_TOKEN,
-	});
+  const octokit = new Octokit({
+    auth: process.env.GITHUB_TOKEN,
+  });
 
-	const response = await octokit.issues.create({
-		owner: "LethalModding",
-		repo: "Concrete",
-		title: "Bug Report",
-		body: message,
-		labels: ["triage"],
-	});
+  const response = await octokit.issues.create({
+    owner: "LethalModding",
+    repo: "Concrete",
+    title: "Bug Report",
+    body: message,
+    labels: ["triage"],
+  });
 
-	res.status(200).json(response.data);
+  res.status(200).json(response.data);
 }

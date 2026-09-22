@@ -12,85 +12,77 @@ import { useCallback, useState } from "react";
 import type { Profile } from "@/types/Profile.ts";
 
 interface Props {
-	onSelect: Dispatch<SetStateAction<Profile>>;
-	profile: Profile;
+  onSelect: Dispatch<SetStateAction<Profile>>;
+  profile: Profile;
 }
 
 export function ProfileListItem(props: Props): JSX.Element {
-	const { onSelect, profile } = props;
+  const { onSelect, profile } = props;
 
-	const handleClick = useCallback(() => onSelect(profile), [onSelect, profile]);
+  const handleClick = useCallback(() => onSelect(profile), [onSelect, profile]);
 
-	const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
-	const menuOpen = Boolean(menuAnchor);
+  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
+  const menuOpen = Boolean(menuAnchor);
 
-	const handleMenuClick = useCallback(
-		(event: MouseEvent<HTMLButtonElement>) => {
-			setMenuAnchor(event.currentTarget);
-		},
-		[],
-	);
+  const handleMenuClick = useCallback((event: MouseEvent<HTMLButtonElement>) => {
+    setMenuAnchor(event.currentTarget);
+  }, []);
 
-	const handleMenuClose = useCallback(() => {
-		setMenuAnchor(null);
-	}, []);
+  const handleMenuClose = useCallback(() => {
+    setMenuAnchor(null);
+  }, []);
 
-	return (
-		<ListItemButton selected={profile.id === "30"} onClick={handleClick}>
-			<Image
-				alt={`Profile icon for ${profile.name}`}
-				src={`https://picsum.photos/seed/${profile.id}/40/40`}
-				height={40}
-				width={40}
-			/>
+  return (
+    <ListItemButton selected={profile.id === "30"} onClick={handleClick}>
+      <Image
+        alt={`Profile icon for ${profile.name}`}
+        src={`https://picsum.photos/seed/${profile.id}/40/40`}
+        height={40}
+        width={40}
+      />
 
-			<Box
-				sx={{
-					display: "flex",
-					flex: 1,
-					flexDirection: "column",
-					mx: 2,
-				}}
-			>
-				<Typography
-					sx={{
-						fontSize: `${24 * (1 - profile.name.length / 75)}px !important`,
-						lineHeight: 1,
-					}}
-					variant="h6"
-				>
-					{profile.name}
-				</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          flex: 1,
+          flexDirection: "column",
+          mx: 2,
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: `${24 * (1 - profile.name.length / 75)}px !important`,
+            lineHeight: 1,
+          }}
+          variant="h6"
+        >
+          {profile.name}
+        </Typography>
 
-				{profile.owner ? (
-					<Typography
-						color="text.secondary"
-						sx={{
-							fontSize: `${18 * (1 - profile.owner.length / 75)}px !important`,
-							lineHeight: 1,
-						}}
-						variant="body2"
-					>
-						{profile.owner}
-					</Typography>
-				) : null}
-			</Box>
+        {profile.owner ? (
+          <Typography
+            color="text.secondary"
+            sx={{
+              fontSize: `${18 * (1 - profile.owner.length / 75)}px !important`,
+              lineHeight: 1,
+            }}
+            variant="body2"
+          >
+            {profile.owner}
+          </Typography>
+        ) : null}
+      </Box>
 
-			<IconButton
-				color="primary"
-				onClick={handleMenuClick}
-				size="small"
-				sx={{ mr: -1 }}
-			>
-				<DotsIcon color="inherit" fontSize="inherit" />
-			</IconButton>
+      <IconButton color="primary" onClick={handleMenuClick} size="small" sx={{ mr: -1 }}>
+        <DotsIcon color="inherit" fontSize="inherit" />
+      </IconButton>
 
-			<Menu anchorEl={menuAnchor} onClose={handleMenuClose} open={menuOpen}>
-				<MenuItem sx={{ color: "error.light" }}>
-					<TrashIcon color="inherit" fontSize="inherit" sx={{ mr: 1 }} />
-					<Typography variant="body2">Delete</Typography>
-				</MenuItem>
-			</Menu>
-		</ListItemButton>
-	);
+      <Menu anchorEl={menuAnchor} onClose={handleMenuClose} open={menuOpen}>
+        <MenuItem sx={{ color: "error.light" }}>
+          <TrashIcon color="inherit" fontSize="inherit" sx={{ mr: 1 }} />
+          <Typography variant="body2">Delete</Typography>
+        </MenuItem>
+      </Menu>
+    </ListItemButton>
+  );
 }
