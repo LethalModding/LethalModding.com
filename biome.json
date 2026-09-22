@@ -60,7 +60,13 @@
         "useExplicitLengthCheck": "off",
         "useErrorCause": "off",
         "useNamingConvention": "off",
-        "useFilenamingConvention": "off",
+        "useFilenamingConvention": {
+          "level": "on",
+          "options": {
+            "strictCase": false,
+            "filenameCases": ["camelCase", "PascalCase", "kebab-case", "export"]
+          }
+        },
         "noProcessEnv": "off",
         "noExcessiveLinesPerFile": {
           "level": "on",
@@ -245,6 +251,11 @@
           },
           "suspicious": {
             "noConsole": "off"
+          },
+          "style": {
+            "noDefaultExport": "off",
+            "noMagicNumbers": "off",
+            "noProcessEnv": "off"
           }
         }
       }
@@ -269,6 +280,10 @@
           },
           "suspicious": {
             "noConsole": "off"
+          },
+          "style": {
+            "noDefaultExport": "off",
+            "noProcessEnv": "off"
           }
         }
       }
