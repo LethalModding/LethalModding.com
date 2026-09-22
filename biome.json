@@ -118,7 +118,7 @@
             "skipIifes": true
           }
         },
-        "noUselessUndefined": "off"
+        "noUselessReturn": "off"
       },
       "nursery": {
         "noFloatingPromises": "error",
@@ -301,7 +301,30 @@
         "rules": {
           "style": {
             "noDefaultExport": "off",
-            "useComponentExportOnlyModules": "off"
+            "useComponentExportOnlyModules": {
+              "level": "on",
+              "options": {
+                "allowExportNames": [
+                  "alt",
+                  "contentType",
+                  "dynamic",
+                  "dynamicParams",
+                  "fetchCache",
+                  "generateImageMetadata",
+                  "generateMetadata",
+                  "generateSitemaps",
+                  "generateStaticParams",
+                  "generateViewport",
+                  "maxDuration",
+                  "metadata",
+                  "preferredRegion",
+                  "revalidate",
+                  "runtime",
+                  "size",
+                  "viewport"
+                ]
+              }
+            }
           }
         }
       }
