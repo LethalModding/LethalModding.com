@@ -40,7 +40,8 @@
       "preset": "all",
       "correctness": {
         "noSolidDestructuredProps": "off",
-        "useQwikValidLexicalScope": "off"
+        "useQwikValidLexicalScope": "off",
+        "noUnresolvedImports": "off"
       },
       "suspicious": {
         "noReactSpecificProps": "off",
