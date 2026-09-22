@@ -3,6 +3,7 @@ import path from 'node:path'
 import FormData from 'form-data'
 import Handlebars from 'handlebars'
 import Mailgun from 'mailgun.js'
+import { logError } from '@/server/log.ts'
 
 const mailgun = new Mailgun(FormData)
 
@@ -26,7 +27,7 @@ export async function readTemplate(
     const template = Handlebars.compile(templateContent)
     return template(options ?? {})
   } catch (error) {
-    console.error('Error rendering the email template:', error)
+    logError('Error rendering the email template:', error)
     return null
   }
 }

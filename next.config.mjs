@@ -20,8 +20,8 @@ const nextConfig = {
       },
     ],
   },
-  async headers() {
-    return [
+  headers() {
+    return Promise.resolve([
       {
         // matching all API routes
         source: '/api/:path*',
@@ -39,7 +39,7 @@ const nextConfig = {
           },
         ],
       },
-    ]
+    ])
   },
 }
 

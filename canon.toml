@@ -1,0 +1,9 @@
+reconciled = "canon v0.1.0-poc"
+
+[deviations]
+# LoginButtons.tsx is a client component reading NEXT_PUBLIC_BASE_URL. Next.js inlines it
+# only for a literal `process.env.X` on the global; an imported `node:process` keeps nothing.
+"ts-biome-00006 correctness/noProcessGlobal" = "Next.js inlines NEXT_PUBLIC_* only through the global process"
+# src/pages/api/** is the Pages Router's server-only API surface (Next never bundles it for the
+# browser), the counterpart of canon's src/app/api/**; bug-report.ts and v2/auth/login.ts import node:*.
+"ts-biome-00006 correctness/noNodejsModules" = "Pages Router API routes are server-only"

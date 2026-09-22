@@ -145,31 +145,6 @@
   },
   "overrides": [
     {
-      "includes": [
-        "**/src/components/tools/Breadcrumb.tsx",
-        "**/src/pages/_document.tsx",
-        "**/src/pages/api/concrete/v2/auth/login.ts"
-      ],
-      "linter": {
-        "rules": {
-          "correctness": {
-            "noUnresolvedImports": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": ["**/next.config.*"],
-      "linter": {
-        "rules": {
-          "suspicious": {
-            "noConsole": "off",
-            "useAwait": "off"
-          }
-        }
-      }
-    },
-    {
       "includes": ["**/src/components/_shared/auth/LoginButtons.tsx"],
       "linter": {
         "rules": {
@@ -180,31 +155,25 @@
       }
     },
     {
-      "includes": ["**/src/pages/_document.tsx"],
+      "includes": ["**/src/pages/api/**"],
       "linter": {
         "rules": {
-          "security": {
-            "noDangerouslySetInnerHtml": "off"
+          "correctness": {
+            "noNodejsModules": "off"
           }
         }
       }
     },
     {
-      "includes": ["**/src/pages/api/concrete/mods/recommended.ts"],
+      "includes": [
+        "**/src/components/tools/Breadcrumb.tsx",
+        "**/src/pages/_document.tsx",
+        "**/src/pages/api/concrete/v2/auth/login.ts"
+      ],
       "linter": {
         "rules": {
-          "security": {
-            "noSecrets": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": ["**/src/components/team/Profile.tsx"],
-      "linter": {
-        "rules": {
-          "suspicious": {
-            "noArrayIndexKey": "off"
+          "correctness": {
+            "noUnresolvedImports": "off"
           }
         }
       }
@@ -324,21 +293,17 @@
     },
     {
       "includes": [
-        "**/src/server/**",
+        "**/app/**/route.ts",
         "**/apps/server/**",
         "**/apps/worker/**",
-        "**/app/**/route.ts",
         "**/src/app/api/**",
-        "**/src/pages/api/**"
+        "**/src/server/**"
       ],
       "linter": {
         "rules": {
           "correctness": {
             "noNodejsModules": "off",
             "noProcessGlobal": "off"
-          },
-          "suspicious": {
-            "noConsole": "off"
           }
         }
       }
@@ -370,6 +335,26 @@
           "style": {
             "noDefaultExport": "off",
             "useComponentExportOnlyModules": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.d.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/cli.ts", "**/logger.ts", "**/log.ts", "**/main.ts"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off"
           }
         }
       }
