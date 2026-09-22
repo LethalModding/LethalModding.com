@@ -51,7 +51,8 @@
       "performance": {
         "noAwaitInLoops": "off",
         "noJsxPropsBind": "off",
-        "useSolidForComponent": "off"
+        "useSolidForComponent": "off",
+        "noImgElement": "on"
       },
       "style": {
         "noTernary": "off",
