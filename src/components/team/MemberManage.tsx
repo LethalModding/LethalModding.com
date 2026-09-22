@@ -1,48 +1,48 @@
-import DeleteIcon from "@mui/icons-material/Delete";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useSnackbar } from "notistack";
-import type { JSX } from "react";
-import { useCallback, useEffect, useState } from "react";
-import { useAppStore } from "@/store.ts";
-import type { Profile } from "@/types/db/Profile.ts";
-import { TeamInvitesList } from "./InvitesList.tsx";
-import { TeamMemberInvitePage } from "./MemberInvite.tsx";
+import DeleteIcon from '@mui/icons-material/Delete'
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSnackbar } from 'notistack'
+import type { JSX } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { useAppStore } from '@/store.ts'
+import type { Profile } from '@/types/db/Profile.ts'
+import { TeamInvitesList } from './InvitesList.tsx'
+import { TeamMemberInvitePage } from './MemberInvite.tsx'
 
 export function TeamMemberManagePage(): JSX.Element {
-  const { enqueueSnackbar } = useSnackbar();
-  const supabase = useSupabaseClient();
+  const { enqueueSnackbar } = useSnackbar()
+  const supabase = useSupabaseClient()
 
-  const team = useAppStore((state) => state.selectedTeam);
+  const team = useAppStore((state) => state.selectedTeam)
 
-  const [members, setMembers] = useState<Profile[]>([]);
+  const [members, setMembers] = useState<Profile[]>([])
   const refreshMembers = useCallback(() => {
     if (!team) {
-      return;
+      return
     }
 
-    const memberIDs = team.members || [];
-    memberIDs.push(team.owner_id);
+    const memberIDs = team.members || []
+    memberIDs.push(team.owner_id)
 
     supabase
-      .from("profiles")
-      .select("*")
-      .in("id", memberIDs)
-      .order("username", { ascending: true })
+      .from('profiles')
+      .select('*')
+      .in('id', memberIDs)
+      .order('username', { ascending: true })
       .then(({ data, error }) => {
         if (error) {
           enqueueSnackbar(`Unable to load members: ${error.message}`, {
-            variant: "error",
-          });
+            variant: 'error',
+          })
         } else {
-          setMembers(data || []);
+          setMembers(data || [])
         }
-      });
-  }, [supabase, team, enqueueSnackbar]);
-  useEffect(() => refreshMembers(), [refreshMembers]);
+      })
+  }, [supabase, team, enqueueSnackbar])
+  useEffect(() => refreshMembers(), [refreshMembers])
 
   return (
     <>
@@ -56,11 +56,11 @@ export function TeamMemberManagePage(): JSX.Element {
           <Box
             key={member.id}
             sx={{
-              display: "grid",
-              alignItems: "center",
-              flexDirection: "row",
+              display: 'grid',
+              alignItems: 'center',
+              flexDirection: 'row',
               gap: 2,
-              gridTemplateColumns: "1fr auto",
+              gridTemplateColumns: '1fr auto',
             }}
           >
             <Box>
@@ -68,7 +68,7 @@ export function TeamMemberManagePage(): JSX.Element {
                 {member.username ? `@${member.username}` : member.full_name}
               </Typography>
               <Typography variant="body2">
-                {member.id === team?.owner_id ? "Owner" : "Member"}
+                {member.id === team?.owner_id ? 'Owner' : 'Member'}
               </Typography>
             </Box>
 
@@ -89,5 +89,5 @@ export function TeamMemberManagePage(): JSX.Element {
         <TeamInvitesList />
       </Paper>
     </>
-  );
+  )
 }

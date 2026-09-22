@@ -1,39 +1,39 @@
-import TrashIcon from "@mui/icons-material/Delete";
-import DotsIcon from "@mui/icons-material/MoreVert";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import ListItemButton from "@mui/material/ListItemButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
-import Image from "next/image";
-import type { Dispatch, JSX, MouseEvent, SetStateAction } from "react";
-import { useCallback, useState } from "react";
-import type { Profile } from "@/types/Profile.ts";
+import TrashIcon from '@mui/icons-material/Delete'
+import DotsIcon from '@mui/icons-material/MoreVert'
+import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
+import ListItemButton from '@mui/material/ListItemButton'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import Typography from '@mui/material/Typography'
+import Image from 'next/image'
+import type { Dispatch, JSX, MouseEvent, SetStateAction } from 'react'
+import { useCallback, useState } from 'react'
+import type { Profile } from '@/types/Profile.ts'
 
 interface Props {
-  onSelect: Dispatch<SetStateAction<Profile>>;
-  profile: Profile;
+  onSelect: Dispatch<SetStateAction<Profile>>
+  profile: Profile
 }
 
 export function ProfileListItem(props: Props): JSX.Element {
-  const { onSelect, profile } = props;
+  const { onSelect, profile } = props
 
-  const handleClick = useCallback(() => onSelect(profile), [onSelect, profile]);
+  const handleClick = useCallback(() => onSelect(profile), [onSelect, profile])
 
-  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
-  const menuOpen = Boolean(menuAnchor);
+  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null)
+  const menuOpen = Boolean(menuAnchor)
 
   const handleMenuClick = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-    setMenuAnchor(event.currentTarget);
-  }, []);
+    setMenuAnchor(event.currentTarget)
+  }, [])
 
   const handleMenuClose = useCallback(() => {
-    setMenuAnchor(null);
-  }, []);
+    setMenuAnchor(null)
+  }, [])
 
   return (
-    <ListItemButton selected={profile.id === "30"} onClick={handleClick}>
+    <ListItemButton selected={profile.id === '30'} onClick={handleClick}>
       <Image
         alt={`Profile icon for ${profile.name}`}
         src={`https://picsum.photos/seed/${profile.id}/40/40`}
@@ -43,9 +43,9 @@ export function ProfileListItem(props: Props): JSX.Element {
 
       <Box
         sx={{
-          display: "flex",
+          display: 'flex',
           flex: 1,
-          flexDirection: "column",
+          flexDirection: 'column',
           mx: 2,
         }}
       >
@@ -78,11 +78,11 @@ export function ProfileListItem(props: Props): JSX.Element {
       </IconButton>
 
       <Menu anchorEl={menuAnchor} onClose={handleMenuClose} open={menuOpen}>
-        <MenuItem sx={{ color: "error.light" }}>
+        <MenuItem sx={{ color: 'error.light' }}>
           <TrashIcon color="inherit" fontSize="inherit" sx={{ mr: 1 }} />
           <Typography variant="body2">Delete</Typography>
         </MenuItem>
       </Menu>
     </ListItemButton>
-  );
+  )
 }

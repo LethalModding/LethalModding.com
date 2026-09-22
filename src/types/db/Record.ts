@@ -1,9 +1,9 @@
 export interface Record {
-  id: string;
+  id: string
 
-  created_at: string;
-  updated_at: string | null;
-  deleted_at: string | null;
+  created_at: string
+  updated_at: string | null
+  deleted_at: string | null
 
   // [key: string]: string | number | boolean | null
 }

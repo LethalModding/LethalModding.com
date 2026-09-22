@@ -1,62 +1,62 @@
-import Box from "@mui/material/Box";
-import Checkbox from "@mui/material/Checkbox";
-import Chip from "@mui/material/Chip";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { type SelectChangeEvent } from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import { ofetch } from "ofetch";
-import type { JSX } from "react";
-import { type ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
-import { CornerAccents } from "@/components/branding/CornerAccents.tsx";
-import { Link } from "@/components/mui/Link.tsx";
-import { Breadcrumb } from "@/components/tools/Breadcrumb.tsx";
-import { Pagination } from "@/components/tools/Pagination.tsx";
-import type { Mod } from "@/types/Mod.ts";
-import type { ModSort } from "@/types/ModSort.ts";
-import { type Filters, filterMods, sortMods } from "@/utility/modFilters.ts";
+import Box from '@mui/material/Box'
+import Checkbox from '@mui/material/Checkbox'
+import Chip from '@mui/material/Chip'
+import FormControl from '@mui/material/FormControl'
+import FormLabel from '@mui/material/FormLabel'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import Select, { type SelectChangeEvent } from '@mui/material/Select'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import Image from 'next/image'
+import { ofetch } from 'ofetch'
+import type { JSX } from 'react'
+import { type ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
+import { CornerAccents } from '@/components/branding/CornerAccents.tsx'
+import { Link } from '@/components/mui/Link.tsx'
+import { Breadcrumb } from '@/components/tools/Breadcrumb.tsx'
+import { Pagination } from '@/components/tools/Pagination.tsx'
+import type { Mod } from '@/types/Mod.ts'
+import type { ModSort } from '@/types/ModSort.ts'
+import { type Filters, filterMods, sortMods } from '@/utility/modFilters.ts'
 
 const ToolsHome: NextPage = (): JSX.Element => {
-  const [allMods, setAllMods] = useState<Mod[]>([]);
+  const [allMods, setAllMods] = useState<Mod[]>([])
   // A failed fetch would otherwise render as an empty result set, which reads
   // as "Thunderstore has no mods" rather than "the search is unavailable".
-  const [loadError, setLoadError] = useState<string | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null)
   useEffect(() => {
     const timeout = setTimeout(() => {
-      ofetch("https://thunderstore.io/c/lethal-company/api/v1/package/")
+      ofetch('https://thunderstore.io/c/lethal-company/api/v1/package/')
         .then((data) => {
           if (data.error) {
-            setLoadError(String(data.error));
-            return;
+            setLoadError(String(data.error))
+            return
           }
 
-          setLoadError(null);
-          setAllMods(data);
+          setLoadError(null)
+          setAllMods(data)
         })
         .catch(() => {
-          setLoadError("Could not reach the Thunderstore API.");
-        });
-    }, 100);
+          setLoadError('Could not reach the Thunderstore API.')
+        })
+    }, 100)
 
-    return () => clearTimeout(timeout);
-  }, []);
+    return () => clearTimeout(timeout)
+  }, [])
 
-  const [allCategories, setAllCategories] = useState<string[]>([]);
+  const [allCategories, setAllCategories] = useState<string[]>([])
   useEffect(() => {
-    const newCategories = new Set<string>();
+    const newCategories = new Set<string>()
     for (const mod of allMods) {
       for (const category of mod.categories) {
-        newCategories.add(category);
+        newCategories.add(category)
       }
     }
-    setAllCategories(Array.from(newCategories).sort());
-  }, [allMods]);
+    setAllCategories(Array.from(newCategories).sort())
+  }, [allMods])
 
   //
   // Filters
@@ -76,48 +76,48 @@ const ToolsHome: NextPage = (): JSX.Element => {
     minRatings: 0,
     maxSize: -1,
     minSize: 0,
-    name: "",
-    owner: "",
-  });
+    name: '',
+    owner: '',
+  })
   const handleFilterChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFilters((prev) => ({ ...prev, [name]: value }));
-  }, []);
+    const { name, value } = e.target
+    setFilters((prev) => ({ ...prev, [name]: value }))
+  }, [])
   const handleFilterCheckboxChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      const { name } = e.target;
-      const oldValue = filters[name];
-      let value: boolean | null = null;
+      const { name } = e.target
+      const oldValue = filters[name]
+      let value: boolean | null = null
 
       if (oldValue === null) {
-        value = false;
+        value = false
       } else if (oldValue) {
-        value = null;
+        value = null
       } else {
-        value = true;
+        value = true
       }
 
-      setFilters((prev) => ({ ...prev, [name]: value }));
+      setFilters((prev) => ({ ...prev, [name]: value }))
     },
     [filters],
-  );
+  )
 
-  const [includesCategoryFilter, setIncludesCategoryFilter] = useState<string[]>([]);
+  const [includesCategoryFilter, setIncludesCategoryFilter] = useState<string[]>([])
   const handleIncludesCategoryFilterChange = useCallback((e: SelectChangeEvent<string[]>) => {
-    if (typeof e.target.value === "string") {
-      setIncludesCategoryFilter(e.target.value.split(","));
+    if (typeof e.target.value === 'string') {
+      setIncludesCategoryFilter(e.target.value.split(','))
     } else {
-      setIncludesCategoryFilter(e.target.value);
+      setIncludesCategoryFilter(e.target.value)
     }
-  }, []);
-  const [excludesCategoryFilter, setExcludesCategoryFilter] = useState<string[]>([]);
+  }, [])
+  const [excludesCategoryFilter, setExcludesCategoryFilter] = useState<string[]>([])
   const handleExcludesCategoryFilterChange = useCallback((e: SelectChangeEvent<string[]>) => {
-    if (typeof e.target.value === "string") {
-      setExcludesCategoryFilter(e.target.value.split(","));
+    if (typeof e.target.value === 'string') {
+      setExcludesCategoryFilter(e.target.value.split(','))
     } else {
-      setExcludesCategoryFilter(e.target.value);
+      setExcludesCategoryFilter(e.target.value)
     }
-  }, []);
+  }, [])
 
   const filteredMods = useMemo(
     () =>
@@ -126,30 +126,30 @@ const ToolsHome: NextPage = (): JSX.Element => {
         excludes: excludesCategoryFilter,
       }),
     [allMods, filters, includesCategoryFilter, excludesCategoryFilter],
-  );
+  )
 
   //
   // Sorting
   //
 
   const [sort, setSort] = useState<ModSort>({
-    direction: "asc",
-    property: "",
-  });
+    direction: 'asc',
+    property: '',
+  })
 
-  const sortedMods = useMemo(() => sortMods(filteredMods, sort), [filteredMods, sort]);
+  const sortedMods = useMemo(() => sortMods(filteredMods, sort), [filteredMods, sort])
 
   //
   // Pagination
   //
 
-  const [pageNumber, setPageNumber] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(100);
+  const [pageNumber, setPageNumber] = useState<number>(1)
+  const [pageSize, setPageSize] = useState<number>(100)
 
   const thisPage = useMemo(
     () => sortedMods.slice((pageNumber - 1) * pageSize, pageNumber * pageSize),
     [sortedMods, pageNumber, pageSize],
-  );
+  )
 
   return (
     <>
@@ -161,23 +161,23 @@ const ToolsHome: NextPage = (): JSX.Element => {
 
       <Box
         sx={{
-          height: "calc(100vh - 56px)",
-          overflowX: "hidden",
-          overflowY: "auto",
+          height: 'calc(100vh - 56px)',
+          overflowX: 'hidden',
+          overflowY: 'auto',
           p: 6,
           pb: 4,
 
-          "&::-webkit-scrollbar": {
-            width: "0.5em",
-            height: "0.5em",
+          '&::-webkit-scrollbar': {
+            width: '0.5em',
+            height: '0.5em',
           },
 
-          "&::-webkit-scrollbar-thumb": {
-            backgroundColor: "var(--accent)",
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'var(--accent)',
           },
         }}
       >
-        <Breadcrumb parts={["Tools", "Thunderstore Search"]} />
+        <Breadcrumb parts={['Tools', 'Thunderstore Search']} />
 
         {loadError !== null && (
           <Typography color="error" sx={{ mt: 3 }} variant="body2">
@@ -187,21 +187,21 @@ const ToolsHome: NextPage = (): JSX.Element => {
 
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
             gap: 3,
             mt: 3,
 
-            ".MuiFormLabel-root.MuiInputLabel-shrink": {
+            '.MuiFormLabel-root.MuiInputLabel-shrink': {
               mt: -0.5,
             },
 
-            "fieldset legend span": {
-              fontSize: "0.9em",
+            'fieldset legend span': {
+              fontSize: '0.9em',
             },
 
-            "& > *": {
+            '& > *': {
               flexGrow: 1,
             },
           }}
@@ -232,13 +232,13 @@ const ToolsHome: NextPage = (): JSX.Element => {
               renderValue={(selected: string[]) => (
                 <Box
                   sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
+                    display: 'flex',
+                    flexWrap: 'wrap',
                     gap: 0.5,
                     pt: 0.75,
 
-                    ".MuiChip-root": {
-                      fontSize: "0.7em",
+                    '.MuiChip-root': {
+                      fontSize: '0.7em',
                       padding: 0,
                     },
                   }}
@@ -267,13 +267,13 @@ const ToolsHome: NextPage = (): JSX.Element => {
               renderValue={(selected: string[]) => (
                 <Box
                   sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
+                    display: 'flex',
+                    flexWrap: 'wrap',
                     gap: 0.5,
                     pt: 0.75,
 
-                    ".MuiChip-root": {
-                      fontSize: "0.7em",
+                    '.MuiChip-root': {
+                      fontSize: '0.7em',
                       padding: 0,
                     },
                   }}
@@ -370,11 +370,11 @@ const ToolsHome: NextPage = (): JSX.Element => {
 
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-around",
-            flexDirection: "row",
-            flexWrap: "wrap",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
             py: 2,
           }}
         >
@@ -384,7 +384,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               indeterminate={filters.hasDonation === null}
               name="hasDonation"
               onChange={handleFilterCheckboxChange}
-            />{" "}
+            />{' '}
             Donation Link
           </FormLabel>
           <FormLabel>
@@ -393,7 +393,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               indeterminate={filters.hasNSFW === null}
               name="hasNSFW"
               onChange={handleFilterCheckboxChange}
-            />{" "}
+            />{' '}
             NSFW Content
           </FormLabel>
           <FormLabel>
@@ -402,7 +402,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               indeterminate={filters.hasWebsite === null}
               name="hasWebsite"
               onChange={handleFilterCheckboxChange}
-            />{" "}
+            />{' '}
             Website
           </FormLabel>
           <FormLabel>
@@ -411,7 +411,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               indeterminate={filters.isDeprecated === null}
               name="isDeprecated"
               onChange={handleFilterCheckboxChange}
-            />{" "}
+            />{' '}
             Deprecated
           </FormLabel>
           <FormLabel>
@@ -420,7 +420,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
               indeterminate={filters.isPinned === null}
               name="isPinned"
               onChange={handleFilterCheckboxChange}
-            />{" "}
+            />{' '}
             Pinned
           </FormLabel>
         </Box>
@@ -437,33 +437,33 @@ const ToolsHome: NextPage = (): JSX.Element => {
 
         <Box
           sx={{
-            display: "grid",
-            alignItems: "flex-start",
-            justifyContent: "space-around",
-            gridTemplateColumns: "repeat(auto-fill, minmax(calc(192px + 32px), 1fr))",
+            display: 'grid',
+            alignItems: 'flex-start',
+            justifyContent: 'space-around',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(calc(192px + 32px), 1fr))',
             gap: 1,
             my: 2,
 
-            "& > *": {
-              backgroundColor: "var(--background)",
+            '& > *': {
+              backgroundColor: 'var(--background)',
               borderRadius: 0.2,
               p: 2,
-              width: "calc(192px + 32px)",
+              width: 'calc(192px + 32px)',
 
-              "&:hover": {
-                backgroundColor: "var(--accent)",
+              '&:hover': {
+                backgroundColor: 'var(--accent)',
               },
 
-              ".MuiTypography-root": {
+              '.MuiTypography-root': {
                 // overflow with ellipsis
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
               },
 
-              ".MuiTypography-body2": {
-                color: "white",
-                fontSize: "0.8em",
+              '.MuiTypography-body2': {
+                color: 'white',
+                fontSize: '0.8em',
                 pt: 1,
               },
             },
@@ -474,9 +474,9 @@ const ToolsHome: NextPage = (): JSX.Element => {
               href={x.package_url}
               key={x.uuid4}
               sx={{
-                color: "inherit",
-                display: "block",
-                textDecoration: "none",
+                color: 'inherit',
+                display: 'block',
+                textDecoration: 'none',
               }}
               target="_blank"
             >
@@ -504,7 +504,7 @@ const ToolsHome: NextPage = (): JSX.Element => {
         />
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default ToolsHome;
+export default ToolsHome

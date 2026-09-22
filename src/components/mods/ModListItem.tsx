@@ -1,32 +1,32 @@
-import TrashIcon from "@mui/icons-material/Delete";
-import DotsIcon from "@mui/icons-material/MoreVert";
-import WorldIcon from "@mui/icons-material/Public";
-import SettingsIcon from "@mui/icons-material/Settings";
-import VerifiedIcon from "@mui/icons-material/VerifiedOutlined";
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import ListItemButton from "@mui/material/ListItemButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
-import Image from "next/image";
-import type { JSX } from "react";
-import { useState } from "react";
+import TrashIcon from '@mui/icons-material/Delete'
+import DotsIcon from '@mui/icons-material/MoreVert'
+import WorldIcon from '@mui/icons-material/Public'
+import SettingsIcon from '@mui/icons-material/Settings'
+import VerifiedIcon from '@mui/icons-material/VerifiedOutlined'
+import Box from '@mui/material/Box'
+import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
+import ListItemButton from '@mui/material/ListItemButton'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import Typography from '@mui/material/Typography'
+import Image from 'next/image'
+import type { JSX } from 'react'
+import { useState } from 'react'
 
 interface Props {
-  id: string;
-  name: string;
-  owner: string;
-  summary: string;
-  verified?: boolean;
+  id: string
+  name: string
+  owner: string
+  summary: string
+  verified?: boolean
 }
 
 export function ModListItem(props: Props): JSX.Element {
-  const { id, name, owner, summary, verified } = props;
+  const { id, name, owner, summary, verified } = props
 
-  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
-  const menuOpen = Boolean(menuAnchor);
+  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null)
+  const menuOpen = Boolean(menuAnchor)
 
   return (
     <ListItemButton>
@@ -39,25 +39,25 @@ export function ModListItem(props: Props): JSX.Element {
 
       <Box
         sx={{
-          display: "flex",
+          display: 'flex',
           flex: 1,
-          flexDirection: "column",
+          flexDirection: 'column',
           mt: -1,
         }}
       >
         <Box
           sx={{
-            alignItems: "baseline",
-            display: "flex",
-            flexDirection: "row",
+            alignItems: 'baseline',
+            display: 'flex',
+            flexDirection: 'row',
             gap: 1,
             mb: -0.75,
-            width: "auto",
-            letterSpacing: ".15em",
-            wordSpacing: "-.35em",
+            width: 'auto',
+            letterSpacing: '.15em',
+            wordSpacing: '-.35em',
           }}
         >
-          <Typography variant="h6">{name.replaceAll("_", " ").replaceAll("-", " ")}</Typography>
+          <Typography variant="h6">{name.replaceAll('_', ' ').replaceAll('-', ' ')}</Typography>
 
           {verified ? (
             <VerifiedIcon
@@ -65,7 +65,7 @@ export function ModListItem(props: Props): JSX.Element {
               fontSize="inherit"
               sx={{
                 ml: -0.5,
-                position: "relative",
+                position: 'relative',
                 top: 4,
               }}
             />
@@ -76,12 +76,12 @@ export function ModListItem(props: Props): JSX.Element {
 
         <Typography
           sx={{
-            color: "primary.dark",
-            fontSize: "90%",
+            color: 'primary.dark',
+            fontSize: '90%',
             lineHeight: 1,
             maxHeight: 56,
-            letterSpacing: ".15em",
-            wordSpacing: "-.25em",
+            letterSpacing: '.15em',
+            wordSpacing: '-.25em',
           }}
           variant="body2"
         >
@@ -104,11 +104,11 @@ export function ModListItem(props: Props): JSX.Element {
           <Typography variant="body2">Settings</Typography>
         </MenuItem>
         <Divider />
-        <MenuItem sx={{ color: "error.light" }}>
+        <MenuItem sx={{ color: 'error.light' }}>
           <TrashIcon color="inherit" fontSize="inherit" sx={{ mr: 1 }} />
           <Typography variant="body2">Uninstall</Typography>
         </MenuItem>
       </Menu>
     </ListItemButton>
-  );
+  )
 }

@@ -1,127 +1,127 @@
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LogoutIcon from "@mui/icons-material/Logout";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Divider from "@mui/material/Divider";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import type { SelectChangeEvent } from "@mui/material/Select";
-import Select from "@mui/material/Select";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useSnackbar } from "notistack";
-import type { JSX, MouseEvent } from "react";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useAppStore } from "@/store.ts";
-import type { Profile } from "@/types/db/Profile.ts";
-import type { Team } from "@/types/db/Team.ts";
-import { LoginButtons } from "./LoginButtons.tsx";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import LogoutIcon from '@mui/icons-material/Logout'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import Divider from '@mui/material/Divider'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemText from '@mui/material/ListItemText'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import type { SelectChangeEvent } from '@mui/material/Select'
+import Select from '@mui/material/Select'
+import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSnackbar } from 'notistack'
+import type { JSX, MouseEvent } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useAppStore } from '@/store.ts'
+import type { Profile } from '@/types/db/Profile.ts'
+import type { Team } from '@/types/db/Team.ts'
+import { LoginButtons } from './LoginButtons.tsx'
 
 export function AccountButton(): JSX.Element {
-  const { enqueueSnackbar } = useSnackbar();
-  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
-  const hideLoginDialog = useCallback(() => setLoginDialogOpen(false), []);
-  const showLoginDialog = useCallback(() => setLoginDialogOpen(true), []);
+  const { enqueueSnackbar } = useSnackbar()
+  const [loginDialogOpen, setLoginDialogOpen] = useState(false)
+  const hideLoginDialog = useCallback(() => setLoginDialogOpen(false), [])
+  const showLoginDialog = useCallback(() => setLoginDialogOpen(true), [])
 
-  const [menuEl, setMenuEl] = useState<null | HTMLElement>(null);
+  const [menuEl, setMenuEl] = useState<null | HTMLElement>(null)
   const openMenu = useCallback((event: MouseEvent<HTMLElement>) => {
-    setMenuEl(event.currentTarget);
-  }, []);
-  const closeMenu = useCallback(() => setMenuEl(null), []);
+    setMenuEl(event.currentTarget)
+  }, [])
+  const closeMenu = useCallback(() => setMenuEl(null), [])
 
-  const session = useSession();
+  const session = useSession()
 
-  const supabase = useSupabaseClient();
+  const supabase = useSupabaseClient()
   const signOut = useCallback(() => {
-    supabase.auth.signOut();
-  }, [supabase]);
+    supabase.auth.signOut()
+  }, [supabase])
 
-  const selectedTeamID = useAppStore((state) => state.selectedTeamID);
-  const setSelectedTeamID = useAppStore((state) => state.setSelectedTeamID);
+  const selectedTeamID = useAppStore((state) => state.selectedTeamID)
+  const setSelectedTeamID = useAppStore((state) => state.setSelectedTeamID)
 
   const handleSelectedTeamChange = useCallback(
     (event: SelectChangeEvent<string>) => {
-      if (event.target.value === "create") {
-        setSelectedTeamID("create");
-        return;
+      if (event.target.value === 'create') {
+        setSelectedTeamID('create')
+        return
       }
 
-      setSelectedTeamID(event.target.value);
+      setSelectedTeamID(event.target.value)
     },
     [setSelectedTeamID],
-  );
+  )
 
-  const [teams, setTeams] = useState<Partial<Team>[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [teams, setTeams] = useState<Partial<Team>[]>([])
+  const [loading, setLoading] = useState(true)
   const refreshTeams = useCallback(() => {
     supabase
-      .from("teams")
-      .select("id,name")
-      .order("name")
-      .eq("owner_id", session?.user.id)
+      .from('teams')
+      .select('id,name')
+      .order('name')
+      .eq('owner_id', session?.user.id)
       .then(({ data, error }) => {
         if (error) {
           enqueueSnackbar(`Unable to load teams: ${error.message}`, {
-            variant: "error",
-          });
+            variant: 'error',
+          })
         } else {
-          setTeams(data);
+          setTeams(data)
 
           if (
-            selectedTeamID === "" ||
-            (selectedTeamID !== "create" && !data.find((team) => team.id === selectedTeamID))
+            selectedTeamID === '' ||
+            (selectedTeamID !== 'create' && !data.find((team) => team.id === selectedTeamID))
           ) {
-            setSelectedTeamID(data?.[0]?.id);
+            setSelectedTeamID(data?.[0]?.id)
           }
         }
 
-        setLoading(false);
-      });
-  }, [selectedTeamID, session?.user.id, setSelectedTeamID, supabase, enqueueSnackbar]);
-  useEffect(() => refreshTeams(), [refreshTeams]);
+        setLoading(false)
+      })
+  }, [selectedTeamID, session?.user.id, setSelectedTeamID, supabase, enqueueSnackbar])
+  useEffect(() => refreshTeams(), [refreshTeams])
 
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null)
   useEffect(() => {
     const update = async (): Promise<void> => {
       if (!session?.user.id) {
-        return;
+        return
       }
 
       const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", session.user.id)
-        .single();
+        .from('profiles')
+        .select('*')
+        .eq('id', session.user.id)
+        .single()
 
       if (error) {
         enqueueSnackbar(`Unable to load profile: ${error.message}`, {
-          variant: "error",
-        });
+          variant: 'error',
+        })
       } else {
-        setProfile(data);
+        setProfile(data)
       }
-    };
+    }
 
     update().catch((err: unknown) => {
       enqueueSnackbar(
         `Unable to load profile: ${err instanceof Error ? err.message : String(err)}`,
-        { variant: "error" },
-      );
-    });
-  }, [session?.user.id, supabase, enqueueSnackbar]);
+        { variant: 'error' },
+      )
+    })
+  }, [session?.user.id, supabase, enqueueSnackbar])
 
   const username = useMemo(() => {
     if (!session?.user?.user_metadata) {
-      return "";
+      return ''
     }
-    return profile?.username || session.user.user_metadata.full_name;
-  }, [profile?.username, session?.user?.user_metadata]);
+    return profile?.username || session.user.user_metadata.full_name
+  }, [profile?.username, session?.user?.user_metadata])
 
   if (session?.user.id) {
     return (
@@ -129,15 +129,15 @@ export function AccountButton(): JSX.Element {
         <ListItemButton
           onClick={openMenu}
           sx={{
-            ".MuiTypography-root": {
+            '.MuiTypography-root': {
               lineHeight: 1,
-              textAlign: "right",
+              textAlign: 'right',
             },
           }}
         >
           <ListItemText
             primary={username}
-            secondary={teams?.find((team) => team.id === selectedTeamID)?.name || "No Team"}
+            secondary={teams?.find((team) => team.id === selectedTeamID)?.name || 'No Team'}
           />
           <Avatar
             alt={session.user.email}
@@ -148,7 +148,7 @@ export function AccountButton(): JSX.Element {
 
         <Menu
           anchorEl={menuEl}
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           onClose={closeMenu}
           open={Boolean(menuEl)}
           slotProps={{
@@ -191,13 +191,13 @@ export function AccountButton(): JSX.Element {
             Settings
           </MenuItem> */}
           <Divider />
-          <MenuItem onClick={signOut} sx={{ color: "warning.main" }}>
+          <MenuItem onClick={signOut} sx={{ color: 'warning.main' }}>
             <LogoutIcon sx={{ mr: 2 }} />
             Log Out
           </MenuItem>
         </Menu>
       </>
-    );
+    )
   }
 
   return (
@@ -214,5 +214,5 @@ export function AccountButton(): JSX.Element {
         Login
       </Button>
     </>
-  );
+  )
 }

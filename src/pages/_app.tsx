@@ -1,97 +1,97 @@
-import { CacheProvider } from "@emotion/react";
-import type { EmotionCache } from "@emotion/utils";
-import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
-import AccessibleForwardIcon from "@mui/icons-material/AccessibleForward";
-import CssBaseline from "@mui/material/CssBaseline";
-import IconButton from "@mui/material/IconButton";
-import type { Theme } from "@mui/material/styles";
-import { createTheme } from "@mui/material/styles";
-import ThemeProvider from "@mui/system/ThemeProvider";
-import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
-import { SessionContextProvider } from "@supabase/auth-helpers-react";
-import type { AppProps } from "next/app";
-import Head from "next/head";
-import { enqueueSnackbar, SnackbarProvider } from "notistack";
-import type { FunctionComponent, PropsWithChildren } from "react";
-import { useEffect, useState } from "react";
-import { AppBar } from "@/components/_shared/AppBar.tsx";
-import { AuthWrapper } from "@/components/_shared/auth/Wrapper.tsx";
-import { Loader } from "@/components/_shared/Loader.tsx";
-import { useAppStore } from "@/store.ts";
-import { darkTheme as darkThemeOptions } from "@/styles/darkThemeOptions.ts";
-import "@/styles/globals.css";
+import { CacheProvider } from '@emotion/react'
+import type { EmotionCache } from '@emotion/utils'
+import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew'
+import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward'
+import CssBaseline from '@mui/material/CssBaseline'
+import IconButton from '@mui/material/IconButton'
+import type { Theme } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles'
+import ThemeProvider from '@mui/system/ThemeProvider'
+import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
+import { SessionContextProvider } from '@supabase/auth-helpers-react'
+import type { AppProps } from 'next/app'
+import Head from 'next/head'
+import { enqueueSnackbar, SnackbarProvider } from 'notistack'
+import type { FunctionComponent, PropsWithChildren } from 'react'
+import { useEffect, useState } from 'react'
+import { AppBar } from '@/components/_shared/AppBar.tsx'
+import { AuthWrapper } from '@/components/_shared/auth/Wrapper.tsx'
+import { Loader } from '@/components/_shared/Loader.tsx'
+import { useAppStore } from '@/store.ts'
+import { darkTheme as darkThemeOptions } from '@/styles/darkThemeOptions.ts'
+import '@/styles/globals.css'
 
-import TimeAgo from "javascript-time-ago";
-import en from "javascript-time-ago/locale/en";
-import { createEmotionCache } from "@/utility/createEmotionCache.ts";
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+import { createEmotionCache } from '@/utility/createEmotionCache.ts'
 
-interface MyAppProps extends Omit<AppProps, "Component"> {
-  Component: AppProps["Component"] & { auth?: boolean };
-  emotionCache?: EmotionCache;
+interface MyAppProps extends Omit<AppProps, 'Component'> {
+  Component: AppProps['Component'] & { auth?: boolean }
+  emotionCache?: EmotionCache
 }
 
-const clientSideEmotionCache: EmotionCache = createEmotionCache();
+const clientSideEmotionCache: EmotionCache = createEmotionCache()
 
-const darkTheme: Theme = createTheme(darkThemeOptions);
+const darkTheme: Theme = createTheme(darkThemeOptions)
 
 const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProps>) => {
   const {
     Component,
     emotionCache = clientSideEmotionCache,
     pageProps: { initialSession, ...pageProps },
-  } = props;
+  } = props
 
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(false)
   useEffect(() => {
     if (isMounted) {
-      return;
+      return
     }
-    setIsMounted(true);
+    setIsMounted(true)
 
-    TimeAgo.addLocale(en);
-  }, [isMounted]);
+    TimeAgo.addLocale(en)
+  }, [isMounted])
 
-  const isAccessible = useAppStore((state) => state.isAccessible);
-  const toggleAccessibility = useAppStore((state) => state.toggleAccessibility);
+  const isAccessible = useAppStore((state) => state.isAccessible)
+  const toggleAccessibility = useAppStore((state) => state.toggleAccessibility)
   useEffect(() => {
     if (isAccessible) {
-      document.body.classList.add("accessible");
+      document.body.classList.add('accessible')
     } else {
-      document.body.classList.remove("accessible");
+      document.body.classList.remove('accessible')
     }
-  }, [isAccessible]);
+  }, [isAccessible])
 
   // Create a new supabase browser client on every first render.
-  const [supabaseClient] = useState(() => createPagesBrowserClient());
+  const [supabaseClient] = useState(() => createPagesBrowserClient())
 
   // when the selectedTeamID changes, update the selectedTeam
-  const selectedTeamID = useAppStore((state) => state.selectedTeamID);
-  const setSelectedTeam = useAppStore((state) => state.setSelectedTeam);
+  const selectedTeamID = useAppStore((state) => state.selectedTeamID)
+  const setSelectedTeam = useAppStore((state) => state.setSelectedTeam)
   useEffect(() => {
-    if (selectedTeamID === "" || selectedTeamID === "create") {
-      setSelectedTeam(null);
-      return;
+    if (selectedTeamID === '' || selectedTeamID === 'create') {
+      setSelectedTeam(null)
+      return
     }
 
     if (supabaseClient === null) {
-      return;
+      return
     }
 
     supabaseClient
-      .from("teams")
-      .select("*")
-      .eq("id", selectedTeamID)
+      .from('teams')
+      .select('*')
+      .eq('id', selectedTeamID)
       .single()
       .then(({ data, error }) => {
         if (error) {
           enqueueSnackbar(`Unable to load team: ${error.message}`, {
-            variant: "error",
-          });
+            variant: 'error',
+          })
         } else {
-          setSelectedTeam(data);
+          setSelectedTeam(data)
         }
-      });
-  }, [selectedTeamID, setSelectedTeam, supabaseClient]);
+      })
+  }, [selectedTeamID, setSelectedTeam, supabaseClient])
 
   return (
     <CacheProvider value={emotionCache}>
@@ -123,12 +123,12 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
           color="inherit"
           onClick={toggleAccessibility}
           sx={{
-            bottom: "0.75em",
-            cursor: "pointer",
-            fontSize: "2em",
-            right: "0.75em",
-            position: "absolute",
-            textAlign: "right",
+            bottom: '0.75em',
+            cursor: 'pointer',
+            fontSize: '2em',
+            right: '0.75em',
+            position: 'absolute',
+            textAlign: 'right',
             zIndex: 100,
           }}
           tabIndex={0}
@@ -141,7 +141,7 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
         </IconButton>
       </ThemeProvider>
     </CacheProvider>
-  );
-};
+  )
+}
 
-export default MyApp;
+export default MyApp

@@ -1,19 +1,19 @@
-import type { EmotionCache } from "@emotion/cache";
-import type { EmotionCriticalToChunks } from "@emotion/server/create-instance";
-import createEmotionServer from "@emotion/server/create-instance";
+import type { EmotionCache } from '@emotion/cache'
+import type { EmotionCriticalToChunks } from '@emotion/server/create-instance'
+import createEmotionServer from '@emotion/server/create-instance'
 import type {
   AppPropsType,
   AppType,
   DocumentInitialProps,
   RenderPage,
-} from "next/dist/shared/lib/utils";
-import type { DocumentContext } from "next/document";
-import Document, { Head, Html, Main, NextScript } from "next/document";
-import type { NextRouter } from "next/router";
-import type { JSX } from "react";
-import { Children } from "react";
-import { darkTheme as darkThemeOptions } from "@/styles/darkThemeOptions.ts";
-import { createEmotionCache } from "@/utility/createEmotionCache.ts";
+} from 'next/dist/shared/lib/utils'
+import type { DocumentContext } from 'next/document'
+import Document, { Head, Html, Main, NextScript } from 'next/document'
+import type { NextRouter } from 'next/router'
+import type { JSX } from 'react'
+import { Children } from 'react'
+import { darkTheme as darkThemeOptions } from '@/styles/darkThemeOptions.ts'
+import { createEmotionCache } from '@/utility/createEmotionCache.ts'
 
 export default class MyDocument extends Document {
   render(): JSX.Element {
@@ -37,17 +37,17 @@ export default class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    );
+    )
   }
 }
 
 MyDocument.getInitialProps = async (ctx: DocumentContext) => {
-  const originalRenderPage: RenderPage = ctx.renderPage;
+  const originalRenderPage: RenderPage = ctx.renderPage
 
   // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
   // However, be aware that it can have global side effects.
-  const cache: EmotionCache = createEmotionCache();
-  const { extractCriticalToChunks } = createEmotionServer(cache);
+  const cache: EmotionCache = createEmotionCache()
+  const { extractCriticalToChunks } = createEmotionServer(cache)
 
   ctx.renderPage = () =>
     originalRenderPage({
@@ -56,26 +56,26 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
       enhanceApp: (App: AppType) => {
         const EmotionApp = App as React.ComponentType<
           AppPropsType<NextRouter, object> & { emotionCache: EmotionCache }
-        >;
+        >
 
         return (props: AppPropsType<NextRouter, object>) => (
           <EmotionApp emotionCache={cache} {...props} />
-        );
+        )
       },
-    });
+    })
 
-  const initialProps: DocumentInitialProps = await Document.getInitialProps(ctx);
-  const emotionStyles: EmotionCriticalToChunks = extractCriticalToChunks(initialProps.html);
+  const initialProps: DocumentInitialProps = await Document.getInitialProps(ctx)
+  const emotionStyles: EmotionCriticalToChunks = extractCriticalToChunks(initialProps.html)
   const emotionStyleTags: JSX.Element[] = emotionStyles.styles.map((style) => (
     <style
-      data-emotion={`${style.key} ${style.ids.join(" ")}`}
+      data-emotion={`${style.key} ${style.ids.join(' ')}`}
       key={style.key}
       dangerouslySetInnerHTML={{ __html: style.css }}
     />
-  ));
+  ))
 
   return {
     ...initialProps,
     styles: [...Children.toArray(initialProps.styles), ...emotionStyleTags],
-  };
-};
+  }
+}

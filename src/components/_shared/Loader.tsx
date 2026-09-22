@@ -1,21 +1,21 @@
-import Backdrop from "@mui/material/Backdrop";
-import Typography from "@mui/material/Typography";
-import Image from "next/image";
-import type { JSX } from "react";
+import Backdrop from '@mui/material/Backdrop'
+import Typography from '@mui/material/Typography'
+import Image from 'next/image'
+import type { JSX } from 'react'
 
 interface Props {
-  open?: boolean;
+  open?: boolean
 }
 
 export function Loader(props: Props): JSX.Element {
-  const { open = true } = props;
+  const { open = true } = props
 
   return (
     <Backdrop
       open={open}
       sx={{
-        display: "flex",
-        flexDirection: "column",
+        display: 'flex',
+        flexDirection: 'column',
         gap: 2,
       }}
     >
@@ -24,5 +24,5 @@ export function Loader(props: Props): JSX.Element {
         Loading...
       </Typography>
     </Backdrop>
-  );
+  )
 }

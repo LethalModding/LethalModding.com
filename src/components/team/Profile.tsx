@@ -1,152 +1,152 @@
-import AddIcon from "@mui/icons-material/Add";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MinusIcon from "@mui/icons-material/Remove";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import IconButton from "@mui/material/IconButton";
-import { alpha, type Theme } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useSnackbar } from "notistack";
-import type { ChangeEvent, JSX } from "react";
-import { useCallback, useEffect, useState } from "react";
-import { Loader } from "@/components/_shared/Loader.tsx";
-import { useAppStore } from "@/store.ts";
-import type { Team } from "@/types/db/Team.ts";
-import { slugify } from "@/utility/slugify.ts";
+import AddIcon from '@mui/icons-material/Add'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import MinusIcon from '@mui/icons-material/Remove'
+import Accordion from '@mui/material/Accordion'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import IconButton from '@mui/material/IconButton'
+import { alpha, type Theme } from '@mui/material/styles'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSnackbar } from 'notistack'
+import type { ChangeEvent, JSX } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { Loader } from '@/components/_shared/Loader.tsx'
+import { useAppStore } from '@/store.ts'
+import type { Team } from '@/types/db/Team.ts'
+import { slugify } from '@/utility/slugify.ts'
 
 export function TeamProfilePage(): JSX.Element {
-  const { enqueueSnackbar } = useSnackbar();
-  const team = useAppStore((state) => state.selectedTeam);
-  const [slugs, setSlugs] = useState<string[]>([]);
+  const { enqueueSnackbar } = useSnackbar()
+  const team = useAppStore((state) => state.selectedTeam)
+  const [slugs, setSlugs] = useState<string[]>([])
 
-  const supabase = useSupabaseClient();
+  const supabase = useSupabaseClient()
   useEffect(() => {
     if (!team) {
-      return;
+      return
     }
 
     supabase
-      .from("team_slugs")
-      .select("slug")
-      .eq("team_id", team.id)
+      .from('team_slugs')
+      .select('slug')
+      .eq('team_id', team.id)
       .then(({ data, error }) => {
         if (error) {
           enqueueSnackbar(`Unable to load team slugs: ${error.message}`, {
-            variant: "error",
-          });
+            variant: 'error',
+          })
         } else {
-          setSlugs(data.map((row) => row.slug));
+          setSlugs(data.map((row) => row.slug))
         }
-      });
-  }, [supabase, team, enqueueSnackbar]);
+      })
+  }, [supabase, team, enqueueSnackbar])
 
-  const [localSlugs, setLocalSlugs] = useState<string[]>(slugs ?? [slugify(team?.name)]);
-  useEffect(() => setLocalSlugs(slugs), [slugs]);
+  const [localSlugs, setLocalSlugs] = useState<string[]>(slugs ?? [slugify(team?.name)])
+  useEffect(() => setLocalSlugs(slugs), [slugs])
 
   const [localTeam, setLocalTeam] = useState<Team>({
-    id: "",
-    created_at: "",
-    updated_at: "",
-    deleted_at: "",
-    owner_id: "",
-    bio: "",
-    name: "",
-    location: "",
+    id: '',
+    created_at: '',
+    updated_at: '',
+    deleted_at: '',
+    owner_id: '',
+    bio: '',
+    name: '',
+    location: '',
     members: [],
-    socials: "",
-    website: "",
-  });
+    socials: '',
+    website: '',
+  })
   useEffect(() => {
     if (!team) {
-      return;
+      return
     }
-    setLocalTeam(team);
+    setLocalTeam(team)
 
     setLocalSlugs((prev) => {
       if (!prev.length) {
-        return [slugify(team.name)];
+        return [slugify(team.name)]
       }
 
-      return prev;
-    });
-  }, [team]);
+      return prev
+    })
+  }, [team])
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
-  const socials = localTeam.socials?.split(",") || [""];
+  const socials = localTeam.socials?.split(',') || ['']
 
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+    const { name, value } = event.target
 
     setLocalTeam((prevTeam) => ({
       ...prevTeam,
       [name]: value,
-    }));
-  }, []);
+    }))
+  }, [])
 
-  const [expanded, setExpanded] = useState<string>("profile");
+  const [expanded, setExpanded] = useState<string>('profile')
 
-  const setTeam = useAppStore((state) => state.setSelectedTeam);
+  const setTeam = useAppStore((state) => state.setSelectedTeam)
   const handleSubmit = useCallback(() => {
-    setLoading(true);
+    setLoading(true)
 
     supabase
-      .from("teams")
+      .from('teams')
       .update(localTeam)
-      .eq("id", localTeam.id)
+      .eq('id', localTeam.id)
       .select()
       .single()
       .then(({ data, error }) => {
         if (error) {
-          enqueueSnackbar("Unable to save changes", { variant: "error" });
+          enqueueSnackbar('Unable to save changes', { variant: 'error' })
         } else {
-          enqueueSnackbar("Changes saved", { variant: "success" });
-          setTeam(data);
+          enqueueSnackbar('Changes saved', { variant: 'success' })
+          setTeam(data)
         }
 
-        setLoading(false);
-      });
-  }, [enqueueSnackbar, localTeam, setTeam, supabase]);
+        setLoading(false)
+      })
+  }, [enqueueSnackbar, localTeam, setTeam, supabase])
 
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const showDeleteModal = useCallback(() => setDeleteModalOpen(true), []);
-  const hideDeleteModal = useCallback(() => setDeleteModalOpen(false), []);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
+  const showDeleteModal = useCallback(() => setDeleteModalOpen(true), [])
+  const hideDeleteModal = useCallback(() => setDeleteModalOpen(false), [])
 
-  const setSelectedTeamID = useAppStore((state) => state.setSelectedTeamID);
-  const [confirmationName, setConfirmationName] = useState("");
+  const setSelectedTeamID = useAppStore((state) => state.setSelectedTeamID)
+  const [confirmationName, setConfirmationName] = useState('')
   const confirmDeleteTeam = useCallback(() => {
-    setLoading(true);
+    setLoading(true)
 
     supabase
-      .from("teams")
+      .from('teams')
       .delete()
-      .eq("id", localTeam.id)
+      .eq('id', localTeam.id)
       .then(({ error }) => {
         if (error) {
-          enqueueSnackbar("Unable to delete Team", { variant: "error" });
+          enqueueSnackbar('Unable to delete Team', { variant: 'error' })
         } else {
-          enqueueSnackbar("Team deleted", { variant: "success" });
-          setSelectedTeamID("");
+          enqueueSnackbar('Team deleted', { variant: 'success' })
+          setSelectedTeamID('')
 
-          setLocalSlugs([]);
-          setLocalTeam({} as Team);
+          setLocalSlugs([])
+          setLocalTeam({} as Team)
         }
 
-        setLoading(false);
-      });
-  }, [enqueueSnackbar, localTeam.id, setSelectedTeamID, supabase]);
+        setLoading(false)
+      })
+  }, [enqueueSnackbar, localTeam.id, setSelectedTeamID, supabase])
 
   return (
     <>
@@ -187,21 +187,21 @@ export function TeamProfilePage(): JSX.Element {
       <Accordion
         defaultExpanded={true}
         disableGutters={true}
-        expanded={expanded === "profile"}
-        onChange={() => setExpanded("profile")}
+        expanded={expanded === 'profile'}
+        onChange={() => setExpanded('profile')}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography sx={{ flexBasis: "240px", flexShrink: 0 }} variant="h5">
+          <Typography sx={{ flexBasis: '240px', flexShrink: 0 }} variant="h5">
             Profile
           </Typography>
-          <Typography sx={{ color: "text.secondary", pt: 0.55 }}>
+          <Typography sx={{ color: 'text.secondary', pt: 0.55 }}>
             Manage your Team&apos;s Public Profile.
           </Typography>
         </AccordionSummary>
         <AccordionDetails
           sx={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
             gap: 1,
           }}
         >
@@ -229,7 +229,7 @@ export function TeamProfilePage(): JSX.Element {
             onChange={handleChange}
             rows={6}
             sx={{
-              gridColumn: "1 / span 2",
+              gridColumn: '1 / span 2',
             }}
             variant="filled"
             value={localTeam.bio}
@@ -239,7 +239,7 @@ export function TeamProfilePage(): JSX.Element {
               fullWidth={true}
               slotProps={{
                 htmlInput: {
-                  type: "url",
+                  type: 'url',
                 },
                 input: {
                   endAdornment:
@@ -260,9 +260,9 @@ export function TeamProfilePage(): JSX.Element {
                           setLocalTeam((prevTeam) => ({
                             ...prevTeam,
                             socials: prevTeam.socials
-                              .split(",")
+                              .split(',')
                               .filter((_, i) => i !== index)
-                              .join(","),
+                              .join(','),
                           }))
                         }
                       >
@@ -283,7 +283,7 @@ export function TeamProfilePage(): JSX.Element {
             fullWidth={true}
             slotProps={{
               htmlInput: {
-                type: "url",
+                type: 'url',
               },
             }}
             label="Website"
@@ -298,21 +298,21 @@ export function TeamProfilePage(): JSX.Element {
       <Accordion
         disabled={true}
         disableGutters={true}
-        expanded={expanded === "donation"}
-        onChange={() => setExpanded("donation")}
+        expanded={expanded === 'donation'}
+        onChange={() => setExpanded('donation')}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography sx={{ flexBasis: "240px", flexShrink: 0 }} variant="h5">
+          <Typography sx={{ flexBasis: '240px', flexShrink: 0 }} variant="h5">
             Donations
           </Typography>
-          <Typography sx={{ color: "text.secondary", pt: 0.55 }}>
+          <Typography sx={{ color: 'text.secondary', pt: 0.55 }}>
             Manage your Team&apos;s Donation Settings.
           </Typography>
         </AccordionSummary>
         <AccordionDetails
           sx={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
             gap: 1,
           }}
         >
@@ -321,12 +321,12 @@ export function TeamProfilePage(): JSX.Element {
             fullWidth={true}
             slotProps={{
               htmlInput: {
-                type: "url",
+                type: 'url',
               },
             }}
             label="Donation Link"
             sx={{
-              gridColumn: "1 / span 2",
+              gridColumn: '1 / span 2',
             }}
             variant="filled"
           />
@@ -349,25 +349,25 @@ export function TeamProfilePage(): JSX.Element {
 
       <Accordion
         disableGutters={true}
-        expanded={expanded === "namespace"}
-        onChange={() => setExpanded("namespace")}
+        expanded={expanded === 'namespace'}
+        onChange={() => setExpanded('namespace')}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography sx={{ flexBasis: "240px", flexShrink: 0 }} variant="h5">
+          <Typography sx={{ flexBasis: '240px', flexShrink: 0 }} variant="h5">
             Namespaces
           </Typography>
-          <Typography sx={{ color: "text.secondary", pt: 0.55 }}>
+          <Typography sx={{ color: 'text.secondary', pt: 0.55 }}>
             Manage your Team&apos;s Namespaces and Aliases.
           </Typography>
         </AccordionSummary>
         <AccordionDetails
           sx={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
             gap: 1,
           }}
         >
-          <Box sx={{ gridColumn: "1 / span 2" }}>
+          <Box sx={{ gridColumn: '1 / span 2' }}>
             <Typography gutterBottom={true}>
               Namespaces are how your Team is identified on the platform and mod launchers. Aliases
               are interchangeable with the primary Namespace. Both are case-insensitive and must be
@@ -381,7 +381,7 @@ export function TeamProfilePage(): JSX.Element {
               disabled={true}
               fullWidth={true}
               key={index}
-              label={index === 0 ? "Primary Name" : `Alias ${index}`}
+              label={index === 0 ? 'Primary Name' : `Alias ${index}`}
               name={`slugs[${index}]`}
               onChange={(event) =>
                 setLocalSlugs((prevSlugs) =>
@@ -397,17 +397,17 @@ export function TeamProfilePage(): JSX.Element {
 
       <Accordion
         disableGutters={true}
-        expanded={expanded === "danger"}
-        onChange={() => setExpanded("danger")}
+        expanded={expanded === 'danger'}
+        onChange={() => setExpanded('danger')}
         sx={{
           backgroundColor: (theme: Theme) => alpha(theme.palette.error.main, 0.2),
         }}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography sx={{ flexBasis: "240px", flexShrink: 0 }} variant="h5">
+          <Typography sx={{ flexBasis: '240px', flexShrink: 0 }} variant="h5">
             Danger Zone
           </Typography>
-          <Typography sx={{ color: "text.secondary", pt: 0.55 }}>
+          <Typography sx={{ color: 'text.secondary', pt: 0.55 }}>
             Delete your Team or Transfer Ownership.
           </Typography>
         </AccordionSummary>
@@ -428,11 +428,11 @@ export function TeamProfilePage(): JSX.Element {
         </AccordionDetails>
       </Accordion>
 
-      <Box sx={{ display: "flex", justifyContent: "flex-end", m: 1 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', m: 1 }}>
         <Button color="primary" disabled={loading} onClick={handleSubmit} variant="contained">
           Save
         </Button>
       </Box>
     </>
-  );
+  )
 }

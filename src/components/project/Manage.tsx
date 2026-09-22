@@ -1,46 +1,46 @@
-import UnpublishedIcon from "@mui/icons-material/Unpublished";
-import VisibilityOnIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
-import type { JSX } from "react";
-import { useEffect, useState } from "react";
-import { Loader } from "@/components/_shared/Loader.tsx";
-import { useAppStore } from "@/store.ts";
-import type { Project } from "@/types/db/Project.ts";
+import UnpublishedIcon from '@mui/icons-material/Unpublished'
+import VisibilityOnIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import Paper from '@mui/material/Paper'
+import Typography from '@mui/material/Typography'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
+import type { JSX } from 'react'
+import { useEffect, useState } from 'react'
+import { Loader } from '@/components/_shared/Loader.tsx'
+import { useAppStore } from '@/store.ts'
+import type { Project } from '@/types/db/Project.ts'
 
 export function ProjectManagePage(): JSX.Element {
-  const { enqueueSnackbar } = useSnackbar();
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { enqueueSnackbar } = useSnackbar()
+  const [projects, setProjects] = useState<Project[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const selectedTeamID = useAppStore((state) => state.selectedTeamID);
+  const selectedTeamID = useAppStore((state) => state.selectedTeamID)
 
-  const supabase = useSupabaseClient();
+  const supabase = useSupabaseClient()
   useEffect(() => {
     supabase
-      .from("projects")
-      .select("*")
-      .eq("team_id", selectedTeamID)
+      .from('projects')
+      .select('*')
+      .eq('team_id', selectedTeamID)
       .then(({ data, error }) => {
         if (error) {
           enqueueSnackbar(`Unable to load projects: ${error.message}`, {
-            variant: "error",
-          });
+            variant: 'error',
+          })
         } else {
-          setProjects(data);
+          setProjects(data)
         }
-        setLoading(false);
-      });
-  }, [supabase, selectedTeamID, enqueueSnackbar]);
+        setLoading(false)
+      })
+  }, [supabase, selectedTeamID, enqueueSnackbar])
 
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <>
@@ -54,19 +54,19 @@ export function ProjectManagePage(): JSX.Element {
         <Paper elevation={1} key={project.id}>
           <ListItemButton onClick={() => router.push(`/project/${project.id}`)}>
             <ListItemIcon>
-              <UnpublishedIcon color="inherit" sx={{ color: "text.secondary", ml: 0.75 }} />
+              <UnpublishedIcon color="inherit" sx={{ color: 'text.secondary', ml: 0.75 }} />
             </ListItemIcon>
-            <ListItemText primary={project.name} secondary={project.summary || "Not Published"} />
+            <ListItemText primary={project.name} secondary={project.summary || 'Not Published'} />
             <Typography variant="caption">
-              {project.type === "public" ? (
-                <VisibilityOnIcon color="inherit" sx={{ color: "text.secondary", mt: 1, mr: 2 }} />
+              {project.type === 'public' ? (
+                <VisibilityOnIcon color="inherit" sx={{ color: 'text.secondary', mt: 1, mr: 2 }} />
               ) : (
-                <VisibilityOffIcon color="inherit" sx={{ color: "text.secondary", mt: 1, mr: 2 }} />
+                <VisibilityOffIcon color="inherit" sx={{ color: 'text.secondary', mt: 1, mr: 2 }} />
               )}
             </Typography>
           </ListItemButton>
         </Paper>
       ))}
     </>
-  );
+  )
 }

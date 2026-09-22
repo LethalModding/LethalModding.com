@@ -1,49 +1,49 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Paper from "@mui/material/Paper";
-import type { SelectChangeEvent } from "@mui/material/Select";
-import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useSnackbar } from "notistack";
-import type { ChangeEvent, JSX, MouseEvent } from "react";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useAppStore } from "@/store.ts";
-import { slugify } from "@/utility/slugify.ts";
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import FormControl from '@mui/material/FormControl'
+import FormHelperText from '@mui/material/FormHelperText'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import Paper from '@mui/material/Paper'
+import type { SelectChangeEvent } from '@mui/material/Select'
+import Select from '@mui/material/Select'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import { useSnackbar } from 'notistack'
+import type { ChangeEvent, JSX, MouseEvent } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useAppStore } from '@/store.ts'
+import { slugify } from '@/utility/slugify.ts'
 
 export function ProjectCreatePage(): JSX.Element {
-  const [name, setName] = useState("");
-  const [type, setType] = useState("public");
+  const [name, setName] = useState('')
+  const [type, setType] = useState('public')
 
   const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.name === "name") {
-      setName(event.target.value);
+    if (event.target.name === 'name') {
+      setName(event.target.value)
     }
-  }, []);
+  }, [])
 
   const handleSelectChange = useCallback((event: SelectChangeEvent<string>) => {
-    if (event.target.name === "type") {
-      setType(event.target.value);
+    if (event.target.name === 'type') {
+      setType(event.target.value)
     }
-  }, []);
+  }, [])
 
-  const { enqueueSnackbar } = useSnackbar();
-  const supabase = useSupabaseClient();
-  const selectedTeamID = useAppStore((state) => state.selectedTeamID);
+  const { enqueueSnackbar } = useSnackbar()
+  const supabase = useSupabaseClient()
+  const selectedTeamID = useAppStore((state) => state.selectedTeamID)
   const handleSubmit = useCallback(
     (event: MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
+      event.preventDefault()
       if (!name) {
-        return;
+        return
       }
 
       supabase
-        .from("projects")
+        .from('projects')
         .insert({
           team_id: selectedTeamID,
           name,
@@ -52,60 +52,60 @@ export function ProjectCreatePage(): JSX.Element {
         .select()
         .then(({ error }) => {
           if (error) {
-            enqueueSnackbar("Unable to create Project", { variant: "error" });
+            enqueueSnackbar('Unable to create Project', { variant: 'error' })
           } else {
-            enqueueSnackbar("Project created", { variant: "success" });
+            enqueueSnackbar('Project created', { variant: 'success' })
           }
-        });
+        })
     },
     [enqueueSnackbar, name, selectedTeamID, supabase, type],
-  );
+  )
 
-  const [slugs, setSlugs] = useState<string[]>([]);
+  const [slugs, setSlugs] = useState<string[]>([])
   useEffect(() => {
-    if (selectedTeamID === "") {
-      return;
+    if (selectedTeamID === '') {
+      return
     }
 
     supabase
-      .from("team_slugs")
-      .select("name")
-      .eq("team_id", selectedTeamID)
+      .from('team_slugs')
+      .select('name')
+      .eq('team_id', selectedTeamID)
       .then(({ data, error }) => {
         if (error) {
           enqueueSnackbar(`Unable to load projects: ${error.message}`, {
-            variant: "error",
-          });
+            variant: 'error',
+          })
         } else {
-          setSlugs(data.map((slug) => slug.name));
+          setSlugs(data.map((slug) => slug.name))
         }
-      });
-  }, [selectedTeamID, supabase, enqueueSnackbar]);
+      })
+  }, [selectedTeamID, supabase, enqueueSnackbar])
 
-  const teamName = useAppStore((state) => state.selectedTeam?.name || "");
+  const teamName = useAppStore((state) => state.selectedTeam?.name || '')
   const projectURL = useMemo(() => {
     // use first slug
-    const slugName = slugify(name);
+    const slugName = slugify(name)
     if (slugs.length > 0) {
-      return `${slugs[0]}/${slugName}`;
+      return `${slugs[0]}/${slugName}`
     }
 
     // generate slug from name
-    return `${slugify(teamName)}/${slugName}`;
-  }, [name, slugs, teamName]);
+    return `${slugify(teamName)}/${slugName}`
+  }, [name, slugs, teamName])
 
   return (
     <Box
       sx={{
-        display: "grid",
-        height: "100%",
-        placeItems: "center",
+        display: 'grid',
+        height: '100%',
+        placeItems: 'center',
       }}
     >
       <Paper
         sx={{
-          display: "flex",
-          flexDirection: "column",
+          display: 'flex',
+          flexDirection: 'column',
           gap: 2,
           maxWidth: 520,
           p: 2,
@@ -132,18 +132,18 @@ export function ProjectCreatePage(): JSX.Element {
               <MenuItem value="private">Private</MenuItem>
             </Select>
             <FormHelperText>
-              {type === "public"
-                ? "Public projects are visible to everyone."
-                : "Private projects are only visible to team members."}
+              {type === 'public'
+                ? 'Public projects are visible to everyone.'
+                : 'Private projects are only visible to team members.'}
             </FormHelperText>
           </FormControl>
         </Box>
 
         <Box
           sx={{
-            display: "flex",
+            display: 'flex',
             gap: 1,
-            justifyContent: "flex-end",
+            justifyContent: 'flex-end',
           }}
         >
           <Button color="primary" disabled={!name} onClick={handleSubmit} variant="contained">
@@ -152,5 +152,5 @@ export function ProjectCreatePage(): JSX.Element {
         </Box>
       </Paper>
     </Box>
-  );
+  )
 }

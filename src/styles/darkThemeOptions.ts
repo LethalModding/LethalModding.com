@@ -1,21 +1,21 @@
-import type { Theme } from "@mui/material/styles";
-import { createTheme, responsiveFontSizes } from "@mui/material/styles";
+import type { Theme } from '@mui/material/styles'
+import { createTheme, responsiveFontSizes } from '@mui/material/styles'
 
 const darkThemeOptions: Theme = createTheme({
   palette: {
-    mode: "dark",
+    mode: 'dark',
     background: {
-      default: "#121010",
-      paper: "#121010",
+      default: '#121010',
+      paper: '#121010',
     },
     text: {
-      primary: "#e8982f",
+      primary: '#e8982f',
     },
     primary: {
-      main: "#e8982f",
+      main: '#e8982f',
     },
     secondary: {
-      main: "#fc0000",
+      main: '#fc0000',
     },
   },
   breakpoints: {
@@ -28,18 +28,18 @@ const darkThemeOptions: Theme = createTheme({
     },
   },
   typography: {
-    fontFamily: ["VT323", "monospace"].join(","),
+    fontFamily: ['VT323', 'monospace'].join(','),
     fontSize: 18,
     allVariants: {
-      letterSpacing: "0.25rem",
+      letterSpacing: '0.25rem',
       lineHeight: 0.97,
-      wordSpacing: "-0.1rem",
+      wordSpacing: '-0.1rem',
     },
     body1: {
-      letterSpacing: "0.3rem",
+      letterSpacing: '0.3rem',
       lineHeight: 1.24,
     },
   },
-});
+})
 
-export const darkTheme = responsiveFontSizes(darkThemeOptions);
+export const darkTheme = responsiveFontSizes(darkThemeOptions)

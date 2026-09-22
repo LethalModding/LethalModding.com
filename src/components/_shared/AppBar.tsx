@@ -1,49 +1,49 @@
-import MenuIcon from "@mui/icons-material/Menu";
-import MuiAppBar from "@mui/material/AppBar";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListSubheader from "@mui/material/ListSubheader";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import type { Theme } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import useMediaQuery from "@mui/system/useMediaQuery";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import type { JSX } from "react";
-import { useCallback, useState } from "react";
-import { Link } from "@/components/mui/Link.tsx";
-import { AccountButton } from "./auth/AccountButton.tsx";
+import MenuIcon from '@mui/icons-material/Menu'
+import MuiAppBar from '@mui/material/AppBar'
+import List from '@mui/material/List'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListSubheader from '@mui/material/ListSubheader'
+import SwipeableDrawer from '@mui/material/SwipeableDrawer'
+import type { Theme } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
+import useMediaQuery from '@mui/system/useMediaQuery'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
+import type { JSX } from 'react'
+import { useCallback, useState } from 'react'
+import { Link } from '@/components/mui/Link.tsx'
+import { AccountButton } from './auth/AccountButton.tsx'
 
 export function AppBar(): JSX.Element {
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
 
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const closeDrawer = useCallback(() => {
-    setDrawerOpen(false);
-  }, []);
+    setDrawerOpen(false)
+  }, [])
 
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <MuiAppBar
       position="sticky"
       sx={{
-        alignItems: "stretch",
-        flexDirection: "row",
-        justifyContent: "space-between",
+        alignItems: 'stretch',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         height: 56,
 
         a: {
-          display: "grid",
-          placeItems: "center",
+          display: 'grid',
+          placeItems: 'center',
 
-          backgroundColor: "transparent",
-          color: "inherit",
-          height: "100%",
-          textDecoration: "none",
+          backgroundColor: 'transparent',
+          color: 'inherit',
+          height: '100%',
+          textDecoration: 'none',
         },
 
-        ".MuiListItemButton-root": {
+        '.MuiListItemButton-root': {
           flexGrow: 0,
           pb: 0,
           pl: 2,
@@ -64,17 +64,17 @@ export function AppBar(): JSX.Element {
             onClose={closeDrawer}
             onOpen={() => setDrawerOpen(true)}
             sx={{
-              ".MuiDrawer-paper": {
-                maxWidth: "100vw",
+              '.MuiDrawer-paper': {
+                maxWidth: '100vw',
                 width: 265,
               },
 
               a: {
-                color: "inherit",
-                textDecoration: "none",
+                color: 'inherit',
+                textDecoration: 'none',
 
-                "&:hover": {
-                  backgroundColor: "unset",
+                '&:hover': {
+                  backgroundColor: 'unset',
                 },
               },
             }}
@@ -83,10 +83,10 @@ export function AppBar(): JSX.Element {
               href="/"
               onClick={closeDrawer}
               sx={{
-                alignItems: "center",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
                 py: 2,
               }}
             >
@@ -101,7 +101,7 @@ export function AppBar(): JSX.Element {
                 Account
               </ListSubheader>
 
-              <ListItemButton selected={router.pathname === "/team"}>
+              <ListItemButton selected={router.pathname === '/team'}>
                 <Link onClick={closeDrawer} href="/team">
                   Your Team
                 </Link>
@@ -111,7 +111,7 @@ export function AppBar(): JSX.Element {
                 Tools
               </ListSubheader>
 
-              <ListItemButton onClick={closeDrawer} selected={router.pathname === "/tools"}>
+              <ListItemButton onClick={closeDrawer} selected={router.pathname === '/tools'}>
                 <Link href="/tools">Search Thunderstore</Link>
               </ListItemButton>
 
@@ -119,7 +119,7 @@ export function AppBar(): JSX.Element {
                 Community
               </ListSubheader>
 
-              <ListItemButton onClick={closeDrawer} selected={router.pathname === "/"}>
+              <ListItemButton onClick={closeDrawer} selected={router.pathname === '/'}>
                 <Link href="https://discord.gg/lcmod">Join the Discord</Link>
               </ListItemButton>
             </List>
@@ -127,7 +127,7 @@ export function AppBar(): JSX.Element {
         </>
       ) : (
         <>
-          <ListItemButton selected={router.pathname === "/"} sx={{ pr: "8px !important" }}>
+          <ListItemButton selected={router.pathname === '/'} sx={{ pr: '8px !important' }}>
             <Link href="/" sx={{ pt: 0 }}>
               <Image alt="logo" height={48} src="/icons/favicon.ico" width={48} />
             </Link>
@@ -137,11 +137,11 @@ export function AppBar(): JSX.Element {
             <Link href="https://discord.gg/lcmod">Join the Discord</Link>
           </ListItemButton>
 
-          <ListItemButton selected={router.pathname === "/tools"}>
+          <ListItemButton selected={router.pathname === '/tools'}>
             <Link href="/tools">Search Thunderstore</Link>
           </ListItemButton>
 
-          <ListItemButton selected={router.pathname === "/team"}>
+          <ListItemButton selected={router.pathname === '/team'}>
             <Link href="/team">Your Team</Link>
           </ListItemButton>
         </>
@@ -149,5 +149,5 @@ export function AppBar(): JSX.Element {
 
       <AccountButton />
     </MuiAppBar>
-  );
+  )
 }

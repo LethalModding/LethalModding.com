@@ -1,91 +1,91 @@
-import PrivateIcon from "@mui/icons-material/Lock";
-import PublicIcon from "@mui/icons-material/Public";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Skeleton from "@mui/material/Skeleton";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import Head from "next/head";
-import { useParams } from "next/navigation";
-import { useSnackbar } from "notistack";
-import type { JSX } from "react";
-import { useCallback, useEffect, useState } from "react";
-import ReactTimeAgo from "react-time-ago";
-import type { Profile } from "@/types/db/Profile.ts";
-import type { Project } from "@/types/db/Project.ts";
-import type { Team } from "@/types/db/Team.ts";
+import PrivateIcon from '@mui/icons-material/Lock'
+import PublicIcon from '@mui/icons-material/Public'
+import Box from '@mui/material/Box'
+import Paper from '@mui/material/Paper'
+import Skeleton from '@mui/material/Skeleton'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
+import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import Head from 'next/head'
+import { useParams } from 'next/navigation'
+import { useSnackbar } from 'notistack'
+import type { JSX } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import ReactTimeAgo from 'react-time-ago'
+import type { Profile } from '@/types/db/Profile.ts'
+import type { Project } from '@/types/db/Project.ts'
+import type { Team } from '@/types/db/Team.ts'
 
 const ProjectPage = (): JSX.Element => {
-  const { enqueueSnackbar } = useSnackbar();
-  const { id } = useParams();
-  const supabase = useSupabaseClient();
+  const { enqueueSnackbar } = useSnackbar()
+  const { id } = useParams()
+  const supabase = useSupabaseClient()
 
-  const [project, setProject] = useState<Project | null>(null);
-  const [team, setTeam] = useState<Team | null>(null);
+  const [project, setProject] = useState<Project | null>(null)
+  const [team, setTeam] = useState<Team | null>(null)
 
   const refreshProject = useCallback(() => {
     supabase
-      .from("projects")
-      .select("*")
-      .eq("id", id)
+      .from('projects')
+      .select('*')
+      .eq('id', id)
       .single()
       .then(({ data, error }) => {
         if (error) {
           enqueueSnackbar(`Unable to load project: ${error.message}`, {
-            variant: "error",
-          });
+            variant: 'error',
+          })
         } else {
-          setProject(data);
+          setProject(data)
         }
-      });
-  }, [id, supabase, enqueueSnackbar]);
-  useEffect(() => refreshProject(), [refreshProject]);
+      })
+  }, [id, supabase, enqueueSnackbar])
+  useEffect(() => refreshProject(), [refreshProject])
 
   const refreshTeam = useCallback(() => {
     if (project === null) {
-      return;
+      return
     }
 
     supabase
-      .from("teams")
-      .select("*")
-      .eq("id", project.team_id)
+      .from('teams')
+      .select('*')
+      .eq('id', project.team_id)
       .single()
       .then(({ data, error }) => {
         if (error) {
           enqueueSnackbar(`Unable to load team: ${error.message}`, {
-            variant: "error",
-          });
+            variant: 'error',
+          })
         } else {
-          setTeam(data);
+          setTeam(data)
         }
-      });
-  }, [project, supabase, enqueueSnackbar]);
-  useEffect(() => refreshTeam(), [refreshTeam]);
+      })
+  }, [project, supabase, enqueueSnackbar])
+  useEffect(() => refreshTeam(), [refreshTeam])
 
-  const [creator, setCreator] = useState<Profile | null>(null);
+  const [creator, setCreator] = useState<Profile | null>(null)
   const refreshCreator = useCallback(() => {
     if (project === null) {
-      return;
+      return
     }
 
     supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", project.created_by)
+      .from('profiles')
+      .select('*')
+      .eq('id', project.created_by)
       .single()
       .then(({ data, error }) => {
         if (error) {
           enqueueSnackbar(`Unable to load creator: ${error.message}`, {
-            variant: "error",
-          });
+            variant: 'error',
+          })
         } else {
-          setCreator(data);
+          setCreator(data)
         }
-      });
-  }, [project, supabase, enqueueSnackbar]);
-  useEffect(() => refreshCreator(), [refreshCreator]);
+      })
+  }, [project, supabase, enqueueSnackbar])
+  useEffect(() => refreshCreator(), [refreshCreator])
 
   return (
     <>
@@ -95,26 +95,26 @@ const ProjectPage = (): JSX.Element => {
 
       <Box
         sx={{
-          height: "calc(100vh - 56px)",
+          height: 'calc(100vh - 56px)',
 
-          overflowX: "hidden",
-          overflowY: "auto",
+          overflowX: 'hidden',
+          overflowY: 'auto',
 
-          "&::-webkit-scrollbar": {
-            width: "0.25em",
-            height: "0.25em",
+          '&::-webkit-scrollbar': {
+            width: '0.25em',
+            height: '0.25em',
           },
 
-          "&::-webkit-scrollbar-thumb": {
-            backgroundColor: "var(--accent)",
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'var(--accent)',
           },
         }}
       >
         <Paper
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
 
             borderRadius: 0,
             gap: 4,
@@ -134,9 +134,9 @@ const ProjectPage = (): JSX.Element => {
             )}
           </Box>
 
-          <Box sx={{ fontSize: "2em", mb: -2 }}>
-            <Tooltip title={project?.type === "public" ? "Public" : "Private"}>
-              {project?.type === "public" ? (
+          <Box sx={{ fontSize: '2em', mb: -2 }}>
+            <Tooltip title={project?.type === 'public' ? 'Public' : 'Private'}>
+              {project?.type === 'public' ? (
                 <PublicIcon fontSize="inherit" />
               ) : (
                 <PrivateIcon fontSize="inherit" />
@@ -148,8 +148,8 @@ const ProjectPage = (): JSX.Element => {
         <Paper
           sx={{
             borderRadius: 0,
-            borderTop: "1px solid",
-            borderColor: "divider",
+            borderTop: '1px solid',
+            borderColor: 'divider',
             p: 4,
           }}
         >
@@ -157,21 +157,21 @@ const ProjectPage = (): JSX.Element => {
           {project === null ? (
             <Skeleton variant="text" height={60} width={600} />
           ) : (
-            <Typography variant="body1">{project.summary || "No summary provided."}</Typography>
+            <Typography variant="body1">{project.summary || 'No summary provided.'}</Typography>
           )}
         </Paper>
         <Paper
           sx={{
             borderRadius: 0,
-            borderTop: "1px solid",
-            borderColor: "divider",
+            borderTop: '1px solid',
+            borderColor: 'divider',
             p: 4,
           }}
         >
           <Typography variant="h6">Details</Typography>
           <Typography variant="body1">
-            Created: <ReactTimeAgo date={new Date(project?.created_at ?? 0)} /> (by{" "}
-            {creator?.username || "Unknown"})
+            Created: <ReactTimeAgo date={new Date(project?.created_at ?? 0)} /> (by{' '}
+            {creator?.username || 'Unknown'})
           </Typography>
           <Typography variant="body1">
             Updated: <ReactTimeAgo date={new Date(project?.updated_at ?? 0)} />
@@ -179,9 +179,9 @@ const ProjectPage = (): JSX.Element => {
         </Paper>
       </Box>
     </>
-  );
-};
+  )
+}
 
-ProjectPage.auth = true;
+ProjectPage.auth = true
 
-export default ProjectPage;
+export default ProjectPage

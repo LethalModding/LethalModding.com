@@ -1,61 +1,61 @@
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import type { JSX } from "react";
-import { Link } from "@/components/mui/Link.tsx";
-import { useGlobalStyles } from "@/styles/globalStyles.ts";
-import { TypedText } from "./TypedText.tsx";
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import type { JSX } from 'react'
+import { Link } from '@/components/mui/Link.tsx'
+import { useGlobalStyles } from '@/styles/globalStyles.ts'
+import { TypedText } from './TypedText.tsx'
 
 const styles = {
   titleBox: {
-    color: "#fc0000",
-    display: "inline-block",
-    fontSize: "clamp(1rem, 6vw, 3rem)",
-    lineHeight: "0.8",
-    mx: "auto",
-    textShadow: "4px 0 4px",
+    color: '#fc0000',
+    display: 'inline-block',
+    fontSize: 'clamp(1rem, 6vw, 3rem)',
+    lineHeight: '0.8',
+    mx: 'auto',
+    textShadow: '4px 0 4px',
   },
 
   titleText: {
-    border: "10px solid #fc0000",
-    fontFamily: "sans-serif",
-    padding: "0.5rem 1rem",
-    paddingTop: "1rem",
-    transform: "perspective(300px) rotateX(15deg)",
+    border: '10px solid #fc0000',
+    fontFamily: 'sans-serif',
+    padding: '0.5rem 1rem',
+    paddingTop: '1rem',
+    transform: 'perspective(300px) rotateX(15deg)',
     span: {
-      letterSpacing: "0.08em",
-      paddingLeft: "0.3em",
+      letterSpacing: '0.08em',
+      paddingLeft: '0.3em',
     },
   },
-};
+}
 
 const externalLinks = [
   {
-    href: "https://store.steampowered.com/app/1966720/Lethal_Company/",
-    label: "> Buy Lethal Company on Steam",
+    href: 'https://store.steampowered.com/app/1966720/Lethal_Company/',
+    label: '> Buy Lethal Company on Steam',
   },
   {
-    href: "https://github.com/LethalCompany/LethalCompanyTemplate",
-    label: "> Clone the Template Repository",
+    href: 'https://github.com/LethalCompany/LethalCompanyTemplate',
+    label: '> Clone the Template Repository',
   },
   {
-    href: "https://discord.gg/XeyYqRdRGC",
-    label: "> Join the Modding Discord",
+    href: 'https://discord.gg/XeyYqRdRGC',
+    label: '> Join the Modding Discord',
   },
-];
+]
 
 const internalLinks = [
   {
-    href: "/team",
-    label: "> LethalModding (WIP)",
+    href: '/team',
+    label: '> LethalModding (WIP)',
   },
   {
-    href: "/tools",
-    label: "> Thunderstore Search",
+    href: '/tools',
+    label: '> Thunderstore Search',
   },
-];
+]
 
 export function MOTD(): JSX.Element {
-  const globalStyles = useGlobalStyles();
+  const globalStyles = useGlobalStyles()
 
   return (
     <>
@@ -91,5 +91,5 @@ export function MOTD(): JSX.Element {
         </Box>
       </Box>
     </>
-  );
+  )
 }

@@ -1,55 +1,55 @@
-import Box from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
-import Link from "@mui/material/Link";
-import MenuItem from "@mui/material/MenuItem";
-import type { SelectChangeEvent } from "@mui/material/Select";
-import Select from "@mui/material/Select";
-import Typography from "@mui/material/Typography";
-import type { Dispatch, JSX, SetStateAction } from "react";
-import { useCallback } from "react";
-import type { ModSort } from "@/types/ModSort.ts";
+import Box from '@mui/material/Box'
+import FormControl from '@mui/material/FormControl'
+import Link from '@mui/material/Link'
+import MenuItem from '@mui/material/MenuItem'
+import type { SelectChangeEvent } from '@mui/material/Select'
+import Select from '@mui/material/Select'
+import Typography from '@mui/material/Typography'
+import type { Dispatch, JSX, SetStateAction } from 'react'
+import { useCallback } from 'react'
+import type { ModSort } from '@/types/ModSort.ts'
 
 interface Props {
-  pageNumber: number;
-  pageSize: number;
-  totalResults: number;
-  setPageNumber: (pageNumber: number) => void;
-  setPageSize: (pageSize: number) => void;
-  setSort: Dispatch<SetStateAction<ModSort>>;
-  sort: ModSort;
+  pageNumber: number
+  pageSize: number
+  totalResults: number
+  setPageNumber: (pageNumber: number) => void
+  setPageSize: (pageSize: number) => void
+  setSort: Dispatch<SetStateAction<ModSort>>
+  sort: ModSort
 }
 
 export const Pagination = (props: Props): JSX.Element => {
-  const { pageNumber, pageSize, totalResults, setPageNumber, setPageSize, setSort, sort } = props;
+  const { pageNumber, pageSize, totalResults, setPageNumber, setPageSize, setSort, sort } = props
 
   const handleSortDirectionChange = useCallback(
     (e: SelectChangeEvent<string>) => {
       setSort((prev) => ({
         ...prev,
-        direction: e.target.value as ModSort["direction"],
-      }));
+        direction: e.target.value as ModSort['direction'],
+      }))
     },
     [setSort],
-  );
+  )
   const handleSortPropertyChange = useCallback(
     (e: SelectChangeEvent<string>) => {
       setSort((prev) => ({
         ...prev,
-        property: e.target.value as ModSort["property"],
-      }));
+        property: e.target.value as ModSort['property'],
+      }))
     },
     [setSort],
-  );
+  )
 
   return (
     <>
       <Box
         sx={{
-          border: "1px solid var(--accent)",
+          border: '1px solid var(--accent)',
 
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
           p: 1,
           px: 2,
         }}
@@ -122,11 +122,11 @@ export const Pagination = (props: Props): JSX.Element => {
 
       <Box
         sx={{
-          border: "1px solid var(--accent)",
+          border: '1px solid var(--accent)',
 
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
           my: 1,
           p: 1,
           px: 2,
@@ -144,31 +144,31 @@ export const Pagination = (props: Props): JSX.Element => {
                 key={x}
                 onClick={() => setPageNumber(x)}
                 sx={{
-                  backgroundColor: pageNumber === x ? "var(--accent)" : "inherit",
+                  backgroundColor: pageNumber === x ? 'var(--accent)' : 'inherit',
                   borderRadius: 2,
-                  color: pageNumber === x ? "white" : "inherit",
-                  cursor: "pointer",
+                  color: pageNumber === x ? 'white' : 'inherit',
+                  cursor: 'pointer',
                   px: 1,
-                  textDecoration: "none",
+                  textDecoration: 'none',
                 }}
                 variant="body1"
               >
                 {x}
               </Link>
-            );
+            )
           }
           if (x === 2 && pageNumber > 3) {
-            return "...";
+            return '...'
           }
           if (
             x === Math.ceil(totalResults / pageSize) - 1 &&
             pageNumber < Math.ceil(totalResults / pageSize) - 1
           ) {
-            return "...";
+            return '...'
           }
-          return null;
+          return null
         })}
       </Box>
     </>
-  );
-};
+  )
+}
