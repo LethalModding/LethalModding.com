@@ -469,28 +469,29 @@ const ToolsHome: NextPage = (): JSX.Element => {
             },
           }}
         >
-          {thisPage.map((x) => (
-            <Link
-              href={x.package_url}
-              key={x.uuid4}
-              sx={{
-                color: 'inherit',
-                display: 'block',
-                textDecoration: 'none',
-              }}
-              target="_blank"
-            >
-              <Image
-                alt={x.name}
-                height={192}
-                loading="lazy"
-                src={x.versions[0].icon}
-                width={192}
-              />
-              <Typography variant="body2">{x.owner}</Typography>
-              <Typography variant="body1">{x.name}</Typography>
-            </Link>
-          ))}
+          {thisPage.map((x) => {
+            // filterMods drops a mod with no versions, so this is a type guard, not a case.
+            const version = x.versions[0]
+            if (version === undefined) {
+              return null
+            }
+            return (
+              <Link
+                href={x.package_url}
+                key={x.uuid4}
+                sx={{
+                  color: 'inherit',
+                  display: 'block',
+                  textDecoration: 'none',
+                }}
+                target="_blank"
+              >
+                <Image alt={x.name} height={192} loading="lazy" src={version.icon} width={192} />
+                <Typography variant="body2">{x.owner}</Typography>
+                <Typography variant="body1">{x.name}</Typography>
+              </Link>
+            )
+          })}
         </Box>
 
         <Pagination

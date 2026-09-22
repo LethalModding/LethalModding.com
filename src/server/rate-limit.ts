@@ -16,12 +16,12 @@ export function rateLimit(options?: Options) {
     check: (res: NextApiResponse, limit: number, token: string) =>
       new Promise<void>((resolve, reject) => {
         const tokenCount = (tokenCache.get(token) as number[]) || [0]
-        if (tokenCount[0] === 0) {
+        const [seen = 0] = tokenCount
+        if (seen === 0) {
           tokenCache.set(token, tokenCount)
         }
-        tokenCount[0] += 1
-
-        const currentUsage = tokenCount[0]
+        const currentUsage = seen + 1
+        tokenCount[0] = currentUsage
         const isRateLimited = currentUsage >= limit
         res.setHeader('X-RateLimit-Limit', limit)
         res.setHeader('X-RateLimit-Remaining', isRateLimited ? 0 : limit - currentUsage)

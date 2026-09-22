@@ -34,7 +34,8 @@
     "erasableSyntaxOnly": true,
     "useDefineForClassFields": true,
     "verbatimModuleSyntax": true,
-    "moduleDetection": "force"
+    "moduleDetection": "force",
+    "noUncheckedIndexedAccess": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

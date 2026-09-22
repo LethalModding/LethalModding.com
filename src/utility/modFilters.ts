@@ -31,6 +31,13 @@ export function filterMods(allMods: Mod[], filters: Filters, categories: Categor
   const includesCategoryFilter = categories.includes
   const excludesCategoryFilter = categories.excludes
   return allMods.filter((mod) => {
+    // Thunderstore ships every mod with at least one version; one that has none cannot be
+    // filtered on size, dependencies or website, so it is not a match.
+    const version = mod.versions[0]
+    if (version === undefined) {
+      return false
+    }
+
     if (
       includesCategoryFilter.length > 0 &&
       !mod.categories.some((category) => includesCategoryFilter.includes(category))
@@ -80,17 +87,11 @@ export function filterMods(allMods: Mod[], filters: Filters, categories: Categor
       return false
     }
 
-    if (
-      filters.maxDependencies > -1 &&
-      mod.versions[0].dependencies.length > filters.maxDependencies
-    ) {
+    if (filters.maxDependencies > -1 && version.dependencies.length > filters.maxDependencies) {
       return false
     }
 
-    if (
-      filters.minDependencies > 0 &&
-      mod.versions[0].dependencies.length < filters.minDependencies
-    ) {
+    if (filters.minDependencies > 0 && version.dependencies.length < filters.minDependencies) {
       return false
     }
 
@@ -104,17 +105,17 @@ export function filterMods(allMods: Mod[], filters: Filters, categories: Categor
       return false
     }
 
-    if (filters.maxSize > -1 && mod.versions[0].file_size > filters.maxSize * MEBI) {
+    if (filters.maxSize > -1 && version.file_size > filters.maxSize * MEBI) {
       return false
     }
 
-    if (filters.minSize > 0 && mod.versions[0].file_size < filters.minSize * MEBI) {
+    if (filters.minSize > 0 && version.file_size < filters.minSize * MEBI) {
       return false
     }
 
     if (
       filters.hasWebsite !== null &&
-      (filters.hasWebsite ? mod.versions[0].website_url === '' : mod.versions[0].website_url !== '')
+      (filters.hasWebsite ? version.website_url === '' : version.website_url !== '')
     ) {
       return false
     }
@@ -126,6 +127,8 @@ export function filterMods(allMods: Mod[], filters: Filters, categories: Categor
 export function sortMods(mods: Mod[], sort: ModSort): Mod[] {
   const newMods = [...mods]
   newMods.sort((a, b) => {
+    const [aVersion] = a.versions
+    const [bVersion] = b.versions
     if (sort.property === 'name') {
       return sort.direction === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
     }
@@ -144,15 +147,20 @@ export function sortMods(mods: Mod[], sort: ModSort): Mod[] {
         ? a.rating_score - b.rating_score
         : b.rating_score - a.rating_score
     }
+    // Only these two read the version; a mod without one sorts as equal rather than
+    // disturbing the name and owner orderings above.
+    if (aVersion === undefined || bVersion === undefined) {
+      return 0
+    }
     if (sort.property === 'size') {
       return sort.direction === 'asc'
-        ? a.versions[0].file_size - b.versions[0].file_size
-        : b.versions[0].file_size - a.versions[0].file_size
+        ? aVersion.file_size - bVersion.file_size
+        : bVersion.file_size - aVersion.file_size
     }
     if (sort.property === 'dependencies') {
       return sort.direction === 'asc'
-        ? a.versions[0].dependencies.length - b.versions[0].dependencies.length
-        : b.versions[0].dependencies.length - a.versions[0].dependencies.length
+        ? aVersion.dependencies.length - bVersion.dependencies.length
+        : bVersion.dependencies.length - aVersion.dependencies.length
     }
     return 0
   })
