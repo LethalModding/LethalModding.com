@@ -1,296 +1,296 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.5.12/schema.json",
-	"vcs": {
-		"enabled": true,
-		"clientKind": "git",
-		"useIgnoreFile": true
-	},
-	"files": {
-		"includes": [
-			"**",
-			"!**/.turbo",
-			"!**/public",
-			"!**/node_modules",
-			"!**/dist",
-			"!**/.next",
-			"!next-env.d.ts",
-			"!**/build",
-			"!**/coverage",
-			"!**/generated",
-			"!**/.venv",
-			"!**/playwright-report",
-			"!**/test-results",
-			"!**/*.dc.html",
-			"!**/*.min.js",
-			"!**/vendor",
-			"!**/public/pagefind",
-			"!**/dist-release"
-		]
-	},
-	"assist": {
-		"actions": {
-			"source": {
-				"organizeImports": "on"
-			}
-		}
-	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"preset": "all",
-			"correctness": {},
-			"suspicious": {},
-			"performance": {
-				"noAwaitInLoops": "off"
-			},
-			"style": {
-				"noTernary": "off",
-				"noNestedTernary": "off",
-				"noMagicNumbers": "off",
-				"noJsxLiterals": "off",
-				"noContinue": "off",
-				"noIncrementDecrement": {
-					"level": "on",
-					"options": {
-						"allowForLoopAfterthoughts": true
-					}
-				},
-				"useDestructuring": "off",
-				"useExportsLast": "off",
-				"useExplicitLengthCheck": "off",
-				"useErrorCause": "off",
-				"useNamingConvention": "off",
-				"useFilenamingConvention": "off",
-				"noProcessEnv": "off",
-				"noExcessiveLinesPerFile": {
-					"level": "on",
-					"options": {
-						"maxLines": 500
-					}
-				},
-				"noInferrableTypes": "off"
-			},
-			"complexity": {
-				"noExcessiveCognitiveComplexity": "off",
-				"noExcessiveLinesPerFunction": "off"
-			},
-			"nursery": {
-				"noFloatingPromises": "error",
-				"noMisusedPromises": "error"
-			}
-		},
-		"domains": {
-			"qwik": "none",
-			"solid": "none"
-		}
-	},
-	"formatter": {
-		"enabled": true
-	},
-	"overrides": [
-		{
-			"includes": [
-				"**/src/components/tools/Breadcrumb.tsx",
-				"**/src/pages/_document.tsx",
-				"**/src/pages/api/concrete/v2/auth/login.ts"
-			],
-			"linter": {
-				"rules": {
-					"correctness": {
-						"noUnresolvedImports": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": ["**/next.config.*"],
-			"linter": {
-				"rules": {
-					"suspicious": {
-						"noConsole": "off",
-						"useAwait": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": ["**/src/components/_shared/auth/LoginButtons.tsx"],
-			"linter": {
-				"rules": {
-					"correctness": {
-						"noProcessGlobal": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": ["**/src/pages/_document.tsx"],
-			"linter": {
-				"rules": {
-					"security": {
-						"noDangerouslySetInnerHtml": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": ["**/src/pages/api/concrete/mods/recommended.ts"],
-			"linter": {
-				"rules": {
-					"security": {
-						"noSecrets": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": ["**/src/components/team/Profile.tsx"],
-			"linter": {
-				"rules": {
-					"suspicious": {
-						"noArrayIndexKey": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": [
-				"**/*.test.ts",
-				"**/*.test.tsx",
-				"**/*.spec.ts",
-				"**/*.spec.tsx",
-				"**/test/**",
-				"**/__tests__/**"
-			],
-			"linter": {
-				"rules": {
-					"correctness": {
-						"noNodejsModules": "off",
-						"noProcessGlobal": "off",
-						"noUnresolvedImports": "off"
-					},
-					"security": {
-						"noSecrets": "off"
-					},
-					"performance": {
-						"noAwaitInLoops": "off",
-						"useTopLevelRegex": "off"
-					},
-					"suspicious": {
-						"noBitwiseOperators": "off",
-						"noMisplacedAssertion": "off",
-						"noSkippedTests": "off",
-						"noConsole": "off"
-					},
-					"complexity": {
-						"noExcessiveCognitiveComplexity": {
-							"level": "on",
-							"options": {
-								"maxAllowedComplexity": 30
-							}
-						},
-						"noExcessiveLinesPerFunction": {
-							"level": "on",
-							"options": {
-								"maxLines": 150,
-								"skipBlankLines": true,
-								"skipIifes": true
-							}
-						}
-					},
-					"style": {
-						"noExcessiveLinesPerFile": {
-							"level": "on",
-							"options": {
-								"maxLines": 1500
-							}
-						},
-						"noMagicNumbers": "off",
-						"noProcessEnv": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": [
-				"**/e2e/**",
-				"**/playwright.config.ts",
-				"**/playwright.*.config.ts"
-			],
-			"linter": {
-				"rules": {
-					"correctness": {
-						"noNodejsModules": "off",
-						"noProcessGlobal": "off",
-						"noUnresolvedImports": "off"
-					},
-					"security": {
-						"noSecrets": "off"
-					},
-					"performance": {
-						"noAwaitInLoops": "off",
-						"useTopLevelRegex": "off"
-					},
-					"suspicious": {
-						"noConsole": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": [
-				"**/scripts/**",
-				"tools/**",
-				"**/*.config.ts",
-				"**/*.config.mjs",
-				"**/*.config.js"
-			],
-			"linter": {
-				"rules": {
-					"correctness": {
-						"noNodejsModules": "off",
-						"noProcessGlobal": "off",
-						"noUnresolvedImports": "off"
-					},
-					"performance": {
-						"useTopLevelRegex": "off"
-					},
-					"suspicious": {
-						"noConsole": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": [
-				"**/src/server/**",
-				"**/apps/server/**",
-				"**/apps/worker/**",
-				"**/app/**/route.ts",
-				"**/src/app/api/**",
-				"**/src/pages/api/**"
-			],
-			"linter": {
-				"rules": {
-					"correctness": {
-						"noNodejsModules": "off",
-						"noProcessGlobal": "off"
-					},
-					"suspicious": {
-						"noConsole": "off"
-					}
-				}
-			}
-		},
-		{
-			"includes": ["**/src/pages/**", "next.config.*"],
-			"linter": {
-				"rules": {
-					"style": {
-						"noDefaultExport": "off"
-					}
-				}
-			}
-		}
-	]
+  "$schema": "https://biomejs.dev/schemas/2.5.12/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": [
+      "**",
+      "!**/.turbo",
+      "!**/public",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/.next",
+      "!next-env.d.ts",
+      "!**/build",
+      "!**/coverage",
+      "!**/generated",
+      "!**/.venv",
+      "!**/playwright-report",
+      "!**/test-results",
+      "!**/*.dc.html",
+      "!**/*.min.js",
+      "!**/vendor",
+      "!**/public/pagefind",
+      "!**/dist-release"
+    ]
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "all",
+      "correctness": {},
+      "suspicious": {},
+      "performance": {
+        "noAwaitInLoops": "off"
+      },
+      "style": {
+        "noTernary": "off",
+        "noNestedTernary": "off",
+        "noMagicNumbers": "off",
+        "noJsxLiterals": "off",
+        "noContinue": "off",
+        "noIncrementDecrement": {
+          "level": "on",
+          "options": {
+            "allowForLoopAfterthoughts": true
+          }
+        },
+        "useDestructuring": "off",
+        "useExportsLast": "off",
+        "useExplicitLengthCheck": "off",
+        "useErrorCause": "off",
+        "useNamingConvention": "off",
+        "useFilenamingConvention": "off",
+        "noProcessEnv": "off",
+        "noExcessiveLinesPerFile": {
+          "level": "on",
+          "options": {
+            "maxLines": 500
+          }
+        },
+        "noInferrableTypes": "off"
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": "off",
+        "noExcessiveLinesPerFunction": "off"
+      },
+      "nursery": {
+        "noFloatingPromises": "error",
+        "noMisusedPromises": "error"
+      }
+    },
+    "domains": {
+      "qwik": "none",
+      "solid": "none"
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 100
+  },
+  "overrides": [
+    {
+      "includes": [
+        "**/src/components/tools/Breadcrumb.tsx",
+        "**/src/pages/_document.tsx",
+        "**/src/pages/api/concrete/v2/auth/login.ts"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnresolvedImports": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/next.config.*"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off",
+            "useAwait": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/src/components/_shared/auth/LoginButtons.tsx"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noProcessGlobal": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/src/pages/_document.tsx"],
+      "linter": {
+        "rules": {
+          "security": {
+            "noDangerouslySetInnerHtml": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/src/pages/api/concrete/mods/recommended.ts"],
+      "linter": {
+        "rules": {
+          "security": {
+            "noSecrets": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/src/components/team/Profile.tsx"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noArrayIndexKey": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+        "**/test/**",
+        "**/__tests__/**"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noNodejsModules": "off",
+            "noProcessGlobal": "off",
+            "noUnresolvedImports": "off"
+          },
+          "security": {
+            "noSecrets": "off"
+          },
+          "performance": {
+            "noAwaitInLoops": "off",
+            "useTopLevelRegex": "off"
+          },
+          "suspicious": {
+            "noBitwiseOperators": "off",
+            "noMisplacedAssertion": "off",
+            "noSkippedTests": "off",
+            "noConsole": "off"
+          },
+          "complexity": {
+            "noExcessiveCognitiveComplexity": {
+              "level": "on",
+              "options": {
+                "maxAllowedComplexity": 30
+              }
+            },
+            "noExcessiveLinesPerFunction": {
+              "level": "on",
+              "options": {
+                "maxLines": 150,
+                "skipBlankLines": true,
+                "skipIifes": true
+              }
+            }
+          },
+          "style": {
+            "noExcessiveLinesPerFile": {
+              "level": "on",
+              "options": {
+                "maxLines": 1500
+              }
+            },
+            "noMagicNumbers": "off",
+            "noProcessEnv": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/e2e/**", "**/playwright.config.ts", "**/playwright.*.config.ts"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noNodejsModules": "off",
+            "noProcessGlobal": "off",
+            "noUnresolvedImports": "off"
+          },
+          "security": {
+            "noSecrets": "off"
+          },
+          "performance": {
+            "noAwaitInLoops": "off",
+            "useTopLevelRegex": "off"
+          },
+          "suspicious": {
+            "noConsole": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/scripts/**",
+        "tools/**",
+        "**/*.config.ts",
+        "**/*.config.mjs",
+        "**/*.config.js"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noNodejsModules": "off",
+            "noProcessGlobal": "off",
+            "noUnresolvedImports": "off"
+          },
+          "performance": {
+            "useTopLevelRegex": "off"
+          },
+          "suspicious": {
+            "noConsole": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "**/src/server/**",
+        "**/apps/server/**",
+        "**/apps/worker/**",
+        "**/app/**/route.ts",
+        "**/src/app/api/**",
+        "**/src/pages/api/**"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noNodejsModules": "off",
+            "noProcessGlobal": "off"
+          },
+          "suspicious": {
+            "noConsole": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/src/pages/**", "next.config.*"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          }
+        }
+      }
+    }
+  ]
 }
