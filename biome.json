@@ -25,7 +25,8 @@
       "!**/vendor",
       "!**/public/pagefind",
       "!**/dist-release",
-      "!.claude"
+      "!.claude",
+      "!**/database.types.ts"
     ]
   },
   "assist": {
