@@ -38,10 +38,17 @@
     "enabled": true,
     "rules": {
       "preset": "all",
-      "correctness": {},
-      "suspicious": {},
+      "correctness": {
+        "noSolidDestructuredProps": "off",
+        "useQwikValidLexicalScope": "off"
+      },
+      "suspicious": {
+        "noReactSpecificProps": "off"
+      },
       "performance": {
-        "noAwaitInLoops": "off"
+        "noAwaitInLoops": "off",
+        "noJsxPropsBind": "off",
+        "useSolidForComponent": "off"
       },
       "style": {
         "noTernary": "off",
