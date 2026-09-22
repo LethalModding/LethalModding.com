@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.12/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.14/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -46,7 +46,6 @@
       },
       "suspicious": {
         "noReactSpecificProps": "off",
-        "noArrayIndexKey": "off",
         "noExplicitAny": "error"
       },
       "performance": {
@@ -130,9 +129,6 @@
       "nursery": {
         "noFloatingPromises": "error",
         "noMisusedPromises": "error"
-      },
-      "security": {
-        "noDangerouslySetInnerHtml": "off"
       }
     }
   },
@@ -161,6 +157,15 @@
           "correctness": {
             "noNodejsModules": "off"
           }
+        }
+      }
+    },
+    {
+      "includes": ["src/pages/_document.tsx"],
+      "linter": {
+        "rules": {
+          "security": { "noDangerouslySetInnerHtml": "off" },
+          "style": { "useNamingConvention": "off" }
         }
       }
     },
@@ -199,13 +204,15 @@
           },
           "performance": {
             "noAwaitInLoops": "off",
+            "noNamespaceImport": "off",
             "useTopLevelRegex": "off"
           },
           "suspicious": {
             "noBitwiseOperators": "off",
             "noMisplacedAssertion": "off",
             "noSkippedTests": "off",
-            "noConsole": "off"
+            "noConsole": "off",
+            "useAwait": "off"
           },
           "complexity": {
             "noExcessiveCognitiveComplexity": {
@@ -231,7 +238,8 @@
               }
             },
             "noMagicNumbers": "off",
-            "noProcessEnv": "off"
+            "noProcessEnv": "off",
+            "useComponentExportOnlyModules": "off"
           }
         }
       }

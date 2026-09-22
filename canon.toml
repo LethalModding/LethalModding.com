@@ -7,3 +7,7 @@ reconciled = "canon v0.1.0-poc"
 # src/pages/api/** is the Pages Router's server-only API surface (Next never bundles it for the
 # browser), the counterpart of canon's src/app/api/**; bug-report.ts and v2/auth/login.ts import node:*.
 "ts-biome-00006 correctness/noNodejsModules" = "Pages Router API routes are server-only"
+# src/pages/_document.tsx inlines Emotion's server-extracted critical CSS as <style> bodies, the
+# SSR pattern @emotion/server documents; `__html` is the key React's API names.
+"ts-biome-00006 security/noDangerouslySetInnerHtml" = "Emotion critical-CSS SSR in _document.tsx"
+"ts-biome-00010 style/useNamingConvention" = "React's dangerouslySetInnerHTML key is `__html`, _document.tsx only"

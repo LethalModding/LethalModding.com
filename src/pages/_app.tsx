@@ -25,10 +25,11 @@ import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import { createEmotionCache } from '@/utility/createEmotionCache.ts'
 
-interface MyAppProps extends Omit<AppProps, 'Component'> {
-  Component: AppProps['Component'] & { auth?: boolean }
-  emotionCache?: EmotionCache
-}
+// Next names the page prop `Component`.
+type MyAppProps = Omit<AppProps, 'Component'> &
+  Record<'Component', AppProps['Component'] & { auth?: boolean }> & {
+    emotionCache?: EmotionCache
+  }
 
 const clientSideEmotionCache: EmotionCache = createEmotionCache()
 
