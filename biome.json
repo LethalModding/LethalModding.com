@@ -69,7 +69,28 @@
         "useExportsLast": "off",
         "useExplicitLengthCheck": "off",
         "useErrorCause": "off",
-        "useNamingConvention": "off",
+        "useNamingConvention": {
+          "level": "on",
+          "options": {
+            "strictCase": false,
+            "conventions": [
+              {
+                "selector": {
+                  "kind": "objectLiteralProperty"
+                },
+                "match": "_?\\$?(.+)",
+                "formats": ["camelCase", "snake_case", "CONSTANT_CASE", "PascalCase"]
+              },
+              {
+                "selector": {
+                  "kind": "typeProperty"
+                },
+                "match": "_?\\$?(.+)",
+                "formats": ["camelCase", "snake_case", "CONSTANT_CASE"]
+              }
+            ]
+          }
+        },
         "useFilenamingConvention": {
           "level": "on",
           "options": {

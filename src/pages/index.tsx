@@ -25,11 +25,11 @@ const Home: NextPage = (): JSX.Element => {
       return
     }
 
-    const access_token = parsedHash.get('access_token')
-    const refresh_token = parsedHash.get('refresh_token')
+    const accessToken = parsedHash.get('access_token')
+    const refreshToken = parsedHash.get('refresh_token')
 
     // enforce certain query params
-    if (!(access_token && refresh_token)) {
+    if (!(accessToken && refreshToken)) {
       return
     }
 
@@ -45,8 +45,8 @@ const Home: NextPage = (): JSX.Element => {
 
     supabase.auth
       .setSession({
-        access_token,
-        refresh_token,
+        access_token: accessToken,
+        refresh_token: refreshToken,
       })
       .then(clearTokenFragment)
       .catch(clearTokenFragment)
