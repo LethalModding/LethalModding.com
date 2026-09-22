@@ -344,11 +344,32 @@
       }
     },
     {
-      "includes": ["**/src/pages/**", "next.config.*"],
+      "includes": [
+        "**/app/**/apple-icon.tsx",
+        "**/app/**/default.tsx",
+        "**/app/**/error.tsx",
+        "**/app/**/global-error.tsx",
+        "**/app/**/icon.tsx",
+        "**/app/**/layout.tsx",
+        "**/app/**/loading.tsx",
+        "**/app/**/manifest.ts",
+        "**/app/**/not-found.tsx",
+        "**/app/**/opengraph-image.tsx",
+        "**/app/**/page.tsx",
+        "**/app/**/robots.ts",
+        "**/app/**/route.ts",
+        "**/app/**/sitemap.ts",
+        "**/app/**/template.tsx",
+        "**/app/**/twitter-image.tsx",
+        "**/instrumentation.ts",
+        "**/middleware.ts",
+        "**/pages/**"
+      ],
       "linter": {
         "rules": {
           "style": {
-            "noDefaultExport": "off"
+            "noDefaultExport": "off",
+            "useComponentExportOnlyModules": "off"
           }
         }
       }
