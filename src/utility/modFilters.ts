@@ -1,5 +1,6 @@
 import type { Mod } from '@/types/Mod.ts'
 import type { ModSort } from '@/types/ModSort.ts'
+import type { ModVersion } from '@/types/ModVersion.ts'
 
 export interface Filters {
   hasDonation: boolean | null
@@ -27,9 +28,35 @@ export interface CategoryFilters {
   excludes: string[]
 }
 
+/** `null` means the filter is unset. */
+function flagMatches(wanted: boolean | null, actual: boolean): boolean {
+  return wanted === null || actual === wanted
+}
+
+/** A bound of -1 (max) or 0 (min) means that side is unset. */
+function inRange(value: number, min: number, max: number): boolean {
+  return !((max > -1 && value > max) || (min > 0 && value < min))
+}
+
+function textMatches(needle: string, haystack: string): boolean {
+  return !needle || haystack.toLowerCase().includes(needle.toLowerCase())
+}
+
+function categoriesMatch(
+  modCategories: string[],
+  { includes, excludes }: CategoryFilters,
+): boolean {
+  return (
+    (includes.length === 0 || modCategories.some((category) => includes.includes(category))) &&
+    !(excludes.length > 0 && modCategories.some((category) => excludes.includes(category)))
+  )
+}
+
+function totalDownloads(mod: Mod): number {
+  return mod.versions.reduce((acc, cur) => acc + cur.downloads, 0)
+}
+
 export function filterMods(allMods: Mod[], filters: Filters, categories: CategoryFilters): Mod[] {
-  const includesCategoryFilter = categories.includes
-  const excludesCategoryFilter = categories.excludes
   return allMods.filter((mod) => {
     // Thunderstore ships every mod with at least one version; one that has none cannot be
     // filtered on size, dependencies or website, so it is not a match.
@@ -37,132 +64,44 @@ export function filterMods(allMods: Mod[], filters: Filters, categories: Categor
     if (version === undefined) {
       return false
     }
-
-    if (
-      includesCategoryFilter.length > 0 &&
-      !mod.categories.some((category) => includesCategoryFilter.includes(category))
-    ) {
-      return false
-    }
-
-    if (
-      excludesCategoryFilter.length > 0 &&
-      mod.categories.some((category) => excludesCategoryFilter.includes(category))
-    ) {
-      return false
-    }
-
-    if (filters.hasNSFW !== null && mod.has_nsfw_content !== filters.hasNSFW) {
-      return false
-    }
-
-    if (filters.isDeprecated !== null && mod.is_deprecated !== filters.isDeprecated) {
-      return false
-    }
-
-    if (filters.isPinned !== null && mod.is_pinned !== filters.isPinned) {
-      return false
-    }
-
-    if (filters.maxRatings > -1 && mod.rating_score > filters.maxRatings) {
-      return false
-    }
-
-    if (filters.minRatings > 0 && mod.rating_score < filters.minRatings) {
-      return false
-    }
-
-    if (
-      filters.hasDonation !== null &&
-      (filters.hasDonation ? mod.donation_link === undefined : mod.donation_link !== undefined)
-    ) {
-      return false
-    }
-
-    if (filters.name && !mod.name.toLowerCase().includes(filters.name.toLowerCase())) {
-      return false
-    }
-
-    if (filters.owner && !mod.owner.toLowerCase().includes(filters.owner.toLowerCase())) {
-      return false
-    }
-
-    if (filters.maxDependencies > -1 && version.dependencies.length > filters.maxDependencies) {
-      return false
-    }
-
-    if (filters.minDependencies > 0 && version.dependencies.length < filters.minDependencies) {
-      return false
-    }
-
-    // downloads across all versions
-    const totalDownloads = mod.versions.reduce((acc, cur) => acc + cur.downloads, 0)
-    if (filters.maxDownloads > -1 && totalDownloads > filters.maxDownloads) {
-      return false
-    }
-
-    if (filters.minDownloads > 0 && totalDownloads < filters.minDownloads) {
-      return false
-    }
-
-    if (filters.maxSize > -1 && version.file_size > filters.maxSize * MEBI) {
-      return false
-    }
-
-    if (filters.minSize > 0 && version.file_size < filters.minSize * MEBI) {
-      return false
-    }
-
-    if (
-      filters.hasWebsite !== null &&
-      (filters.hasWebsite ? version.website_url === '' : version.website_url !== '')
-    ) {
-      return false
-    }
-
-    return true
+    return (
+      categoriesMatch(mod.categories, categories) &&
+      flagMatches(filters.hasNSFW, mod.has_nsfw_content) &&
+      flagMatches(filters.isDeprecated, mod.is_deprecated) &&
+      flagMatches(filters.isPinned, mod.is_pinned) &&
+      flagMatches(filters.hasDonation, mod.donation_link !== undefined) &&
+      flagMatches(filters.hasWebsite, version.website_url !== '') &&
+      textMatches(filters.name, mod.name) &&
+      textMatches(filters.owner, mod.owner) &&
+      inRange(mod.rating_score, filters.minRatings, filters.maxRatings) &&
+      inRange(version.dependencies.length, filters.minDependencies, filters.maxDependencies) &&
+      inRange(totalDownloads(mod), filters.minDownloads, filters.maxDownloads) &&
+      inRange(version.file_size / MEBI, filters.minSize, filters.maxSize)
+    )
   })
 }
 
-export function sortMods(mods: Mod[], sort: ModSort): Mod[] {
-  const newMods = [...mods]
-  newMods.sort((a, b) => {
+// Size and dependencies read the latest version; a mod without one sorts as equal rather than
+// disturbing the orderings of the others.
+function byVersion(read: (version: ModVersion) => number): (a: Mod, b: Mod) => number {
+  return (a, b) => {
     const [aVersion] = a.versions
     const [bVersion] = b.versions
-    if (sort.property === 'name') {
-      return sort.direction === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)
-    }
-    if (sort.property === 'owner') {
-      return sort.direction === 'asc'
-        ? a.owner.localeCompare(b.owner)
-        : b.owner.localeCompare(a.owner)
-    }
-    if (sort.property === 'downloads') {
-      const totalA = a.versions.reduce((acc, cur) => acc + cur.downloads, 0)
-      const totalB = b.versions.reduce((acc, cur) => acc + cur.downloads, 0)
-      return sort.direction === 'asc' ? totalA - totalB : totalB - totalA
-    }
-    if (sort.property === 'ratings') {
-      return sort.direction === 'asc'
-        ? a.rating_score - b.rating_score
-        : b.rating_score - a.rating_score
-    }
-    // Only these two read the version; a mod without one sorts as equal rather than
-    // disturbing the name and owner orderings above.
-    if (aVersion === undefined || bVersion === undefined) {
-      return 0
-    }
-    if (sort.property === 'size') {
-      return sort.direction === 'asc'
-        ? aVersion.file_size - bVersion.file_size
-        : bVersion.file_size - aVersion.file_size
-    }
-    if (sort.property === 'dependencies') {
-      return sort.direction === 'asc'
-        ? aVersion.dependencies.length - bVersion.dependencies.length
-        : bVersion.dependencies.length - aVersion.dependencies.length
-    }
-    return 0
-  })
-  return newMods
+    return aVersion === undefined || bVersion === undefined ? 0 : read(aVersion) - read(bVersion)
+  }
+}
+
+const ASCENDING: Record<ModSort['property'], (a: Mod, b: Mod) => number> = {
+  '': () => 0,
+  name: (a, b) => a.name.localeCompare(b.name),
+  owner: (a, b) => a.owner.localeCompare(b.owner),
+  downloads: (a, b) => totalDownloads(a) - totalDownloads(b),
+  ratings: (a, b) => a.rating_score - b.rating_score,
+  size: byVersion((version) => version.file_size),
+  dependencies: byVersion((version) => version.dependencies.length),
+}
+
+export function sortMods(mods: Mod[], sort: ModSort): Mod[] {
+  const compare = ASCENDING[sort.property]
+  return [...mods].sort((a, b) => (sort.direction === 'asc' ? compare(a, b) : compare(b, a)))
 }
