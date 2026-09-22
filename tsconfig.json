@@ -32,7 +32,9 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "erasableSyntaxOnly": true,
-    "useDefineForClassFields": true
+    "useDefineForClassFields": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force"
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
