@@ -42,7 +42,8 @@
       "correctness": {
         "noSolidDestructuredProps": "off",
         "useQwikValidLexicalScope": "off",
-        "noUnresolvedImports": "off"
+        "noUnresolvedImports": "off",
+        "noProcessGlobal": "off"
       },
       "suspicious": {
         "noReactSpecificProps": "off",
@@ -130,6 +131,14 @@
       "nursery": {
         "noFloatingPromises": "error",
         "noMisusedPromises": "error"
+      },
+      "security": {
+        "noSecrets": {
+          "level": "on",
+          "options": {
+            "entropyThreshold": 55
+          }
+        }
       }
     }
   },
@@ -141,49 +150,6 @@
     "lineWidth": 100
   },
   "overrides": [
-    {
-      "includes": ["**/src/components/_shared/auth/LoginButtons.tsx"],
-      "linter": {
-        "rules": {
-          "correctness": {
-            "noProcessGlobal": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": ["**/src/pages/api/**"],
-      "linter": {
-        "rules": {
-          "correctness": {
-            "noNodejsModules": "off"
-          }
-        }
-      }
-    },
-    {
-      "includes": ["src/pages/_document.tsx"],
-      "linter": {
-        "rules": {
-          "security": { "noDangerouslySetInnerHtml": "off" },
-          "style": { "useNamingConvention": "off" }
-        }
-      }
-    },
-    {
-      "includes": [
-        "**/src/components/tools/Breadcrumb.tsx",
-        "**/src/pages/_document.tsx",
-        "**/src/pages/api/concrete/v2/auth/login.ts"
-      ],
-      "linter": {
-        "rules": {
-          "correctness": {
-            "noUnresolvedImports": "off"
-          }
-        }
-      }
-    },
     {
       "includes": [
         "**/*.test.ts",
@@ -204,7 +170,6 @@
             "noSecrets": "off"
           },
           "performance": {
-            "noAwaitInLoops": "off",
             "noNamespaceImport": "off",
             "useTopLevelRegex": "off"
           },
@@ -258,7 +223,6 @@
             "noSecrets": "off"
           },
           "performance": {
-            "noAwaitInLoops": "off",
             "useTopLevelRegex": "off"
           },
           "suspicious": {
@@ -305,6 +269,8 @@
         "**/app/**/route.ts",
         "**/apps/server/**",
         "**/apps/worker/**",
+        "**/lib/server/**",
+        "**/pages/api/**",
         "**/src/app/api/**",
         "**/src/server/**"
       ],
