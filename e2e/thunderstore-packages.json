@@ -1,0 +1,65 @@
+[
+  {
+    "name": "r2modman",
+    "full_name": "ebkr-r2modman",
+    "owner": "ebkr",
+    "package_url": "https://thunderstore.io/c/lethal-company/p/ebkr/r2modman/",
+    "donation_link": "https://www.mcsuk.org/make-a-donation/",
+    "date_created": "2019-06-05T15:09:31.571563Z",
+    "date_updated": "2026-09-22T12:21:53.845179Z",
+    "uuid4": "f21c391c-0bc5-431d-a233-95323b95e01b",
+    "rating_score": 1416,
+    "is_pinned": true,
+    "is_deprecated": false,
+    "has_nsfw_content": false,
+    "categories": ["Tools"],
+    "versions": [
+      {
+        "name": "r2modman",
+        "full_name": "ebkr-r2modman-3.2.20",
+        "description": "A simple and easy to use mod manager for many games using Thunderstore",
+        "icon": "https://ccdn.thunderstore.io/live/repository/icons/ebkr-r2modman-3.2.20.png",
+        "version_number": "3.2.20",
+        "dependencies": [],
+        "download_url": "https://thunderstore.io/package/download/ebkr/r2modman/3.2.20/",
+        "downloads": 3129,
+        "date_created": "2026-09-22T12:21:45.352813Z",
+        "website_url": "https://github.com/ebkr/r2modmanPlus",
+        "is_active": true,
+        "uuid4": "b570b689-2891-4a9a-8b31-509ca1439878",
+        "file_size": 363105843
+      }
+    ]
+  },
+  {
+    "name": "BepInExPack",
+    "full_name": "BepInEx-BepInExPack",
+    "owner": "BepInEx",
+    "package_url": "https://thunderstore.io/c/lethal-company/p/BepInEx/BepInExPack/",
+    "date_created": "2023-01-17T16:24:38.370139Z",
+    "date_updated": "2026-03-17T05:05:21.490966Z",
+    "uuid4": "b9a5a1bd-81d8-4913-a46e-70ca7734628c",
+    "rating_score": 1004,
+    "is_pinned": true,
+    "is_deprecated": false,
+    "has_nsfw_content": false,
+    "categories": ["BepInEx"],
+    "versions": [
+      {
+        "name": "BepInExPack",
+        "full_name": "BepInEx-BepInExPack-5.4.2305",
+        "description": "BepInEx pack for Mono Unity games. Preconfigured and ready to use.",
+        "icon": "https://ccdn.thunderstore.io/live/repository/icons/BepInEx-BepInExPack-5.4.2305.png",
+        "version_number": "5.4.2305",
+        "dependencies": [],
+        "download_url": "https://thunderstore.io/package/download/BepInEx/BepInExPack/5.4.2305/",
+        "downloads": 5011193,
+        "date_created": "2026-03-17T05:05:21.058304Z",
+        "website_url": "https://github.com/BepInEx/BepInEx",
+        "is_active": true,
+        "uuid4": "0b7ce1a8-42d0-4f2b-9cfc-992c3901b316",
+        "file_size": 669238
+      }
+    ]
+  }
+]

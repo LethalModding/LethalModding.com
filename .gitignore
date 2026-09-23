@@ -47,3 +47,7 @@ yarn-error.log*
 
 # Next.js regenerates this on every build
 next-env.d.ts
+
+# playwright
+/test-results/
+/playwright-report/

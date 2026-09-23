@@ -20,6 +20,18 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: Rethunk-Tech/gh-actions/setup-nextjs-bun@68f159b435d9b129b8baf36436079c3e76fb3222 # v1.11
+        with:
+          install-playwright: "true"
+          playwright-browsers: "chromium"
       - run: bun run lint
       - run: bun run typecheck
       - run: bun run build
+      - name: Smoke the production build
+        run: bun run test:e2e
+        env:
+          PW_WEB_COMMAND: bunx next start -p 4720
+      # Hydration mismatches are only reported by React's development build.
+      - name: Smoke the dev server
+        run: bun run test:e2e
+        env:
+          PW_WEB_COMMAND: bunx next dev -p 4720
