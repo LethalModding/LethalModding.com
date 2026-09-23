@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 
 // the list of all allowed origins
 const allowedOrigins = [
@@ -7,11 +7,11 @@ const allowedOrigins = [
   'https://lethalmodding.com',
 ]
 
-export function proxy(req) {
+export function proxy(req: NextRequest): NextResponse {
   // retrieve the current response
   const res = NextResponse.next()
   const origin = req.headers.get('origin')
-  if (allowedOrigins.includes(origin)) {
+  if (origin && allowedOrigins.includes(origin)) {
     res.headers.append('Access-Control-Allow-Origin', origin)
   }
 

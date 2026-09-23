@@ -34,7 +34,7 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noUncheckedIndexedAccess": true,
-    "allowJs": true
+    "allowJs": false
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
