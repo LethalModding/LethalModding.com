@@ -46,25 +46,23 @@ export function AccountButton(): JSX.Element {
   const setSelectedTeamID = useAppStore((state) => state.setSelectedTeamID)
 
   const handleSelectedTeamChange = useCallback(
-    (event: SelectChangeEvent<string>) => {
-      if (event.target.value === 'create') {
-        setSelectedTeamID('create')
-        return
-      }
-
-      setSelectedTeamID(event.target.value)
-    },
+    (event: SelectChangeEvent<string>) => setSelectedTeamID(event.target.value),
     [setSelectedTeamID],
   )
 
   const [teams, setTeams] = useState<Partial<Team>[]>([])
   const [loading, setLoading] = useState(true)
   const refreshTeams = useCallback(() => {
+    const userID = session?.user.id
+    if (!userID) {
+      return
+    }
+
     supabase
       .from('teams')
       .select('id,name')
       .order('name')
-      .eq('owner_id', session?.user.id)
+      .eq('owner_id', userID)
       .then(({ data, error }) => {
         if (error) {
           enqueueSnackbar(`Unable to load teams: ${error.message}`, {
@@ -137,7 +135,7 @@ export function AccountButton(): JSX.Element {
         >
           <ListItemText
             primary={username}
-            secondary={teams?.find((team) => team.id === selectedTeamID)?.name || 'No Team'}
+            secondary={teams.find((team) => team.id === selectedTeamID)?.name || 'No Team'}
           />
           <Avatar
             alt={session.user.email}
@@ -178,18 +176,6 @@ export function AccountButton(): JSX.Element {
               </MenuItem>
             </Select>
           </FormControl>
-          {/* <MenuItem>
-            <AccountCircleIcon sx={{ mr: 2 }} />
-            Account
-          </MenuItem>
-          <MenuItem>
-            <MessageIcon sx={{ mr: 2 }} />
-            Messages
-          </MenuItem>
-          <MenuItem>
-            <SettingsIcon sx={{ mr: 2 }} />
-            Settings
-          </MenuItem> */}
           <Divider />
           <MenuItem onClick={signOut} sx={{ color: 'warning.main' }}>
             <LogoutIcon sx={{ mr: 2 }} />
