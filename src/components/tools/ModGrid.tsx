@@ -58,7 +58,16 @@ export function ModGrid({ mods }: { mods: Mod[] }): JSX.Element {
             }}
             target="_blank"
           >
-            <Image alt={x.name} height={192} loading="lazy" src={version.icon} width={192} />
+            {/* Unoptimized so the browser fetches each icon from ccdn itself: the optimizer
+                fetches them all from the server's one IP and Thunderstore rate-limits the burst. */}
+            <Image
+              alt={x.name}
+              height={192}
+              loading="lazy"
+              src={version.icon}
+              unoptimized={true}
+              width={192}
+            />
             <Typography variant="body2">{x.owner}</Typography>
             <Typography variant="body1">{x.name}</Typography>
           </Link>

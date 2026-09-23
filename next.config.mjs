@@ -8,12 +8,6 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'ccdn.thunderstore.io',
-        port: '',
-        pathname: '/live/repository/icons/**',
-      },
-      {
-        protocol: 'https',
         hostname: 'picsum.photos',
         port: '',
         pathname: '/seed/**',
