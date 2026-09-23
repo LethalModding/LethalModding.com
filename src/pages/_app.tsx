@@ -4,9 +4,7 @@ import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew'
 import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward'
 import CssBaseline from '@mui/material/CssBaseline'
 import IconButton from '@mui/material/IconButton'
-import type { Theme } from '@mui/material/styles'
-import { createTheme } from '@mui/material/styles'
-import ThemeProvider from '@mui/system/ThemeProvider'
+import { ThemeProvider } from '@mui/material/styles'
 import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import type { AppProps } from 'next/app'
@@ -18,7 +16,7 @@ import { AppBar } from '@/components/_shared/AppBar.tsx'
 import { AuthWrapper } from '@/components/_shared/auth/Wrapper.tsx'
 import { Loader } from '@/components/_shared/Loader.tsx'
 import { useAppStore } from '@/store.ts'
-import { darkTheme as darkThemeOptions } from '@/styles/darkThemeOptions.ts'
+import { darkTheme } from '@/styles/darkThemeOptions.ts'
 import '@/styles/globals.css'
 
 import TimeAgo from 'javascript-time-ago'
@@ -32,8 +30,6 @@ type MyAppProps = Omit<AppProps, 'Component'> &
   }
 
 const clientSideEmotionCache: EmotionCache = createEmotionCache()
-
-const darkTheme: Theme = createTheme(darkThemeOptions)
 
 const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProps>) => {
   const {
