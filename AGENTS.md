@@ -7,6 +7,7 @@ Agent conventions. Setup: [HUMANS.md](./HUMANS.md).
 - No secrets, `.env`, or build artifacts (`.next`, `node_modules`, `tsconfig.tsbuildinfo`).
 - Marketing copy stays implementation-free; routes and env catalogs belong here or HUMANS.
 - Stage only files for the current change.
+- Kept on purpose, not deadwood: `components/mods/ModListItem` and `ProfileListItem`, the `picsum.photos` image remote, and the `slugs ?? …` fallback in `useTeamSlugs` (`components/team/Profile.tsx`).
 
 ## Verification
 
