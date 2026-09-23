@@ -1,1 +1,6 @@
 reconciled = "canon v0.1.0-poc"
+
+[deviations]
+# @supabase/ssr marks only the get/set/remove cookie overload of createBrowserClient as
+# deprecated (biomejs/biome#11893); this call passes no cookie methods.
+"ts-biome-00006 suspicious/noDeprecatedImports" = "the deprecation is on an overload this call does not use"

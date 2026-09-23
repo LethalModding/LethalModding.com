@@ -6,11 +6,11 @@ import RadioGroup from '@mui/material/RadioGroup'
 import type { SelectChangeEvent } from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useSnackbar } from 'notistack'
 import type { ChangeEvent, JSX } from 'react'
 import { useCallback, useState } from 'react'
 import { useAppStore } from '@/store.ts'
+import { useSupabaseClient } from '@/utility/supabase.ts'
 
 export function TeamMemberInvitePage(): JSX.Element {
   const [email, setEmail] = useState('')

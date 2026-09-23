@@ -2,11 +2,11 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useSnackbar } from 'notistack'
 import type { JSX } from 'react'
 import { useCallback } from 'react'
 import type { TeamInvite } from '@/types/db/TeamInvite.ts'
+import { useSession, useSupabaseClient } from '@/utility/supabase.ts'
 
 interface Props {
   expanded?: boolean

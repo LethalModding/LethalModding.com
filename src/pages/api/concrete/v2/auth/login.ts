@@ -42,18 +42,6 @@ interface PostBody {
 }
 
 async function handlePOST(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-  // // Ensure the user is authenticated and authorized to access the platform
-  // const supabaseServerClient = createPagesServerClient({ req, res })
-  // const { data: { session } } = await supabaseServerClient.auth.getSession()
-  //
-  // if (session === null) {
-  //   return res.status(401).json({
-  //     code:    401,
-  //     error:   'not_authenticated',
-  //     message: 'The user does not have an active session or is not authenticated',
-  //   })
-  // }
-
   const { email }: PostBody = req.body
   const parsedEmail: ParsedMailbox | ParsedGroup | null = addrs.parseOneAddress(email)
   if (!(parsedEmail && isValidEmail(parsedEmail))) {

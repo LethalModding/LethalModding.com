@@ -17,7 +17,6 @@ import IconButton from '@mui/material/IconButton'
 import { alpha, type Theme } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useSnackbar } from 'notistack'
 import type { ChangeEvent, Dispatch, JSX, SetStateAction } from 'react'
 import { useCallback, useEffect, useState } from 'react'
@@ -25,6 +24,7 @@ import { Loader } from '@/components/_shared/Loader.tsx'
 import { useAppStore } from '@/store.ts'
 import type { Team } from '@/types/db/Team.ts'
 import { slugify } from '@/utility/slugify.ts'
+import { useSupabaseClient } from '@/utility/supabase.ts'
 
 function SectionSummary({
   description,

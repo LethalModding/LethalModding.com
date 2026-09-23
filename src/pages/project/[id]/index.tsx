@@ -5,7 +5,6 @@ import Paper from '@mui/material/Paper'
 import Skeleton from '@mui/material/Skeleton'
 import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Head from 'next/head'
 import { useParams } from 'next/navigation'
 import { useSnackbar } from 'notistack'
@@ -16,6 +15,7 @@ import { AuthWrapper } from '@/components/_shared/auth/Wrapper.tsx'
 import type { Profile } from '@/types/db/Profile.ts'
 import type { Project } from '@/types/db/Project.ts'
 import type { Team } from '@/types/db/Team.ts'
+import { useSupabaseClient } from '@/utility/supabase.ts'
 
 const ProjectContent = (): JSX.Element => {
   const { enqueueSnackbar } = useSnackbar()

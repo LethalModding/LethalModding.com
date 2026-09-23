@@ -1,8 +1,8 @@
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react'
 import type { JSX, PropsWithChildren } from 'react'
 import { useEffect, useState } from 'react'
 import { AuthRequired } from '@/components/_shared/auth/Required.tsx'
 import { Loader } from '@/components/_shared/Loader.tsx'
+import { useSupabaseClient, useUser } from '@/utility/supabase.ts'
 
 export function AuthWrapper(props: PropsWithChildren): JSX.Element {
   const supabase = useSupabaseClient()

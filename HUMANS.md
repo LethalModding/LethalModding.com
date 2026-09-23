@@ -21,6 +21,7 @@ Create `.env.local` at the repo root:
 ```bash
 NEXT_PUBLIC_BASE_URL=http://localhost:9000
 NEXT_PUBLIC_SUPABASE_URL=https://<project>.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon-key>
 SUPABASE_SERVICE_KEY=<service-role-key>
 NEXT_PUBLIC_BRANDING=lethalmodding
 MAILGUN_SEND_KEY=<key>

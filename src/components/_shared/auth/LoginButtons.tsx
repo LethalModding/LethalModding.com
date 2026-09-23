@@ -1,10 +1,10 @@
 import GitHubIcon from '@mui/icons-material/GitHub'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Image from 'next/image'
 import type { JSX } from 'react'
 import { useCallback } from 'react'
+import { useSupabaseClient } from '@/utility/supabase.ts'
 
 interface Props {
   onDontClick?: () => void

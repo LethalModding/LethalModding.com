@@ -5,17 +5,16 @@ import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward'
 import CssBaseline from '@mui/material/CssBaseline'
 import IconButton from '@mui/material/IconButton'
 import { ThemeProvider } from '@mui/material/styles'
-import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
-import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { enqueueSnackbar, SnackbarProvider } from 'notistack'
 import type { FunctionComponent, PropsWithChildren } from 'react'
 import { useEffect, useState } from 'react'
 import { AppBar } from '@/components/_shared/AppBar.tsx'
-import { Loader } from '@/components/_shared/Loader.tsx'
+import { SupabaseProvider } from '@/components/_shared/auth/Supabase.tsx'
 import { useAppStore } from '@/store.ts'
 import { darkTheme } from '@/styles/darkThemeOptions.ts'
+import { useSupabaseClient } from '@/utility/supabase.ts'
 import '@/styles/globals.css'
 
 import TimeAgo from 'javascript-time-ago'
@@ -28,12 +27,38 @@ type MyAppProps = AppProps & {
 
 const clientSideEmotionCache: EmotionCache = createEmotionCache()
 
+/** Loads the team row whenever the selected team changes. */
+function SelectedTeamLoader(): null {
+  const supabase = useSupabaseClient()
+  const selectedTeamID = useAppStore((state) => state.selectedTeamID)
+  const setSelectedTeam = useAppStore((state) => state.setSelectedTeam)
+  useEffect(() => {
+    if (selectedTeamID === '' || selectedTeamID === 'create') {
+      setSelectedTeam(null)
+      return
+    }
+
+    supabase
+      .from('teams')
+      .select('*')
+      .eq('id', selectedTeamID)
+      .single()
+      .then(({ data, error }) => {
+        if (error) {
+          enqueueSnackbar(`Unable to load team: ${error.message}`, {
+            variant: 'error',
+          })
+        } else {
+          setSelectedTeam(data)
+        }
+      })
+  }, [selectedTeamID, setSelectedTeam, supabase])
+
+  return null
+}
+
 const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProps>) => {
-  const {
-    Component,
-    emotionCache = clientSideEmotionCache,
-    pageProps: { initialSession, ...pageProps },
-  } = props
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => {
@@ -55,38 +80,6 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
     }
   }, [isAccessible])
 
-  // Create a new supabase browser client on every first render.
-  const [supabaseClient] = useState(() => createPagesBrowserClient())
-
-  // when the selectedTeamID changes, update the selectedTeam
-  const selectedTeamID = useAppStore((state) => state.selectedTeamID)
-  const setSelectedTeam = useAppStore((state) => state.setSelectedTeam)
-  useEffect(() => {
-    if (selectedTeamID === '' || selectedTeamID === 'create') {
-      setSelectedTeam(null)
-      return
-    }
-
-    if (supabaseClient === null) {
-      return
-    }
-
-    supabaseClient
-      .from('teams')
-      .select('*')
-      .eq('id', selectedTeamID)
-      .single()
-      .then(({ data, error }) => {
-        if (error) {
-          enqueueSnackbar(`Unable to load team: ${error.message}`, {
-            variant: 'error',
-          })
-        } else {
-          setSelectedTeam(data)
-        }
-      })
-  }, [selectedTeamID, setSelectedTeam, supabaseClient])
-
   return (
     <CacheProvider value={emotionCache}>
       <Head>
@@ -96,15 +89,12 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
         <CssBaseline enableColorScheme={true} />
 
         <SnackbarProvider>
-          {supabaseClient === null ? (
-            <Loader />
-          ) : (
-            <SessionContextProvider supabaseClient={supabaseClient} initialSession={initialSession}>
-              <AppBar />
+          <SupabaseProvider>
+            <SelectedTeamLoader />
+            <AppBar />
 
-              <Component {...pageProps} />
-            </SessionContextProvider>
-          )}
+            <Component {...pageProps} />
+          </SupabaseProvider>
         </SnackbarProvider>
 
         <IconButton

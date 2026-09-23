@@ -53,3 +53,18 @@ test('/tools loads Thunderstore icons lazily, straight from the CDN', async ({ p
   expect(await icon.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0)
   expect(optimizedRemote).toEqual([])
 })
+
+for (const path of ['/team', '/team/profile', '/project/00000000-0000-0000-0000-000000000000']) {
+  test(`${path} asks a signed-out visitor to log in`, async ({ page }) => {
+    const supabaseCalls: string[] = []
+    await page.route(/\.supabase\.co\//, (route) => {
+      supabaseCalls.push(route.request().url())
+      return route.abort()
+    })
+
+    await page.goto(path, { waitUntil: 'networkidle' })
+
+    await expect(page.getByText('Please login to view this page.')).toBeVisible()
+    expect(supabaseCalls).toEqual([])
+  })
+}

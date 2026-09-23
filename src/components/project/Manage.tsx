@@ -6,7 +6,6 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import type { JSX } from 'react'
@@ -14,6 +13,7 @@ import { useEffect, useState } from 'react'
 import { Loader } from '@/components/_shared/Loader.tsx'
 import { useAppStore } from '@/store.ts'
 import type { Project } from '@/types/db/Project.ts'
+import { useSupabaseClient } from '@/utility/supabase.ts'
 
 export function ProjectManagePage(): JSX.Element {
   const { enqueueSnackbar } = useSnackbar()

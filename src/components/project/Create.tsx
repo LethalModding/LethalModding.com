@@ -9,12 +9,12 @@ import type { SelectChangeEvent } from '@mui/material/Select'
 import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useSnackbar } from 'notistack'
 import type { ChangeEvent, JSX, MouseEvent } from 'react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAppStore } from '@/store.ts'
 import { slugify } from '@/utility/slugify.ts'
+import { useSupabaseClient } from '@/utility/supabase.ts'
 
 export function ProjectCreatePage(): JSX.Element {
   const [name, setName] = useState('')
