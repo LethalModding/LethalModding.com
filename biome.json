@@ -136,7 +136,6 @@
     }
   },
   "formatter": {
-    "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2,
     "lineEnding": "lf",
