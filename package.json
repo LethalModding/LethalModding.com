@@ -39,7 +39,7 @@
     "react-time-ago": "^7.4.4",
     "tr46": "^6.0.0",
     "webidl-conversions": "^8.0.1",
-    "zustand": "^4.5.7"
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.14",
