@@ -5,6 +5,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import type { JSX } from 'react'
 import { useEffect, useMemo, useState } from 'react'
+import { AuthWrapper } from '@/components/_shared/auth/Wrapper.tsx'
 import { Link } from '@/components/mui/Link.tsx'
 import { ProjectManagePage } from '@/components/project/Manage.tsx'
 import { TeamCreatePage } from '@/components/team/Create.tsx'
@@ -13,7 +14,7 @@ import { TeamMenu } from '@/components/team/Menu.tsx'
 import { TeamProfilePage } from '@/components/team/Profile.tsx'
 import { useAppStore } from '@/store.ts'
 
-const TeamPage = (): JSX.Element => {
+const TeamContent = (): JSX.Element => {
   const [selectedPage, setSelectedPage] = useState('')
 
   const pageComponent = useMemo(() => {
@@ -40,72 +41,80 @@ const TeamPage = (): JSX.Element => {
   const selectedTeam = useAppStore((state) => state.selectedTeam)
 
   return (
-    <>
-      <Head>
-        <title>Your Source for Lethal Company Mods</title>
-      </Head>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: 'calc(100vh - 56px)',
 
-      <Box
+        overflowX: 'hidden',
+        overflowY: 'auto',
+
+        '&::-webkit-scrollbar': {
+          width: '0.25em',
+          height: '0.25em',
+        },
+
+        '&::-webkit-scrollbar-thumb': {
+          backgroundColor: 'var(--accent)',
+        },
+      }}
+    >
+      <Paper
+        elevation={4}
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: 'calc(100vh - 56px)',
-
-          overflowX: 'hidden',
-          overflowY: 'auto',
-
-          '&::-webkit-scrollbar': {
-            width: '0.25em',
-            height: '0.25em',
-          },
-
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: 'var(--accent)',
-          },
+          p: 4,
         }}
       >
-        <Paper
-          elevation={4}
-          sx={{
-            p: 4,
-          }}
-        >
-          <Typography variant="h4">
-            {selectedPage === '' ? (
-              selectedTeam?.name || 'Team'
-            ) : (
-              <>
-                <Link onClick={() => setSelectedPage('')} sx={{ textDecoration: 'none' }}>
-                  {selectedTeam?.name || 'Team'}
-                </Link>
-                {' > '}
-                {selectedPage.charAt(0).toUpperCase() + selectedPage.slice(1)}
-              </>
-            )}
-          </Typography>
-        </Paper>
+        <Typography variant="h4">
+          {selectedPage === '' ? (
+            selectedTeam?.name || 'Team'
+          ) : (
+            <>
+              <Link onClick={() => setSelectedPage('')} sx={{ textDecoration: 'none' }}>
+                {selectedTeam?.name || 'Team'}
+              </Link>
+              {' > '}
+              {selectedPage.charAt(0).toUpperCase() + selectedPage.slice(1)}
+            </>
+          )}
+        </Typography>
+      </Paper>
 
-        {selectedPage === 'create' ? (
-          pageComponent
-        ) : selectedTeam === null ? (
-          <Box sx={{ p: 2 }}>
-            <Typography gutterBottom={true} variant="h5">
-              Please select a team to view or manage.
-            </Typography>
-            <Typography variant="h6">
-              Alternatively, you can <Link href="/team/create">create a new team</Link>.
-            </Typography>
-          </Box>
-        ) : pageComponent ? (
-          pageComponent
-        ) : (
-          <TeamMenu setSelectedPage={setSelectedPage} />
-        )}
-      </Box>
-    </>
+      {selectedPage === 'create' ? (
+        pageComponent
+      ) : selectedTeam === null ? (
+        <Box sx={{ p: 2 }}>
+          <Typography gutterBottom={true} variant="h5">
+            Please select a team to view or manage.
+          </Typography>
+          <Typography variant="h6">
+            Alternatively, you can <Link href="/team/create">create a new team</Link>.
+          </Typography>
+        </Box>
+      ) : pageComponent ? (
+        pageComponent
+      ) : (
+        <TeamMenu setSelectedPage={setSelectedPage} />
+      )}
+    </Box>
   )
 }
 
-TeamPage.auth = true
+const TeamPage = (): JSX.Element => (
+  <>
+    <Head>
+      <title>Your Lethal Company Modding Team</title>
+      <meta
+        name="description"
+        content="Manage your Lethal Company modding team: its profile, members and projects."
+      />
+    </Head>
+
+    <AuthWrapper>
+      <TeamContent />
+    </AuthWrapper>
+  </>
+)
 
 export default TeamPage

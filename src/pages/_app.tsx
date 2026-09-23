@@ -13,7 +13,6 @@ import { enqueueSnackbar, SnackbarProvider } from 'notistack'
 import type { FunctionComponent, PropsWithChildren } from 'react'
 import { useEffect, useState } from 'react'
 import { AppBar } from '@/components/_shared/AppBar.tsx'
-import { AuthWrapper } from '@/components/_shared/auth/Wrapper.tsx'
 import { Loader } from '@/components/_shared/Loader.tsx'
 import { useAppStore } from '@/store.ts'
 import { darkTheme } from '@/styles/darkThemeOptions.ts'
@@ -23,11 +22,9 @@ import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import { createEmotionCache } from '@/utility/createEmotionCache.ts'
 
-// Next names the page prop `Component`.
-type MyAppProps = Omit<AppProps, 'Component'> &
-  Record<'Component', AppProps['Component'] & { auth?: boolean }> & {
-    emotionCache?: EmotionCache
-  }
+type MyAppProps = AppProps & {
+  emotionCache?: EmotionCache
+}
 
 const clientSideEmotionCache: EmotionCache = createEmotionCache()
 
@@ -105,13 +102,7 @@ const MyApp: FunctionComponent<MyAppProps> = (props: PropsWithChildren<MyAppProp
             <SessionContextProvider supabaseClient={supabaseClient} initialSession={initialSession}>
               <AppBar />
 
-              {Component.auth ? (
-                <AuthWrapper>
-                  <Component {...pageProps} />
-                </AuthWrapper>
-              ) : (
-                <Component {...pageProps} />
-              )}
+              <Component {...pageProps} />
             </SessionContextProvider>
           )}
         </SnackbarProvider>

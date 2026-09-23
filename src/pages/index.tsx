@@ -75,6 +75,10 @@ const Home: NextPage = (): JSX.Element => {
     <>
       <Head>
         <title>Your Source for Lethal Company Modding Resources</title>
+        <meta
+          name="description"
+          content="Tools, guides and community for making and playing Lethal Company mods."
+        />
       </Head>
 
       <CornerAccents />

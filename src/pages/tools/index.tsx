@@ -74,6 +74,10 @@ const ToolsHome: NextPage = (): JSX.Element => {
     <>
       <Head>
         <title>Your Source for Lethal Company Tools</title>
+        <meta
+          name="description"
+          content="Search, filter and sort every Lethal Company mod published on Thunderstore."
+        />
       </Head>
 
       <CornerAccents />

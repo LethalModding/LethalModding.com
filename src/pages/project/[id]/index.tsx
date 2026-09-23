@@ -12,11 +12,12 @@ import { useSnackbar } from 'notistack'
 import type { JSX } from 'react'
 import { useCallback, useEffect, useState } from 'react'
 import ReactTimeAgo from 'react-time-ago'
+import { AuthWrapper } from '@/components/_shared/auth/Wrapper.tsx'
 import type { Profile } from '@/types/db/Profile.ts'
 import type { Project } from '@/types/db/Project.ts'
 import type { Team } from '@/types/db/Team.ts'
 
-const ProjectPage = (): JSX.Element => {
+const ProjectContent = (): JSX.Element => {
   const { enqueueSnackbar } = useSnackbar()
   const { id } = useParams()
   const supabase = useSupabaseClient()
@@ -88,100 +89,105 @@ const ProjectPage = (): JSX.Element => {
   useEffect(() => refreshCreator(), [refreshCreator])
 
   return (
-    <>
-      <Head>
-        <title>Your Source for Lethal Company Mods</title>
-      </Head>
+    <Box
+      sx={{
+        height: 'calc(100vh - 56px)',
 
-      <Box
+        overflowX: 'hidden',
+        overflowY: 'auto',
+
+        '&::-webkit-scrollbar': {
+          width: '0.25em',
+          height: '0.25em',
+        },
+
+        '&::-webkit-scrollbar-thumb': {
+          backgroundColor: 'var(--accent)',
+        },
+      }}
+    >
+      <Paper
         sx={{
-          height: 'calc(100vh - 56px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
 
-          overflowX: 'hidden',
-          overflowY: 'auto',
-
-          '&::-webkit-scrollbar': {
-            width: '0.25em',
-            height: '0.25em',
-          },
-
-          '&::-webkit-scrollbar-thumb': {
-            backgroundColor: 'var(--accent)',
-          },
+          borderRadius: 0,
+          gap: 4,
+          p: 4,
         }}
       >
-        <Paper
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-
-            borderRadius: 0,
-            gap: 4,
-            p: 4,
-          }}
-        >
-          <Box>
-            {project === null ? (
-              <Skeleton variant="text" height={32} width={400} />
-            ) : (
-              <Typography variant="h5">{project.name}</Typography>
-            )}
-            {team === null ? (
-              <Skeleton variant="text" height={20} width={200} />
-            ) : (
-              <Typography variant="subtitle1">{team.name}</Typography>
-            )}
-          </Box>
-
-          <Box sx={{ fontSize: '2em', mb: -2 }}>
-            <Tooltip title={project?.type === 'public' ? 'Public' : 'Private'}>
-              {project?.type === 'public' ? (
-                <PublicIcon fontSize="inherit" />
-              ) : (
-                <PrivateIcon fontSize="inherit" />
-              )}
-            </Tooltip>
-          </Box>
-        </Paper>
-
-        <Paper
-          sx={{
-            borderRadius: 0,
-            borderTop: '1px solid',
-            borderColor: 'divider',
-            p: 4,
-          }}
-        >
-          <Typography variant="h6">Summary</Typography>
+        <Box>
           {project === null ? (
-            <Skeleton variant="text" height={60} width={600} />
+            <Skeleton variant="text" height={32} width={400} />
           ) : (
-            <Typography variant="body1">{project.summary || 'No summary provided.'}</Typography>
+            <Typography variant="h5">{project.name}</Typography>
           )}
-        </Paper>
-        <Paper
-          sx={{
-            borderRadius: 0,
-            borderTop: '1px solid',
-            borderColor: 'divider',
-            p: 4,
-          }}
-        >
-          <Typography variant="h6">Details</Typography>
-          <Typography variant="body1">
-            Created: <ReactTimeAgo date={new Date(project?.created_at ?? 0)} /> (by{' '}
-            {creator?.username || 'Unknown'})
-          </Typography>
-          <Typography variant="body1">
-            Updated: <ReactTimeAgo date={new Date(project?.updated_at ?? 0)} />
-          </Typography>
-        </Paper>
-      </Box>
-    </>
+          {team === null ? (
+            <Skeleton variant="text" height={20} width={200} />
+          ) : (
+            <Typography variant="subtitle1">{team.name}</Typography>
+          )}
+        </Box>
+
+        <Box sx={{ fontSize: '2em', mb: -2 }}>
+          <Tooltip title={project?.type === 'public' ? 'Public' : 'Private'}>
+            {project?.type === 'public' ? (
+              <PublicIcon fontSize="inherit" />
+            ) : (
+              <PrivateIcon fontSize="inherit" />
+            )}
+          </Tooltip>
+        </Box>
+      </Paper>
+
+      <Paper
+        sx={{
+          borderRadius: 0,
+          borderTop: '1px solid',
+          borderColor: 'divider',
+          p: 4,
+        }}
+      >
+        <Typography variant="h6">Summary</Typography>
+        {project === null ? (
+          <Skeleton variant="text" height={60} width={600} />
+        ) : (
+          <Typography variant="body1">{project.summary || 'No summary provided.'}</Typography>
+        )}
+      </Paper>
+      <Paper
+        sx={{
+          borderRadius: 0,
+          borderTop: '1px solid',
+          borderColor: 'divider',
+          p: 4,
+        }}
+      >
+        <Typography variant="h6">Details</Typography>
+        <Typography variant="body1">
+          Created: <ReactTimeAgo date={new Date(project?.created_at ?? 0)} /> (by{' '}
+          {creator?.username || 'Unknown'})
+        </Typography>
+        <Typography variant="body1">
+          Updated: <ReactTimeAgo date={new Date(project?.updated_at ?? 0)} />
+        </Typography>
+      </Paper>
+    </Box>
   )
 }
 
-ProjectPage.auth = true
+const ProjectPage = (): JSX.Element => (
+  <>
+    <Head>
+      <title>Lethal Company Modding Project</title>
+      <meta name="description" content="A Lethal Company modding project and its team." />
+    </Head>
+
+    <AuthWrapper>
+      <ProjectContent />
+    </AuthWrapper>
+  </>
+)
 
 export default ProjectPage
