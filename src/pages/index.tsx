@@ -17,7 +17,7 @@ const Home: NextPage = (): JSX.Element => {
   const supabase = useSupabaseClient()
   // get session from fragment #access_token=...&expires_in=...&token_type=...
   useEffect(() => {
-    const hash = (router.asPath as string).split('#')[1] // error=unauthorized_client&error_code=401error_description=Something+went+wrong
+    const [, hash] = (router.asPath as string).split('#') // error=unauthorized_client&error_code=401error_description=Something+went+wrong
     const parsedHash = new URLSearchParams(hash)
 
     const errorHash = parsedHash.get('error_description') // Something went wrong

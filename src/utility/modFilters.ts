@@ -60,7 +60,7 @@ function filterMods(allMods: Mod[], filters: Filters, categories: CategoryFilter
   return allMods.filter((mod) => {
     // Thunderstore ships every mod with at least one version; one that has none cannot be
     // filtered on size, dependencies or website, so it is not a match.
-    const version = mod.versions[0]
+    const [version] = mod.versions
     if (version === undefined) {
       return false
     }

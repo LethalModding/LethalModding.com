@@ -53,7 +53,6 @@
         "noNestedTernary": "off",
         "noMagicNumbers": "off",
         "noJsxLiterals": "off",
-        "noContinue": "off",
         "noIncrementDecrement": {
           "level": "on",
           "options": {

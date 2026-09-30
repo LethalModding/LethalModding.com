@@ -43,7 +43,7 @@ export function ModGrid({ mods }: { mods: Mod[] }): JSX.Element {
     >
       {mods.map((x) => {
         // filterMods drops a mod with no versions, so this is a type guard, not a case.
-        const version = x.versions[0]
+        const [version] = x.versions
         if (version === undefined) {
           return null
         }
