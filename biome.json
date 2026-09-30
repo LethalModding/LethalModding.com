@@ -50,7 +50,6 @@
       },
       "style": {
         "noTernary": "off",
-        "noNestedTernary": "off",
         "noMagicNumbers": "off",
         "noJsxLiterals": "off",
         "noIncrementDecrement": {
