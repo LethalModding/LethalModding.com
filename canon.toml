@@ -6,3 +6,5 @@ reconciled = "canon v0.1.0-poc"
 "ts-biome-00006 suspicious/noDeprecatedImports" = "the deprecation is on an overload this call does not use"
 # English-only marketing site; no Lingui, i18next, next-intl, or react-intl in the dependency tree.
 "ts-biome-00006 style/noJsxLiterals" = "single-language by design; no i18n library"
+# src/env.ts is the sole typed entry point for process.env; app code imports publicEnv/serverEnv instead.
+"ts-biome-00006 style/noProcessEnv" = "typed env module entry point at src/env.ts"
