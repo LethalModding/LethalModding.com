@@ -2,14 +2,12 @@ import { createBrowserClient } from '@supabase/ssr'
 import type { Session } from '@supabase/supabase-js'
 import type { JSX, PropsWithChildren } from 'react'
 import { useEffect, useMemo, useState } from 'react'
+import { publicEnv } from '@/env.ts'
 import { SupabaseContext } from '@/utility/supabase.ts'
 
 export function SupabaseProvider({ children }: PropsWithChildren): JSX.Element {
   const [client] = useState(() =>
-    createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
-    ),
+    createBrowserClient(publicEnv.supabaseUrl, publicEnv.supabaseAnonKey),
   )
   const [session, setSession] = useState<Session | null>(null)
 

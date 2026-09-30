@@ -1,6 +1,6 @@
-import process from 'node:process'
 import { Octokit } from '@octokit/rest'
 import type { NextApiRequest, NextApiResponse } from 'next/types'
+import { serverEnv } from '@/env.ts'
 import { rateLimit } from '@/server/rate-limit.ts'
 
 const limiter = rateLimit({
@@ -89,7 +89,7 @@ export default async function ConcreteBugReport(
     .replace('{{ resultActual }}', resultActual)
 
   const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN,
+    auth: serverEnv.githubToken,
   })
 
   const response = await octokit.issues.create({

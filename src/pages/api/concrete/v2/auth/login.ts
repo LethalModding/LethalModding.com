@@ -3,6 +3,7 @@ import process from 'node:process'
 import type { ParsedGroup, ParsedMailbox } from 'email-addresses'
 import addrs from 'email-addresses'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { publicEnv } from '@/env.ts'
 import { readTemplate, sendEmail } from '@/server/email.ts'
 import { rateLimit } from '@/server/rate-limit.ts'
 import { supabaseSERVER } from '@/server/supabaseServer.ts'
@@ -39,7 +40,7 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse): Promise<vo
   const { data, error } = await supabaseSERVER.auth.admin.generateLink({
     email: parsedEmail.address,
     options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+      redirectTo: publicEnv.baseUrl,
     },
     type: 'magiclink',
   })

@@ -50,7 +50,6 @@
       },
       "style": {
         "noTernary": "off",
-        "noMagicNumbers": "off",
         "noJsxLiterals": "off",
         "noIncrementDecrement": {
           "level": "on",
@@ -87,7 +86,6 @@
             "filenameCases": ["camelCase", "PascalCase", "kebab-case", "export"]
           }
         },
-        "noProcessEnv": "off",
         "noExcessiveLinesPerFile": {
           "level": "on",
           "options": {
@@ -348,6 +346,16 @@
         "rules": {
           "suspicious": {
             "noDeprecatedImports": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/env.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noProcessEnv": "off"
           }
         }
       }

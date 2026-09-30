@@ -4,6 +4,7 @@ import Button from '@mui/material/Button'
 import Image from 'next/image'
 import type { JSX } from 'react'
 import { useCallback } from 'react'
+import { publicEnv } from '@/env.ts'
 import { useSupabaseClient } from '@/utility/supabase.ts'
 
 interface Props {
@@ -18,7 +19,7 @@ export function LoginButtons(props: Props): JSX.Element {
     supabase.auth.signInWithOAuth({
       provider: 'discord',
       options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+        redirectTo: publicEnv.baseUrl,
         scopes: 'identify email',
       },
     })
@@ -27,7 +28,7 @@ export function LoginButtons(props: Props): JSX.Element {
     supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+        redirectTo: publicEnv.baseUrl,
       },
     })
   }, [supabase])

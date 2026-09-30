@@ -3,13 +3,14 @@ import path from 'node:path'
 import FormData from 'form-data'
 import Handlebars from 'handlebars'
 import Mailgun from 'mailgun.js'
+import { publicEnv, serverEnv } from '@/env.ts'
 import { logError } from '@/server/log.ts'
 
 const mailgun = new Mailgun(FormData)
 
 const mg = mailgun.client({
   username: 'api',
-  key: process.env.MAILGUN_SEND_KEY ?? '',
+  key: serverEnv.mailgunSendKey,
 })
 
 export async function readTemplate(
@@ -18,9 +19,9 @@ export async function readTemplate(
 ): Promise<string | null> {
   try {
     const rootPath =
-      process.env.NODE_ENV === 'production'
-        ? `/app/src/server/${process.env.NEXT_PUBLIC_BRANDING}/emails`
-        : `./src/server/${process.env.NEXT_PUBLIC_BRANDING}/emails`
+      serverEnv.nodeEnv === 'production'
+        ? `/app/src/server/${publicEnv.branding}/emails`
+        : `./src/server/${publicEnv.branding}/emails`
 
     const templatePath = path.join(rootPath, `${templateName}.hbs`)
     const templateContent = await fsPromises.readFile(templatePath, 'utf-8')
@@ -46,8 +47,8 @@ export async function sendEmail(
   },
 ): Promise<void> {
   const { subject, text, html } = body
-  const resp = await mg.messages.create(process.env.MAILGUN_DOMAIN ?? '', {
-    from: `no-reply@${process.env.MAILGUN_DOMAIN}`,
+  const resp = await mg.messages.create(serverEnv.mailgunDomain, {
+    from: `no-reply@${serverEnv.mailgunDomain}`,
     to: Array.isArray(to) ? to : [to],
     subject,
     text,
