@@ -40,6 +40,28 @@ const TeamContent = (): JSX.Element => {
 
   const selectedTeam = useAppStore((state) => state.selectedTeam)
 
+  const mainContent = useMemo(() => {
+    if (selectedPage === 'create') {
+      return pageComponent
+    }
+    if (selectedTeam === null) {
+      return (
+        <Box sx={{ p: 2 }}>
+          <Typography gutterBottom={true} variant="h5">
+            Please select a team to view or manage.
+          </Typography>
+          <Typography variant="h6">
+            Alternatively, you can <Link href="/team/create">create a new team</Link>.
+          </Typography>
+        </Box>
+      )
+    }
+    if (pageComponent) {
+      return pageComponent
+    }
+    return <TeamMenu setSelectedPage={setSelectedPage} />
+  }, [pageComponent, selectedPage, selectedTeam])
+
   return (
     <Box
       sx={{
@@ -81,22 +103,7 @@ const TeamContent = (): JSX.Element => {
         </Typography>
       </Paper>
 
-      {selectedPage === 'create' ? (
-        pageComponent
-      ) : selectedTeam === null ? (
-        <Box sx={{ p: 2 }}>
-          <Typography gutterBottom={true} variant="h5">
-            Please select a team to view or manage.
-          </Typography>
-          <Typography variant="h6">
-            Alternatively, you can <Link href="/team/create">create a new team</Link>.
-          </Typography>
-        </Box>
-      ) : pageComponent ? (
-        pageComponent
-      ) : (
-        <TeamMenu setSelectedPage={setSelectedPage} />
-      )}
+      {mainContent}
     </Box>
   )
 }
