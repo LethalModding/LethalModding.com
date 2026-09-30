@@ -1,12 +1,12 @@
 import type { Session, SupabaseClient, User } from '@supabase/supabase-js'
 import { createContext, useContext } from 'react'
 
-export interface SupabaseState {
+interface SupabaseState {
   client: SupabaseClient
   session: Session | null
 }
 
-export const SupabaseContext = createContext<SupabaseState | null>(null)
+const SupabaseContext = createContext<SupabaseState | null>(null)
 
 function useSupabase(): SupabaseState {
   const state = useContext(SupabaseContext)
@@ -16,14 +16,17 @@ function useSupabase(): SupabaseState {
   return state
 }
 
-export function useSupabaseClient(): SupabaseClient {
+function useSupabaseClient(): SupabaseClient {
   return useSupabase().client
 }
 
-export function useSession(): Session | null {
+function useSession(): Session | null {
   return useSupabase().session
 }
 
-export function useUser(): User | null {
+function useUser(): User | null {
   return useSupabase().session?.user ?? null
 }
+
+export type { SupabaseState }
+export { SupabaseContext, useSession, useSupabaseClient, useUser }

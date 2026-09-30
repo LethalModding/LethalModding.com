@@ -15,7 +15,7 @@ import { Children } from 'react'
 import { darkTheme as darkThemeOptions } from '@/styles/darkThemeOptions.ts'
 import { createEmotionCache } from '@/utility/createEmotionCache.ts'
 
-export default class MyDocument extends Document {
+class MyDocument extends Document {
   override render(): JSX.Element {
     return (
       <Html lang="en">
@@ -77,3 +77,5 @@ MyDocument.getInitialProps = async (ctx: DocumentContext) => {
     styles: [...Children.toArray(initialProps.styles), ...emotionStyleTags],
   }
 }
+
+export default MyDocument

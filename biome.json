@@ -60,7 +60,6 @@
             "allowForLoopAfterthoughts": true
           }
         },
-        "useDestructuring": "off",
         "useNamingConvention": {
           "level": "on",
           "options": {

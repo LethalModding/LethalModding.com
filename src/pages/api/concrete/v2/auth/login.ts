@@ -10,24 +10,6 @@ import logo from '../../../../../../public/icons/android-chrome-512x512.png'
 
 const { readFile } = fsPromises
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Response>,
-): Promise<void> {
-  const { method } = req
-
-  switch (method) {
-    case 'OPTIONS':
-      res.status(200).end()
-      break
-    case 'POST':
-      return await handlePOST(req, res)
-    default:
-      res.setHeader('Allow', ['POST', 'OPTIONS'])
-      res.status(405).end(`Method ${method} Not Allowed`)
-  }
-}
-
 function isValidEmail(obj: ParsedMailbox | ParsedGroup): obj is ParsedMailbox {
   return obj.type === 'mailbox'
 }
@@ -109,3 +91,20 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse): Promise<vo
 
   return res.status(200).json({ message: 'Email sent' })
 }
+
+async function handler(req: NextApiRequest, res: NextApiResponse<Response>): Promise<void> {
+  const { method } = req
+
+  switch (method) {
+    case 'OPTIONS':
+      res.status(200).end()
+      break
+    case 'POST':
+      return await handlePOST(req, res)
+    default:
+      res.setHeader('Allow', ['POST', 'OPTIONS'])
+      res.status(405).end(`Method ${method} Not Allowed`)
+  }
+}
+
+export default handler

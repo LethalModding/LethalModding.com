@@ -2,7 +2,7 @@ import type { Mod } from '@/types/Mod.ts'
 import type { ModSort } from '@/types/ModSort.ts'
 import type { ModVersion } from '@/types/ModVersion.ts'
 
-export interface Filters {
+interface Filters {
   hasDonation: boolean | null
   hasNSFW: boolean | null
   hasWebsite: boolean | null
@@ -21,12 +21,12 @@ export interface Filters {
   [key: string]: string | number | boolean | null | undefined
 }
 
-export const MEBI = 1024 * 1024
-
-export interface CategoryFilters {
+interface CategoryFilters {
   includes: string[]
   excludes: string[]
 }
+
+const MEBI = 1024 * 1024
 
 /** `null` means the filter is unset. */
 function flagMatches(wanted: boolean | null, actual: boolean): boolean {
@@ -56,7 +56,7 @@ function totalDownloads(mod: Mod): number {
   return mod.versions.reduce((acc, cur) => acc + cur.downloads, 0)
 }
 
-export function filterMods(allMods: Mod[], filters: Filters, categories: CategoryFilters): Mod[] {
+function filterMods(allMods: Mod[], filters: Filters, categories: CategoryFilters): Mod[] {
   return allMods.filter((mod) => {
     // Thunderstore ships every mod with at least one version; one that has none cannot be
     // filtered on size, dependencies or website, so it is not a match.
@@ -101,7 +101,10 @@ const ASCENDING: Record<ModSort['property'], (a: Mod, b: Mod) => number> = {
   dependencies: byVersion((version) => version.dependencies.length),
 }
 
-export function sortMods(mods: Mod[], sort: ModSort): Mod[] {
+function sortMods(mods: Mod[], sort: ModSort): Mod[] {
   const compare = ASCENDING[sort.property]
   return [...mods].sort((a, b) => (sort.direction === 'asc' ? compare(a, b) : compare(b, a)))
 }
+
+export type { CategoryFilters, Filters }
+export { filterMods, MEBI, sortMods }
