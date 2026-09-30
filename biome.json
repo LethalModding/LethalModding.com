@@ -63,7 +63,6 @@
         "useDestructuring": "off",
         "useExportsLast": "off",
         "useExplicitLengthCheck": "off",
-        "useErrorCause": "off",
         "useNamingConvention": {
           "level": "on",
           "options": {
@@ -100,7 +99,6 @@
             "maxLines": 500
           }
         },
-        "noInferrableTypes": "off",
         "useImportType": "error",
         "noNonNullAssertion": "error"
       },
