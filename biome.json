@@ -62,7 +62,6 @@
         },
         "useDestructuring": "off",
         "useExportsLast": "off",
-        "useExplicitLengthCheck": "off",
         "useNamingConvention": {
           "level": "on",
           "options": {
