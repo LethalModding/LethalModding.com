@@ -3,8 +3,15 @@ import type { NextApiRequest, NextApiResponse } from 'next/types'
 import { serverEnv } from '@/env.ts'
 import { rateLimit } from '@/server/rate-limit.ts'
 
+const MS_PER_SECOND = 1000
+const RATE_LIMIT_WINDOW_MS = 60 * MS_PER_SECOND
+const HTTP_TOO_MANY_REQUESTS = 429
+const HTTP_OK = 200
+
+const RATE_LIMIT_MAX_REQUESTS = 10
+
 const limiter = rateLimit({
-  interval: 60 * 1000, // 60 seconds
+  interval: RATE_LIMIT_WINDOW_MS, // 60 seconds
   uniqueTokenPerInterval: 500, // Max 500 users per second
 })
 
@@ -68,9 +75,9 @@ export default async function ConcreteBugReport(
   res: NextApiResponse,
 ): Promise<void> {
   try {
-    await limiter.check(res, 10, 'CACHE_TOKEN') // 10 requests per minute
+    await limiter.check(res, RATE_LIMIT_MAX_REQUESTS, 'CACHE_TOKEN') // 10 requests per minute
   } catch {
-    res.status(429).json({ error: 'Rate limit exceeded' })
+    res.status(HTTP_TOO_MANY_REQUESTS).json({ error: 'Rate limit exceeded' })
     return
   }
 
@@ -100,5 +107,5 @@ export default async function ConcreteBugReport(
     labels: ['triage'],
   })
 
-  res.status(200).json(response.data)
+  res.status(HTTP_OK).json(response.data)
 }

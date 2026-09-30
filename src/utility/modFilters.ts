@@ -26,7 +26,8 @@ interface CategoryFilters {
   excludes: string[]
 }
 
-const MEBI = 1024 * 1024
+const KIBI = 1024
+const MEBI = KIBI * KIBI
 
 /** `null` means the filter is unset. */
 function flagMatches(wanted: boolean | null, actual: boolean): boolean {

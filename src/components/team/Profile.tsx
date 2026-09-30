@@ -287,13 +287,15 @@ function DangerZoneSection({
   onDelete,
   onExpand,
 }: SectionProps & { onDelete: () => void }): JSX.Element {
+  const dangerZoneBackgroundAlpha = 0.2
   return (
     <Accordion
       disableGutters={true}
       expanded={expanded}
       onChange={onExpand}
       sx={{
-        backgroundColor: (theme: Theme) => alpha(theme.palette.error.main, 0.2),
+        backgroundColor: (theme: Theme) =>
+          alpha(theme.palette.error.main, dangerZoneBackgroundAlpha),
       }}
     >
       <SectionSummary description="Delete your Team or Transfer Ownership." title="Danger Zone" />

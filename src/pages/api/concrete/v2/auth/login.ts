@@ -11,13 +11,23 @@ import logo from '../../../../../../public/icons/android-chrome-512x512.png'
 
 const { readFile } = fsPromises
 
+const MS_PER_SECOND = 1000
+const RATE_LIMIT_WINDOW_MS = 60 * MS_PER_SECOND
+const RATE_LIMIT_MAX_TOKENS = 500
+const RATE_LIMIT_MAX_REQUESTS = 10
+const HTTP_BAD_REQUEST = 400
+const HTTP_OK = 200
+const HTTP_TOO_MANY_REQUESTS = 429
+const HTTP_INTERNAL_ERROR = 500
+const HTTP_METHOD_NOT_ALLOWED = 405
+
 function isValidEmail(obj: ParsedMailbox | ParsedGroup): obj is ParsedMailbox {
   return obj.type === 'mailbox'
 }
 
 const limiter = rateLimit({
-  interval: 60 * 1000,
-  uniqueTokenPerInterval: 500,
+  interval: RATE_LIMIT_WINDOW_MS,
+  uniqueTokenPerInterval: RATE_LIMIT_MAX_TOKENS,
 })
 
 interface PostBody {
@@ -28,13 +38,15 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse): Promise<vo
   const { email }: PostBody = req.body
   const parsedEmail: ParsedMailbox | ParsedGroup | null = addrs.parseOneAddress(email)
   if (!(parsedEmail && isValidEmail(parsedEmail))) {
-    return res.status(400).json({ error: 'Invalid email address' })
+    return res.status(HTTP_BAD_REQUEST).json({ error: 'Invalid email address' })
   }
 
   try {
-    await limiter.check(res, 10, 'CACHE_TOKEN') //
+    await limiter.check(res, RATE_LIMIT_MAX_REQUESTS, 'CACHE_TOKEN') //
   } catch {
-    return res.status(429).json({ error: 'Slow down! Wait at least 30 seconds and try again.' })
+    return res
+      .status(HTTP_TOO_MANY_REQUESTS)
+      .json({ error: 'Slow down! Wait at least 30 seconds and try again.' })
   }
 
   const { data, error } = await supabaseSERVER.auth.admin.generateLink({
@@ -45,7 +57,7 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse): Promise<vo
     type: 'magiclink',
   })
   if (error) {
-    return res.status(500).json({ error: 'Failed sending email' })
+    return res.status(HTTP_INTERNAL_ERROR).json({ error: 'Failed sending email' })
   }
 
   let firstName =
@@ -87,10 +99,10 @@ async function handlePOST(req: NextApiRequest, res: NextApiResponse): Promise<vo
       },
     )
   } catch {
-    return res.status(500).json({ error: 'Failed sending email' })
+    return res.status(HTTP_INTERNAL_ERROR).json({ error: 'Failed sending email' })
   }
 
-  return res.status(200).json({ message: 'Email sent' })
+  return res.status(HTTP_OK).json({ message: 'Email sent' })
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse<Response>): Promise<void> {
@@ -98,13 +110,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse<Response>): Pro
 
   switch (method) {
     case 'OPTIONS':
-      res.status(200).end()
+      res.status(HTTP_OK).end()
       break
     case 'POST':
       return await handlePOST(req, res)
     default:
       res.setHeader('Allow', ['POST', 'OPTIONS'])
-      res.status(405).end(`Method ${method} Not Allowed`)
+      res.status(HTTP_METHOD_NOT_ALLOWED).end(`Method ${method} Not Allowed`)
   }
 }
 

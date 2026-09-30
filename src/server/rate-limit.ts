@@ -6,10 +6,13 @@ interface Options {
   interval?: number
 }
 
+const DEFAULT_MAX_TOKENS = 500
+const DEFAULT_INTERVAL_MS = 60_000
+
 export function rateLimit(options?: Options) {
   const tokenCache = new LRUCache({
-    max: options?.uniqueTokenPerInterval || 500,
-    ttl: options?.interval || 60_000,
+    max: options?.uniqueTokenPerInterval || DEFAULT_MAX_TOKENS,
+    ttl: options?.interval || DEFAULT_INTERVAL_MS,
   })
 
   return {

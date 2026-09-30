@@ -5,6 +5,12 @@ import { Link } from '@/components/mui/Link.tsx'
 import { useGlobalStyles } from '@/styles/globalStyles.ts'
 import { TypedText } from './TypedText.tsx'
 
+const MOTD_TYPING_SPEED = 17
+const LINK_STAGGER_MS = 800
+const INTERNAL_LINK_BASE_DELAY_MS = 400
+const EXTERNAL_LINK_BASE_DELAY_MS = 600
+const EXTERNAL_HEADING_DELAY_MS = 200
+
 const styles = {
   titleBox: {
     color: '#fc0000',
@@ -70,22 +76,34 @@ export function MOTD(): JSX.Element {
       <Box sx={globalStyles.linksBox}>
         <Box className="column">
           <Typography variant="h3">
-            <TypedText finalText="Internal" startDelay={0} typingSpeed={17} />
+            <TypedText finalText="Internal" startDelay={0} typingSpeed={MOTD_TYPING_SPEED} />
           </Typography>
           {internalLinks.map((item, index) => (
             <Link color="inherit" href={item.href} key={item.href} underline="none">
-              <TypedText finalText={item.label} startDelay={index * 800 + 400} typingSpeed={17} />
+              <TypedText
+                finalText={item.label}
+                startDelay={index * LINK_STAGGER_MS + INTERNAL_LINK_BASE_DELAY_MS}
+                typingSpeed={MOTD_TYPING_SPEED}
+              />
             </Link>
           ))}
         </Box>
 
         <Box className="column">
           <Typography variant="h3">
-            <TypedText finalText="External" startDelay={200} typingSpeed={17} />
+            <TypedText
+              finalText="External"
+              startDelay={EXTERNAL_HEADING_DELAY_MS}
+              typingSpeed={MOTD_TYPING_SPEED}
+            />
           </Typography>
           {externalLinks.map((item, index) => (
             <Link color="inherit" href={item.href} key={item.href} target="_blank" underline="none">
-              <TypedText finalText={item.label} startDelay={index * 800 + 600} typingSpeed={17} />
+              <TypedText
+                finalText={item.label}
+                startDelay={index * LINK_STAGGER_MS + EXTERNAL_LINK_BASE_DELAY_MS}
+                typingSpeed={MOTD_TYPING_SPEED}
+              />
             </Link>
           ))}
         </Box>

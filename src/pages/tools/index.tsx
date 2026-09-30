@@ -51,7 +51,8 @@ const ToolsHome: NextPage = (): JSX.Element => {
   //
 
   const [pageNumber, setPageNumber] = useState<number>(1)
-  const [pageSize, setPageSize] = useState<number>(100)
+  const defaultPageSize = 100
+  const [pageSize, setPageSize] = useState<number>(defaultPageSize)
 
   const thisPage = useMemo(
     () => sortedMods.slice((pageNumber - 1) * pageSize, pageNumber * pageSize),

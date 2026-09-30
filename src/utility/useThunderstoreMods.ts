@@ -2,6 +2,8 @@ import { ofetch } from 'ofetch'
 import { useEffect, useMemo, useState } from 'react'
 import type { Mod } from '@/types/Mod.ts'
 
+const THUNDERSTORE_FETCH_DELAY_MS = 100
+
 /** Every Lethal Company package on Thunderstore, and the sorted set of their categories. */
 export function useThunderstoreMods(): {
   allCategories: string[]
@@ -27,7 +29,7 @@ export function useThunderstoreMods(): {
         .catch(() => {
           setLoadError('Could not reach the Thunderstore API.')
         })
-    }, 100)
+    }, THUNDERSTORE_FETCH_DELAY_MS)
 
     return () => clearTimeout(timeout)
   }, [])

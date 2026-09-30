@@ -9,6 +9,9 @@ import type { Dispatch, JSX, SetStateAction } from 'react'
 import { useCallback } from 'react'
 import type { ModSort } from '@/types/ModSort.ts'
 
+const PAGE_NUMBER_NEIGHBORHOOD = 3
+const LEADING_ELLIPSIS_PAGE = 2
+
 interface Props {
   pageNumber: number
   pageSize: number
@@ -137,7 +140,7 @@ export const Pagination = (props: Props): JSX.Element => {
           if (
             x === 1 ||
             x === Math.ceil(totalResults / pageSize) ||
-            Math.abs(x - pageNumber) <= 3
+            Math.abs(x - pageNumber) <= PAGE_NUMBER_NEIGHBORHOOD
           ) {
             return (
               <Link
@@ -157,7 +160,7 @@ export const Pagination = (props: Props): JSX.Element => {
               </Link>
             )
           }
-          if (x === 2 && pageNumber > 3) {
+          if (x === LEADING_ELLIPSIS_PAGE && pageNumber > PAGE_NUMBER_NEIGHBORHOOD) {
             return '...'
           }
           if (

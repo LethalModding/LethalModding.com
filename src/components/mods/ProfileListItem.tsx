@@ -11,6 +11,10 @@ import type { Dispatch, JSX, MouseEvent, SetStateAction } from 'react'
 import { useCallback, useState } from 'react'
 import type { Profile } from '@/types/Profile.ts'
 
+const LONG_LABEL_SHRINK_CHARS = 75
+const NAME_FONT_PX = 24
+const OWNER_FONT_PX = 18
+
 interface Props {
   onSelect: Dispatch<SetStateAction<Profile>>
   profile: Profile
@@ -51,7 +55,7 @@ export function ProfileListItem(props: Props): JSX.Element {
       >
         <Typography
           sx={{
-            fontSize: `${24 * (1 - profile.name.length / 75)}px !important`,
+            fontSize: `${NAME_FONT_PX * (1 - profile.name.length / LONG_LABEL_SHRINK_CHARS)}px !important`,
             lineHeight: 1,
           }}
           variant="h6"
@@ -63,7 +67,7 @@ export function ProfileListItem(props: Props): JSX.Element {
           <Typography
             color="text.secondary"
             sx={{
-              fontSize: `${18 * (1 - profile.owner.length / 75)}px !important`,
+              fontSize: `${OWNER_FONT_PX * (1 - profile.owner.length / LONG_LABEL_SHRINK_CHARS)}px !important`,
               lineHeight: 1,
             }}
             variant="body2"
