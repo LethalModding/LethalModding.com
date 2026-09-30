@@ -416,7 +416,7 @@ export function TeamProfilePage(): JSX.Element {
     setLocalTeam(team)
 
     setLocalSlugs((prev) => {
-      if (!prev.length) {
+      if (prev.length === 0) {
         return [slugify(team.name)]
       }
 

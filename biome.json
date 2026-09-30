@@ -61,7 +61,6 @@
           }
         },
         "useDestructuring": "off",
-        "useExportsLast": "off",
         "useNamingConvention": {
           "level": "on",
           "options": {
