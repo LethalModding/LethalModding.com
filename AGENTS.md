@@ -15,7 +15,7 @@ Agent conventions. Setup: [HUMANS.md](./HUMANS.md).
 | ------ | ------- |
 | Source | `bun run lint`, `bun run typecheck` |
 | Build | `bun run build` or `gate run build typecheck` |
-| Full gate (CI) | `bun run lint`, `bun run typecheck`, `bun run build`, then `bun run test:e2e` against `next start` and `next dev` (`PW_WEB_COMMAND`) |
+| Full gate (CI) | `bun run lint`, `bun run typecheck`, `bun run build`, then `bun run test:e2e` against `next start` and `next dev --webpack` (`PW_WEB_COMMAND`; Turbopack dev fails on next 16.4.0) |
 
 ## Layout
 

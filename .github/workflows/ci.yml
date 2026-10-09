@@ -31,7 +31,8 @@ jobs:
         env:
           PW_WEB_COMMAND: bunx next start -p 4720
       # Hydration mismatches are only reported by React's development build.
+      # Turbopack dev on next 16.4.0 fails to load shared chunks on cold routes, so the dev smoke uses webpack.
       - name: Smoke the dev server
         run: bun run test:e2e
         env:
-          PW_WEB_COMMAND: bunx next dev -p 4720
+          PW_WEB_COMMAND: bunx next dev --webpack -p 4720
