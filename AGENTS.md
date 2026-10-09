@@ -7,7 +7,7 @@ Agent conventions. Setup: [HUMANS.md](./HUMANS.md).
 - No secrets, `.env`, or build artifacts (`.next`, `node_modules`, `tsconfig.tsbuildinfo`).
 - Marketing copy stays implementation-free; routes and env catalogs belong here or HUMANS.
 - Stage only files for the current change.
-- Kept on purpose, not deadwood: `components/mods/ModListItem` and `ProfileListItem`, the `picsum.photos` image remote, and the `slugs ?? …` fallback in `useTeamSlugs` (`components/team/Profile.tsx`).
+- Kept on purpose, not deadwood: `components/mods/ModListItem` and `ProfileListItem`, the `picsum.photos` image remote, and the `slugs ?? …` fallback in `useTeamSlugs` (`src/components/team/Profile.tsx`).
 
 ## Verification
 
@@ -34,6 +34,6 @@ Agent conventions. Setup: [HUMANS.md](./HUMANS.md).
 
 - **Router:** Pages Router (`src/pages`), not App Router.
 - **UI:** MUI v9 + Emotion.
-- **Auth:** `@supabase/ssr` browser client from `SupabaseProvider`; hooks in `utility/supabase.ts`. Tokens may arrive in URL hash on home.
+- **Auth:** `@supabase/ssr` browser client from `SupabaseProvider`; hooks in `src/utility/supabase.ts`. Tokens may arrive in URL hash on home.
 - **HTTP:** `ofetch` for client API calls.
 - **Package manager:** Bun — `bun run <script>`.
