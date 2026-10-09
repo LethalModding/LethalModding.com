@@ -31,19 +31,15 @@ export function TeamMemberInvitePage(): JSX.Element {
   const teamID = useAppStore((state) => state.selectedTeamID)
   const supabase = useSupabaseClient()
   const { enqueueSnackbar } = useSnackbar()
-  const handleSubmit = useCallback(() => {
-    supabase
-      .from('team_invites')
-      .insert({ team_id: teamID, email, type })
-      .then(({ error }) => {
-        if (error) {
-          enqueueSnackbar(`Error inviting ${email}`, { variant: 'error' })
-        } else {
-          enqueueSnackbar(`Invited ${email}`, { variant: 'success' })
-        }
+  const handleSubmit = useCallback(async () => {
+    const { error } = await supabase.from('team_invites').insert({ team_id: teamID, email, type })
+    if (error) {
+      enqueueSnackbar(`Error inviting ${email}`, { variant: 'error' })
+    } else {
+      enqueueSnackbar(`Invited ${email}`, { variant: 'success' })
+    }
 
-        setEmail('')
-      })
+    setEmail('')
   }, [email, enqueueSnackbar, supabase, teamID, type])
 
   return (

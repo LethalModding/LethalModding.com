@@ -35,9 +35,16 @@ export function useThunderstoreMods(): {
   }, [])
 
   const allCategories = useMemo(
-    () => Array.from(new Set(allMods.flatMap((mod) => mod.categories))).sort(),
+    () => Array.from(new Set(allMods.flatMap((mod) => mod.categories))).sort(compareCodeUnits),
     [allMods],
   )
 
   return { allCategories, allMods, loadError }
+}
+
+function compareCodeUnits(a: string, b: string): number {
+  if (a < b) {
+    return -1
+  }
+  return a > b ? 1 : 0
 }

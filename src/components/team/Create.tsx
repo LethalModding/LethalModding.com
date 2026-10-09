@@ -35,25 +35,19 @@ export function TeamCreatePage(): JSX.Element {
   const supabase = useSupabaseClient()
   const setSelectedTeamID = useAppStore((state) => state.setSelectedTeamID)
   const handleSubmit = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
+    async (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault()
       if (!name) {
         return
       }
 
-      supabase
-        .from('teams')
-        .insert({ name, type })
-        .select()
-        .single()
-        .then(({ data, error }) => {
-          if (error) {
-            enqueueSnackbar('Unable to create Team', { variant: 'error' })
-          } else {
-            enqueueSnackbar('Team created', { variant: 'success' })
-            setSelectedTeamID(data.id)
-          }
-        })
+      const { data, error } = await supabase.from('teams').insert({ name, type }).select().single()
+      if (error) {
+        enqueueSnackbar('Unable to create Team', { variant: 'error' })
+      } else {
+        enqueueSnackbar('Team created', { variant: 'success' })
+        setSelectedTeamID(data.id)
+      }
     },
     [enqueueSnackbar, name, setSelectedTeamID, supabase, type],
   )

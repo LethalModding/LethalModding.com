@@ -36,13 +36,13 @@ export function ProjectCreatePage(): JSX.Element {
   const supabase = useSupabaseClient()
   const selectedTeamID = useAppStore((state) => state.selectedTeamID)
   const handleSubmit = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
+    async (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault()
       if (!name) {
         return
       }
 
-      supabase
+      const { error } = await supabase
         .from('projects')
         .insert({
           team_id: selectedTeamID,
@@ -50,13 +50,11 @@ export function ProjectCreatePage(): JSX.Element {
           type,
         })
         .select()
-        .then(({ error }) => {
-          if (error) {
-            enqueueSnackbar('Unable to create Project', { variant: 'error' })
-          } else {
-            enqueueSnackbar('Project created', { variant: 'success' })
-          }
-        })
+      if (error) {
+        enqueueSnackbar('Unable to create Project', { variant: 'error' })
+      } else {
+        enqueueSnackbar('Project created', { variant: 'success' })
+      }
     },
     [enqueueSnackbar, name, selectedTeamID, supabase, type],
   )
