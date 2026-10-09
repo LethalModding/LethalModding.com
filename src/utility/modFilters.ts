@@ -108,4 +108,4 @@ function sortMods(mods: Mod[], sort: ModSort): Mod[] {
 }
 
 export type { CategoryFilters, Filters }
-export { filterMods, MEBI, sortMods }
+export { filterMods, sortMods }
