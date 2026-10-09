@@ -49,6 +49,8 @@
         "noImgElement": "on"
       },
       "style": {
+        "useExportsLast": "off",
+        "noContinue": "off",
         "noTernary": "off",
         "noJsxLiterals": "off",
         "noIncrementDecrement": {
@@ -87,7 +89,7 @@
           }
         },
         "noExcessiveLinesPerFile": {
-          "level": "on",
+          "level": "error",
           "options": {
             "maxLines": 500
           }
@@ -97,13 +99,13 @@
       },
       "complexity": {
         "noExcessiveCognitiveComplexity": {
-          "level": "on",
+          "level": "error",
           "options": {
             "maxAllowedComplexity": 25
           }
         },
         "noExcessiveLinesPerFunction": {
-          "level": "on",
+          "level": "error",
           "options": {
             "maxLines": 100,
             "skipBlankLines": true,
@@ -165,13 +167,13 @@
           },
           "complexity": {
             "noExcessiveCognitiveComplexity": {
-              "level": "on",
+              "level": "error",
               "options": {
                 "maxAllowedComplexity": 30
               }
             },
             "noExcessiveLinesPerFunction": {
-              "level": "on",
+              "level": "error",
               "options": {
                 "maxLines": 150,
                 "skipBlankLines": true,
@@ -181,7 +183,7 @@
           },
           "style": {
             "noExcessiveLinesPerFile": {
-              "level": "on",
+              "level": "error",
               "options": {
                 "maxLines": 1500
               }
