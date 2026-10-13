@@ -18,7 +18,7 @@
     "@emotion/styled": "^11.14.1",
     "@emotion/utils": "^1.4.2",
     "@mui/icons-material": "9.4.0",
-    "@mui/material": "9.4.0",
+    "@mui/material": "9.5.0",
     "@octokit/rest": "22.0.1",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "2.117.3",
