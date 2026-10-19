@@ -40,7 +40,4 @@ Agent conventions. Setup: [HUMANS.md](./HUMANS.md).
 
 ## Gate budget
 
-Measured, within budget, at load average 33 to 39 on 32 cores. Warm `gate`: 0.14 s wall, 0.3 s CPU
-(build, typecheck and lint all turbo-cached). Cold (`TURBO_FORCE=1`, no `.next`, `.turbo` or
-`tsbuildinfo`): 5.2 s wall, 33.6 s CPU. `turbo run build` is 4.5 s of that, the Next compile
-itself; typecheck and lint are under 1 s each. Nothing in `.gate.toml` is waste.
+Build, typecheck and lint are turbo-cached; cold, the Next compile in `turbo run build` is most of the wall time.
