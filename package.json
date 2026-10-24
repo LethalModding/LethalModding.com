@@ -7,7 +7,7 @@
     "build": "next build",
     "export": "next export",
     "start": "next start -p 9000",
-    "lint": "biome check .",
+    "lint": "biome check --error-on-warnings .",
     "typecheck": "next typegen && tsc -b --noEmit --pretty false",
     "test:e2e": "playwright test"
   },

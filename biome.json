@@ -47,6 +47,7 @@
         "noUnnecessaryConditions": "error"
       },
       "performance": {
+        "useDomNodeTextContent": "off",
         "noAwaitInLoops": "off",
         "noJsxPropsBind": "off",
         "useSolidForComponent": "off",
