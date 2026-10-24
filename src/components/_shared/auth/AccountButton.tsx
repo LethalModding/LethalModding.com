@@ -73,7 +73,7 @@ export function AccountButton(): JSX.Element {
 
           if (
             selectedTeamID === '' ||
-            (selectedTeamID !== 'create' && !data.find((team) => team.id === selectedTeamID))
+            (selectedTeamID !== 'create' && !data.some((team) => team.id === selectedTeamID))
           ) {
             setSelectedTeamID(data?.[0]?.id)
           }
