@@ -31,6 +31,9 @@
   },
   "linter": {
     "rules": {
+      "a11y": {
+        "noNoninteractiveElementInteractions": "error"
+      },
       "preset": "all",
       "correctness": {
         "noSolidDestructuredProps": "off",
@@ -54,6 +57,27 @@
         "noImgElement": "on"
       },
       "style": {
+        "useNamedCaptureGroup": "off",
+        "useUnicodeRegex": "off",
+        "noExportedImports": "off",
+        "useVarsOnTop": "off",
+        "useExplicitLengthCheck": "off",
+        "useTestHooksOnTop": "off",
+        "useTestHooksInOrder": "off",
+        "useConsistentMethodSignatures": "off",
+        "noHexColors": "off",
+        "useDestructuring": "off",
+        "noReactNativeLiteralColors": "off",
+        "useThisInClassMethods": "off",
+        "useDomQuerySelector": "off",
+        "noInlineStyles": "off",
+        "useReduceTypeParameter": "error",
+        "noNestedTernary": "error",
+        "useImportsFirst": "error",
+        "useConsistentTestIt": {
+          "level": "error",
+          "options": { "function": "test", "withinDescribe": "test" }
+        },
         "useExportsLast": "off",
         "noContinue": "off",
         "noTernary": "off",
@@ -103,6 +127,12 @@
         "noNonNullAssertion": "error"
       },
       "complexity": {
+        "useArraySome": "error",
+        "noExcessiveNestedCallbacks": "error",
+        "noPlaywrightUselessAwait": "error",
+        "noUselessUndefined": "error",
+        "noUselessStringConcat": "error",
+        "noUnnecessaryTemplateExpression": "error",
         "noExcessiveCognitiveComplexity": {
           "level": "error",
           "options": {
@@ -140,6 +170,19 @@
     "lineWidth": 100
   },
   "overrides": [
+    {
+      "includes": [
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+        "**/*.pw.ts",
+        "**/__tests__/**",
+        "**/test/**",
+        "**/tests/**"
+      ],
+      "linter": { "rules": { "style": { "useImportsFirst": "off" } } }
+    },
     {
       "includes": [
         "**/*.test.ts",
