@@ -24,7 +24,7 @@ for (const path of ['/', '/tools', '/team', '/team/profile']) {
       }
     })
 
-    const response = await page.goto(path, { waitUntil: 'networkidle' })
+    const response = await page.goto(path, { waitUntil: 'load' })
 
     expect(response?.status()).toBe(200)
     await expect(page).toHaveTitle(/\S/)
@@ -44,7 +44,7 @@ test('/tools loads Thunderstore icons lazily, straight from the CDN', async ({ p
     }
   })
 
-  await page.goto('/tools', { waitUntil: 'networkidle' })
+  await page.goto('/tools', { waitUntil: 'load' })
 
   const icon = page.getByRole('img', { name: packages[0]?.name ?? '' })
   await expect(icon).toHaveAttribute('src', packages[0]?.versions[0]?.icon ?? '')
@@ -62,7 +62,7 @@ for (const path of ['/team', '/team/profile', '/project/00000000-0000-0000-0000-
       return route.abort()
     })
 
-    await page.goto(path, { waitUntil: 'networkidle' })
+    await page.goto(path, { waitUntil: 'load' })
 
     await expect(page.getByText('Please login to view this page.')).toBeVisible()
     expect(supabaseCalls).toEqual([])

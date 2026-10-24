@@ -387,7 +387,7 @@ function useTeamSlugs(team: Team | null): [string[], Dispatch<SetStateAction<str
       })
   }, [supabase, team, enqueueSnackbar])
 
-  const [localSlugs, setLocalSlugs] = useState<string[]>(slugs ?? [slugify(team?.name)])
+  const [localSlugs, setLocalSlugs] = useState<string[]>(slugs)
   useEffect(() => setLocalSlugs(slugs), [slugs])
   return [localSlugs, setLocalSlugs]
 }
