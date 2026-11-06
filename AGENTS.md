@@ -11,24 +11,24 @@ Agent conventions. Setup: [HUMANS.md](./HUMANS.md).
 
 ## Verification
 
-| Change | Command |
-| ------ | ------- |
-| Source | `bun run lint`, `bun run typecheck` |
-| Build | `bun run build` or `gate run build typecheck` |
+| Change         | Command                                                                                                                                                                            |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Source         | `bun run lint`, `bun run typecheck`                                                                                                                                                |
+| Build          | `bun run build` or `gate run build typecheck`                                                                                                                                      |
 | Full gate (CI) | `bun run lint`, `bun run typecheck`, `bun run build`, then `bun run test:e2e` against `next start` and `next dev --webpack` (`PW_WEB_COMMAND`; Turbopack dev fails on next 16.4.0) |
 
 ## Layout
 
-| Path | Role |
-| ---- | ---- |
-| `src/pages/` | Pages Router routes; API under `pages/api/` |
+| Path              | Role                                                                 |
+| ----------------- | -------------------------------------------------------------------- |
+| `src/pages/`      | Pages Router routes; API under `pages/api/`                          |
 | `src/components/` | React UI — `_shared`, `branding`, `mods`, `project`, `team`, `tools` |
-| `src/server/` | Supabase, email (Mailgun + Handlebars), rate limiting |
-| `src/types/` | Shared TypeScript models |
-| `src/styles/` | MUI theme, global CSS |
-| `src/utility/` | Emotion cache, slugify |
-| `src/store.ts` | Zustand state |
-| `next.config.mjs` | Image remotes, API CORS |
+| `src/server/`     | Supabase, email (Mailgun + Handlebars), rate limiting                |
+| `src/types/`      | Shared TypeScript models                                             |
+| `src/styles/`     | MUI theme, global CSS                                                |
+| `src/utility/`    | Emotion cache, slugify                                               |
+| `src/store.ts`    | Zustand state                                                        |
+| `next.config.mjs` | Image remotes, API CORS                                              |
 
 ## Stack invariants
 

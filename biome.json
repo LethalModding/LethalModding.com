@@ -1,6 +1,6 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.6.5/schema.json",
-  "markdown": { "parser": { "frontmatter": true }, "formatter": { "enabled": false } },
+  "markdown": { "parser": { "frontmatter": true }, "formatter": { "enabled": true } },
   "vcs": {
     "enabled": true,
     "clientKind": "git",

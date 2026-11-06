@@ -31,11 +31,11 @@ Install, environment variables, and local workflows: [HUMANS.md](HUMANS.md).
 
 ## Documentation
 
-| Document | Purpose |
-| ---------- | --------- |
-| **[HUMANS.md](./HUMANS.md)** | Install, environment, local development, and operations. |
-| **[AGENTS.md](./AGENTS.md)** | Repository layout and conventions for coding agents. |
-| **[LICENSE.txt](./LICENSE.txt)** | CC BY-NC-SA 2.0 license terms. |
+| Document                         | Purpose                                                  |
+| -------------------------------- | -------------------------------------------------------- |
+| **[HUMANS.md](./HUMANS.md)**     | Install, environment, local development, and operations. |
+| **[AGENTS.md](./AGENTS.md)**     | Repository layout and conventions for coding agents.     |
+| **[LICENSE.txt](./LICENSE.txt)** | CC BY-NC-SA 2.0 license terms.                           |
 
 ## License
 
