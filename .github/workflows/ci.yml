@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: Rethunk-Tech/gh-actions/setup-nextjs-bun@0fd53b2e66ac157aab89e4dc0ebbf4627969acef # v1.23
+      - uses: Rethunk-Tech/gh-actions/setup-nextjs-bun@4163d2a5a37b1538dd45926e264b3c4027b5cbaa # v1.24
         with:
           install-playwright: "true"
           playwright-browsers: "chromium"
