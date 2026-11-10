@@ -35,4 +35,4 @@ jobs:
       - name: Smoke the dev server
         run: bun run test:e2e
         env:
-          PW_WEB_COMMAND: bunx next dev --webpack -p 4720
+          PW_WEB_COMMAND: bunx next dev -p 4720
