@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   agentRules: false,
+  reactCompiler: true,
   experimental: {
+    turbopackRustReactCompiler: true,
     useTypeScriptCli: true,
   },
   reactStrictMode: true,
