@@ -30,7 +30,7 @@
     },
     "typecheck": {
       "inputs": ["$TURBO_DEFAULT$"],
-      "outputs": ["*.tsbuildinfo"]
+      "outputs": [".next/cache/.tsbuildinfo"]
     }
   }
 }

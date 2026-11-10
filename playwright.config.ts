@@ -11,7 +11,8 @@ export default defineConfig({
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
     // PW_WEB_COMMAND='bunx next dev --webpack -p 4720' runs the same smoke against the dev server.
-    command: process.env.PW_WEB_COMMAND?.trim() || 'bun run build && bunx next start -p 4720',
+    command:
+      process.env.PW_WEB_COMMAND?.trim() || 'bunx turbo run build && bunx next start -p 4720',
     url: baseURL,
     reuseExistingServer: false,
     timeout: 300_000,

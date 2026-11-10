@@ -7,6 +7,7 @@ const nextConfig = {
     turbopackFileSystemCacheForBuild: true,
     typedEnv: true,
     useTypeScriptCli: true,
+    cpus: 4,
   },
   reactStrictMode: true,
   typedRoutes: true,

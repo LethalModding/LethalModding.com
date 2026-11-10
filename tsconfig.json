@@ -12,6 +12,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
+    "tsBuildInfoFile": ".next/cache/.tsbuildinfo",
     "target": "ESNext",
     "paths": {
       "@/*": ["./src/*"]
