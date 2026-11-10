@@ -70,7 +70,7 @@ function filterMods(allMods: Mod[], filters: Filters, categories: CategoryFilter
       flagMatches(filters.hasNSFW, mod.has_nsfw_content) &&
       flagMatches(filters.isDeprecated, mod.is_deprecated) &&
       flagMatches(filters.isPinned, mod.is_pinned) &&
-      flagMatches(filters.hasDonation, mod.donation_link !== undefined) &&
+      flagMatches(filters.hasDonation, mod.donation_link !== '') &&
       flagMatches(filters.hasWebsite, version.website_url !== '') &&
       textMatches(filters.name, mod.name) &&
       textMatches(filters.owner, mod.owner) &&
