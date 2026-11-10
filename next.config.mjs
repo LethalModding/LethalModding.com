@@ -4,6 +4,8 @@ const nextConfig = {
   reactCompiler: true,
   experimental: {
     turbopackRustReactCompiler: true,
+    turbopackFileSystemCacheForBuild: true,
+    typedEnv: true,
     useTypeScriptCli: true,
   },
   reactStrictMode: true,
