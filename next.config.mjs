@@ -7,6 +7,7 @@ const nextConfig = {
     useTypeScriptCli: true,
   },
   reactStrictMode: true,
+  typedRoutes: true,
   images: {
     remotePatterns: [
       {
